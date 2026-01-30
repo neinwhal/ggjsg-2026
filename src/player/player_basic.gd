@@ -16,9 +16,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	# horizontal movement
 	var dir := 0
-	if Input.is_key_pressed(KEY_A):
+	if Input.is_action_pressed("MoveLeft"):
 		dir -= 1
-	if Input.is_key_pressed(KEY_D):
+	if Input.is_action_pressed("MoveRight"):
 		dir += 1
 	velocity.x = dir * speed
 
@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 		velocity.y = 0
 
 	# jump
-	if Input.is_key_pressed(KEY_SPACE) and is_on_floor():
+	if Input.is_action_pressed("Jump") and is_on_floor():
 		velocity.y = jump_velocity
 
 	move_and_slide() # handles collision response
