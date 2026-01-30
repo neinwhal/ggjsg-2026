@@ -9,15 +9,15 @@ var desired_distance := 0.0
 @export var follow_distance := 256.0
 @export var distance_variation := 128.0
 
+func find_player() -> void:
+	var players = get_tree().get_nodes_in_group("player")
+	if players.size() > 0:
+		target = players[0] as Node2D
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
-	
-		# Find the player
-	var players = get_tree().get_nodes_in_group("player")
-	if players.size() > 0:
-		target = players[0]
-
+	find_player()
 	# each friendly gets a slightly different stop distance
 	desired_distance = follow_distance + randf_range(-distance_variation, distance_variation)
 
@@ -33,6 +33,11 @@ func _process(delta: float) -> void:
 		velocity.y += gravity * delta
 	else:
 		velocity.y = 0.0
+		
+	# wait until player exists
+	if target == null:
+		find_player()
+		return
 		
 	# horizontal follow logic
 	var dx = target.global_position.x - global_position.x

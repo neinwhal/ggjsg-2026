@@ -4,12 +4,13 @@ extends CharacterBody2D
 func _ready() -> void:
 	add_to_group("player") # add to player group
 	$Camera2D.make_current() # set camera to current
+	$AnimatedSprite2D.play("player_idle")
 
 @export var speed := 200.0
 @export var jump_velocity := -400.0
 @export var gravity := 1200.0
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -32,6 +33,14 @@ func _process(delta: float) -> void:
 		velocity.y = jump_velocity
 
 	move_and_slide() # handles collision response
+
+	# animation state
+	if not is_on_floor():
+		$AnimatedSprite2D.play("player_jump")
+	elif dir != 0:
+		$AnimatedSprite2D.play("player_move")
+	else:
+		$AnimatedSprite2D.play("player_idle")
 
 	# flip sprite based on direction
 	if dir < 0:
