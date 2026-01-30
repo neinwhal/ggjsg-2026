@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckfyqe8sdq3ot"]
+
+[ext_resource type="Texture2D" uid="uid://ydfncygx1fx7" path="res://assets/enemy/testbox.png" id="1_xoety"]
+
+[node name="EnemyBasic" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xoety")
