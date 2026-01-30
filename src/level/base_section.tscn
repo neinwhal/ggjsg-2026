@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dnu462jogtt5y"]
 
-[ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/map/base_section.gd" id="1_euiep"]
-[ext_resource type="Texture2D" uid="uid://b01pu1wjk2wu1" path="res://assets/map/test_brick_wall.webp" id="2_euiep"]
-[ext_resource type="Texture2D" uid="uid://ij22x2wb5gyu" path="res://assets/map/test_stone_tile.webp" id="3_fdwvk"]
-[ext_resource type="PackedScene" uid="uid://dn6ww64k1onmw" path="res://src/player/player.tscn" id="4_qqgfp"]
+[ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/level/base_section.gd" id="1_euiep"]
+[ext_resource type="Texture2D" uid="uid://b01pu1wjk2wu1" path="res://assets/level/test_brick_wall.webp" id="2_u0r2v"]
+[ext_resource type="Texture2D" uid="uid://ij22x2wb5gyu" path="res://assets/level/test_stone_tile.webp" id="3_4t1fm"]
+[ext_resource type="PackedScene" uid="uid://dn4gfhwdccfj3" path="res://src/player/player_basic.tscn" id="4_n5rdq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n6jeu"]
 
@@ -12,7 +12,7 @@ script = ExtResource("1_euiep")
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_repeat = 2
-texture = ExtResource("2_euiep")
+texture = ExtResource("2_u0r2v")
 region_enabled = true
 region_rect = Rect2(0, 0, 500, 400)
 
@@ -24,8 +24,8 @@ shape = SubResource("RectangleShape2D_n6jeu")
 
 [node name="Sprite2D" type="Sprite2D" parent="Floor"]
 texture_repeat = 2
-texture = ExtResource("3_fdwvk")
+texture = ExtResource("3_4t1fm")
 region_enabled = true
 region_rect = Rect2(0, 0, 500, 400)
 
-[node name="Player" parent="." instance=ExtResource("4_qqgfp")]
+[node name="PlayerBasic" parent="." instance=ExtResource("4_n5rdq")]

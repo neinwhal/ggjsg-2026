@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b01pu1wjk2wu1"
-path="res://.godot/imported/test_brick_wall.webp-111a534a6e364dccde6a151c053898a1.ctex"
+uid="uid://ij22x2wb5gyu"
+path="res://.godot/imported/test_stone_tile.webp-358f9392a5b2e8017c6f80dc6fe7f18c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/map/test_brick_wall.webp"
-dest_files=["res://.godot/imported/test_brick_wall.webp-111a534a6e364dccde6a151c053898a1.ctex"]
+source_file="res://assets/level/test_stone_tile.webp"
+dest_files=["res://.godot/imported/test_stone_tile.webp-358f9392a5b2e8017c6f80dc6fe7f18c.ctex"]
 
 [params]
 
