@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	$Camera2D.make_current() # set camera to current
 
 @export var speed := 200.0
 @export var jump_velocity := -400.0
