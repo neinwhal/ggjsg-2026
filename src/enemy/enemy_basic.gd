@@ -6,6 +6,7 @@ extends CharacterBody2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
+	$AnimatedSprite2D.play("enemy_move")
 
 var direction : float = 0.0
 var change_time : float = 0.0
@@ -26,4 +27,8 @@ func _process(delta: float) -> void:
 	else:
 		velocity.y = 0.0
 
+	# flip sprite
+	if direction != 0:
+		$AnimatedSprite2D.flip_h = direction < 0
+	
 	move_and_slide()

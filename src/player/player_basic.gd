@@ -36,7 +36,7 @@ func _process(delta: float) -> void:
 
 	# animation state
 	if not is_on_floor():
-		$AnimatedSprite2D.play("player_jump")
+		$AnimatedSprite2D.play("player_move")
 	elif dir != 0:
 		$AnimatedSprite2D.play("player_move")
 	else:
