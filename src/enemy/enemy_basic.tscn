@@ -1,10 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckfyqe8sdq3ot"]
+[gd_scene load_steps=4 format=3 uid="uid://ckfyqe8sdq3ot"]
 
 [ext_resource type="Script" uid="uid://da55at8pbknvg" path="res://src/enemy/enemy_basic.gd" id="1_d3put"]
 [ext_resource type="Texture2D" uid="uid://bxoa1egpmr6xw" path="res://assets/enemy/enemy_testbox.png" id="1_xoety"]
 
-[node name="EnemyBasic" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3put"]
+size = Vector2(64, 64)
+
+[node name="EnemyBasic" type="CharacterBody2D"]
+collision_layer = 2
 script = ExtResource("1_d3put")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_xoety")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_d3put")

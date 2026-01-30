@@ -8,6 +8,8 @@ func _ready() -> void:
 @export var jump_velocity := -400.0
 @export var gravity := 1200.0
 
+@onready var sprite: Sprite2D = $Sprite2D
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# horizontal movement
@@ -29,3 +31,9 @@ func _process(delta: float) -> void:
 		velocity.y = jump_velocity
 
 	move_and_slide() # handles collision response
+
+	# flip sprite based on direction
+	if dir < 0:
+		sprite.flip_h = true
+	elif dir > 0:
+		sprite.flip_h = false

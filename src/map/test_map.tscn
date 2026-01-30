@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://rxjukwb2eoj1" path="res://src/map/player_spawner.gd" id="2_wac4r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wac4r"]
-size = Vector2(1204, 207.80157)
+size = Vector2(14990, 207.80157)
 
 [node name="TestMap" type="Node2D"]
 
@@ -16,13 +16,14 @@ script = ExtResource("2_wac4r")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(433.62952, 472.19843)
+collision_mask = 0
 
 [node name="ColorRect" type="ColorRect" parent="StaticBody2D"]
-offset_left = -460.62952
+offset_left = -7936.6294
 offset_top = -9.198425
-offset_right = 726.3705
+offset_right = 7051.3706
 offset_bottom = 196.80157
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(131.37048, 93.90082)
+position = Vector2(-442.62952, 93.90082)
 shape = SubResource("RectangleShape2D_wac4r")
