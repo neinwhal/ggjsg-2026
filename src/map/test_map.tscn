@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cyvoris5lawgw"]
+[gd_scene load_steps=5 format=3 uid="uid://cyvoris5lawgw"]
 
 [ext_resource type="Script" uid="uid://v5utpmqld2pi" path="res://src/map/enemy_spawner.gd" id="1_wooa0"]
+[ext_resource type="Script" uid="uid://omkbv758hdlm" path="res://src/map/friendly_spawner.gd" id="2_ss0hp"]
 [ext_resource type="Script" uid="uid://rxjukwb2eoj1" path="res://src/map/player_spawner.gd" id="2_wac4r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wac4r"]
@@ -10,6 +11,9 @@ size = Vector2(14990, 207.80157)
 
 [node name="EnemySpawner" type="Node2D" parent="."]
 script = ExtResource("1_wooa0")
+
+[node name="FriendlySpawner" type="Node2D" parent="."]
+script = ExtResource("2_ss0hp")
 
 [node name="PlayerSpawner" type="Node2D" parent="."]
 script = ExtResource("2_wac4r")
