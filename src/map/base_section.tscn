@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnu462jogtt5y"]
+[gd_scene load_steps=6 format=3 uid="uid://dnu462jogtt5y"]
 
 [ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/map/base_section.gd" id="1_euiep"]
 [ext_resource type="Texture2D" uid="uid://b01pu1wjk2wu1" path="res://assets/map/test_brick_wall.webp" id="2_euiep"]
 [ext_resource type="Texture2D" uid="uid://ij22x2wb5gyu" path="res://assets/map/test_stone_tile.webp" id="3_fdwvk"]
+[ext_resource type="PackedScene" uid="uid://dn6ww64k1onmw" path="res://src/player/player.tscn" id="4_qqgfp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n6jeu"]
 
@@ -26,3 +27,5 @@ texture_repeat = 2
 texture = ExtResource("3_fdwvk")
 region_enabled = true
 region_rect = Rect2(0, 0, 500, 400)
+
+[node name="Player" parent="." instance=ExtResource("4_qqgfp")]
