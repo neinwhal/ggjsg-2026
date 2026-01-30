@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://ckfyqe8sdq3ot"]
+[gd_scene load_steps=3 format=3 uid="uid://ckfyqe8sdq3ot"]
 
-[ext_resource type="Texture2D" uid="uid://ydfncygx1fx7" path="res://assets/enemy/testbox.png" id="1_xoety"]
+[ext_resource type="Script" uid="uid://da55at8pbknvg" path="res://src/enemy/enemy_basic.gd" id="1_d3put"]
+[ext_resource type="Texture2D" uid="uid://bxoa1egpmr6xw" path="res://assets/enemy/enemy_testbox.png" id="1_xoety"]
 
 [node name="EnemyBasic" type="Node2D"]
+script = ExtResource("1_d3put")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_xoety")

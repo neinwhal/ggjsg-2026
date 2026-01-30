@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dn4gfhwdccfj3"]
 
-[ext_resource type="Texture2D" uid="uid://ydfncygx1fx7" path="res://assets/enemy/testbox.png" id="1_y7xq3"]
+[ext_resource type="Texture2D" uid="uid://ch5ro3n0ncnhf" path="res://assets/player/player_testbox.png" id="1_y7xq3"]
 
 [node name="PlayerBasic" type="Node2D"]
 
