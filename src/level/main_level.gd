@@ -27,9 +27,6 @@ func _ready() -> void:
 	generate_random_section(SECTION_WIDTH)
 	#update_section_around_player()
 	$RightExtent.position.x = SECTION_WIDTH
-	
-	$CanvasLayer/PauseMenu._on_unpaused_pressed.connect(unpause)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -71,9 +68,6 @@ func pause() -> void:
 	print_debug("Pause")
 	get_tree().paused = true
 	$CanvasLayer/PauseMenu.show()
-	
-func unpause() -> void:
-	get_tree().paused = false
 
 func _on_right_extent_body_entered(body: Node2D) -> void:
 	#print_debug("Hit right extent!!!")
