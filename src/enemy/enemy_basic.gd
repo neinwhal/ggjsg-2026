@@ -3,9 +3,17 @@ extends CharacterBody2D
 @export var speed := 80.0
 @export var gravity := 1200.0
 
-enum State { WANDER, CHASE, ATTACK }
+var dead_timer := 5.0
+
+enum State { WANDER, CHASE, ATTACK, DEAD }
 var state: int = State.WANDER
+var enemy_HP = 100
+
 var target: Node2D = null
+
+# for damage flash
+@export var flash_duration := 0.1
+var is_flashing := false
 
 @export var detect_range := 250.0
 
@@ -99,9 +107,62 @@ func state_attack(delta: float) -> void:
 	velocity.x = 0.0
 	$AnimatedSprite2D.play("enemy_attack")
 
+func state_dead(delta: float) -> void:
+	if is_on_floor():
+		velocity.y = 5.0
+	else:
+		velocity.y += gravity * delta
+
+	velocity.x = 0.0
+	move_and_slide()
+
+	dead_timer -= delta
+	if dead_timer <= 0.0:
+		queue_free()
+
+func flash_red() -> void:
+	if is_flashing:
+		return
+
+	is_flashing = true
+	var sprite := $AnimatedSprite2D
+	sprite.modulate = Color(1, 0, 0)
+	var tween := get_tree().create_tween()
+	tween.tween_property(
+		sprite,
+		"modulate",
+		Color(1, 1, 1),
+		flash_duration
+	)
+	tween.finished.connect(func():
+		is_flashing = false
+	)
+
+func take_damage(amount: int) -> void:
+	if state == State.DEAD:
+		return
+	enemy_HP -= amount
+	flash_red()
+	if enemy_HP <= 0:
+		enemy_HP = 0
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if (enemy_HP <= 0.0):
+		# stop movement + stop targeting/ai
+		velocity.x = 0.0
+		target = null
+		direction = 0.0
+		# disable collisions so it does not block anything
+		if has_node("CollisionShape2D"):
+			$CollisionShape2D.disabled = true
+		state = State.DEAD
+	
+	if state == State.DEAD:
+		state_dead(delta)
+		return
+	
 	if state == State.WANDER:
 		state_wander(delta)
 		

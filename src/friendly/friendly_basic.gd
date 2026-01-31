@@ -4,7 +4,12 @@ class_name FriendlyBasic
 @export var speed := 150.0
 @export var gravity := 1200.0
 
+@export var attack_cooldown := 0.8
+@export var attack_damage := 10
+var attack_timer := 0.0
+
 enum State { IDLE, FOLLOW, ORDER, CHASE, ATTACK }
+var friendly_HP = 200
 
 var state: int = State.IDLE
 
@@ -137,7 +142,19 @@ func state_attack(delta: float) -> void:
 	
 	# target in attack range
 	velocity.x = 0.0
-	$AnimatedSprite2D.play("bianlian_attack")
+	if $AnimatedSprite2D.animation != "bianlian_attack":
+		$AnimatedSprite2D.play("bianlian_attack")
+	# attacking
+	attack_timer -= delta
+	if attack_timer <= 0.0:
+		attack_timer = attack_cooldown
+
+		# apply damage ONCE per cooldown
+		if target_enemy.has_method("take_damage"):
+			target_enemy.take_damage(attack_damage)
+		else:
+			# fallback if you directly modify HP
+			target_enemy.enemy_HP -= attack_damage
 
 func _process(delta: float) -> void:
 	# wait until player exists
