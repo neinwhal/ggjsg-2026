@@ -106,6 +106,10 @@ func _process(delta: float) -> void:
 	
 	# move towards x position
 	for u in selected_units:
+		# skip if selected unit is considered dead
+		if (u.state == FriendlyBasic.State.DEAD):
+			continue
+		
 		var pos := u.global_position
 		var old_x := pos.x
 		

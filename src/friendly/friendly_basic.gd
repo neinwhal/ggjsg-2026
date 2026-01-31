@@ -1,6 +1,9 @@
 extends CharacterBody2D
 class_name FriendlyBasic
 
+@export var dead_timer := 5.0 # time before deleted after death
+@export var dead_fall_velocity : float = 5.0
+
 @export var speed := 150.0
 @export var gravity := 1200.0
 
@@ -8,8 +11,8 @@ class_name FriendlyBasic
 @export var attack_damage := 10
 var attack_timer := 0.0
 
-enum State { IDLE, FOLLOW, ORDER, CHASE, ATTACK }
-var friendly_HP = 200
+enum State { IDLE, FOLLOW, ORDER, CHASE, ATTACK, DEAD }
+var friendly_HP : float = 500
 
 var state: int = State.IDLE
 
@@ -19,6 +22,10 @@ var desired_distance := 0.0
 
 @export var follow_distance := 350.0
 @export var distance_variation := 128.0
+
+# for damage flash
+@export var flash_duration := 0.1
+var is_flashing := false
 
 func find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
@@ -156,10 +163,45 @@ func state_attack(delta: float) -> void:
 			# fallback if you directly modify HP
 			target_enemy.enemy_HP -= attack_damage
 
+func state_dead(delta: float) -> void:
+	if is_on_floor():
+		velocity.y = dead_fall_velocity
+	else:
+		velocity.y += gravity * delta
+
+	velocity.x = 0.0
+	move_and_slide()
+
+	dead_timer -= delta
+	if dead_timer <= 0.0:
+		queue_free()
+
+func take_damage(amount: int) -> void:
+	if state == State.DEAD:
+		return
+	friendly_HP -= amount
+	DamageHelper.flash_red($AnimatedSprite2D, get_tree(), is_flashing, flash_duration)
+	if friendly_HP <= 0:
+		friendly_HP = 0
+
 func _process(delta: float) -> void:
 	# wait until player exists
 	if target_player == null:
 		find_player()
+		return
+		
+	if (friendly_HP <= 0.0):
+		# stop movement + stop targeting/ai
+		velocity.x = 0.0
+		target_enemy = null
+		target_player = null
+		# disable collisions so it does not block anything
+		if has_node("CollisionShape2D"):
+			$CollisionShape2D.disabled = true
+		state = State.DEAD
+	
+	if state == State.DEAD:
+		state_dead(delta)
 		return
 	
 	if state == State.IDLE:

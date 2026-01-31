@@ -129,7 +129,6 @@ func take_damage(amount: int) -> void:
 	if enemy_HP <= 0:
 		enemy_HP = 0
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if (enemy_HP <= 0.0):
