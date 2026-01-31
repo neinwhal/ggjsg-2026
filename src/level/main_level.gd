@@ -27,11 +27,17 @@ func _ready() -> void:
 	generate_random_section(SECTION_WIDTH)
 	#update_section_around_player()
 	$RightExtent.position.x = SECTION_WIDTH
+	
+	$CanvasLayer/PauseMenu._on_unpaused_pressed.connect(unpause)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("Pause"):
+		pause()
 
 func generate_start_section(xpos: int = 0) -> void:
 	var start_scene := preload("res://src/level/start_section.tscn").instantiate()
@@ -60,6 +66,14 @@ func generate_random_section(xpos: int) -> void:
 
 func open_branching_mrt() -> void:
 	print_debug("Open branching mrt")
+
+func pause() -> void:
+	print_debug("Pause")
+	get_tree().paused = true
+	$CanvasLayer/PauseMenu.show()
+	
+func unpause() -> void:
+	get_tree().paused = false
 
 func _on_right_extent_body_entered(body: Node2D) -> void:
 	#print_debug("Hit right extent!!!")
