@@ -17,7 +17,7 @@ func clear_selected_unit() -> void:
 	for u in selected_units:
 		if u != null and u.has_method("deselect_unit"):
 			u.deselect_unit()
-	#selected_units.clear()
+	selected_units.clear()
 	
 
 func select_unit_under_mouse(mouse_pos: Vector2) -> Node2D:
@@ -85,18 +85,19 @@ func _input(event: InputEvent) -> void:
 		else:
 			# released
 			if is_dragging:
+				clear_selected_unit()
 				selected_units = select_units_in_rectangle(drag_start, drag_end)
 				selected = selected_units[0] if selected_units.size() > 0 else null
 				has_target = false
 				
 				is_dragging = false # stop drawing
 				queue_redraw() # froce redraw to clear rectangle
-				#clear_selected_unit()
 				return
 
 			# treat as a click (not a drag)
 			var unit := select_unit_under_mouse(mouse_pos)
 			if unit != null:
+				
 				
 				if selected_units.size() > 0:
 					if unit.is_in_group("enemy"):
@@ -104,22 +105,21 @@ func _input(event: InputEvent) -> void:
 						for u in selected_units:
 							if (u.state != FriendlyBasic.State.ORDER_ATTACK):
 								u.state = FriendlyBasic.State.ORDER_ATTACK
-								u.target_enemy = unit
-							
+								u.target_enemy = unit			
 						return
 					
+				clear_selected_unit()
 				selected = unit
 				selected_units = [unit]
 				has_target = false
 				queue_redraw()
-				#clear_selected_unit()
 				return
 
 			# click empty space: set destination if anything selected
 			if selected_units.size() > 0:
 				target_pos = mouse_pos
 				has_target = true
-				clear_selected_unit()
+				##clear_selected_unit()
 
 	if event is InputEventMouseMotion:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -161,12 +161,16 @@ func _process(delta: float) -> void:
 		for u in selected_units:
 			var p := u.global_position
 			p.x = target_pos.x
-			if (u.state != FriendlyBasic.State.IDLE):
-				u.state = FriendlyBasic.State.IDLE
 				
 			var spr: AnimatedSprite2D = u.get_node("AnimatedSprite2D")
 			if spr.animation != "bianlian_idle":
 				spr.play("bianlian_idle")
+				
+			if (u.state != FriendlyBasic.State.IDLE):
+				u.state = FriendlyBasic.State.IDLE
+				
+			clear_selected_unit();
+			
 		has_target = false
 
 func _draw() -> void:
