@@ -10,7 +10,6 @@ func _ready() -> void:
 var spawn_timer := 0.0
 
 func spawn_enemy() -> void:
-	print("spawning")
 	var player := get_tree().get_first_node_in_group("player")
 	if player == null:
 		return
