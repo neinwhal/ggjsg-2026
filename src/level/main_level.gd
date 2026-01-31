@@ -3,7 +3,8 @@ extends Node2D
 var scene_selection: Array[PackedScene]
 var rand: RandomNumberGenerator
 
-const SECTION_WIDTH: int = 2304
+#const SECTION_WIDTH: int = 2304 #x2 viewport x
+const SECTION_WIDTH: int = 1728 # x1.5 viewport x
 const VIEWPORT_SIZE: int = 1152
 var current_min_x: int = -SECTION_WIDTH
 var current_max_x: int = SECTION_WIDTH
