@@ -1,25 +1,21 @@
 extends CharacterBody2D
 
-
-@export var dead_timer := 5.0 # time before deleted after death
-@export var dead_fall_velocity : float = 5.0
 # enemy stats
 @export var enemy_HP: float = 100.0
-@export var detect_range : float = 250.0
 @export var speed : float = 80.0
 @export var gravity : float = 1200.0
-
-@export var attack_cooldown : float = 0.8
-@export var attack_damage_min : int = 8
+@export var detect_range : float = 500.0
+@export var attack_cooldown : float = 0.8 # time between attacks
+@export var attack_damage_min : int = 8 # damage dealt
 @export var attack_damage_max : int = 12
-var attack_timer := 0.0
-
 @export var wander_time_min : float = 0.5 # wandering time
 @export var wander_time_max : float = 1.5
-@export var stop_distance_min : float = 15.0 # distance before stopping near target
-@export var stop_distance_max : float = 50.0
+@export var stop_distance_min : float = 20.0 # distance before stopping near target
+@export var stop_distance_max : float = 55.0
 @export var attack_range_max : float = 60.0 # distance to stop attacking
-
+# death timers
+@export var dead_timer := 5.0 # time before getting deleted AFTER death
+@export var dead_fall_velocity : float = 5.0 # death falling speed
 # various states
 enum State { WANDER, CHASE, ATTACK, DEAD }
 var state: int = State.WANDER
@@ -27,8 +23,9 @@ var state: int = State.WANDER
 # for damage flash
 @export var flash_duration := 0.2
 var is_flashing := false
-# other internal values
+# other internal values/timers
 var target: Node2D = null
+var attack_timer := 0.0
 # for wandering
 var enemy_direction : float = 0.0
 var enemy_change_time : float = 0.0
@@ -39,23 +36,6 @@ func _ready() -> void:
 	$AnimatedSprite2D.play("enemy_move")
 	add_to_group("enemy") # add to unit group
 
-func find_nearest_player_unit(max_dist: float) -> Node2D:
-	var nearest: Node2D = null
-	var nearest_dist_sq := max_dist * max_dist
-	# combine both groups
-	var candidates: Array = []
-	candidates.append_array(get_tree().get_nodes_in_group("player"))
-	candidates.append_array(get_tree().get_nodes_in_group("unit"))
-	for node in candidates:
-		if node == null or not (node is Node2D):
-			continue
-			
-		var dist_sq := global_position.distance_squared_to(node.global_position)
-		if dist_sq <= nearest_dist_sq:
-			nearest_dist_sq = dist_sq
-			nearest = node
-	return nearest
-
 func state_wander(delta: float) -> void:
 	enemy_change_time -= delta
 	if enemy_change_time <= 0.0:
@@ -64,7 +44,7 @@ func state_wander(delta: float) -> void:
 	# horizontal
 	velocity.x = enemy_direction * speed
 	#try to find target
-	target = find_nearest_player_unit(detect_range)
+	target = EnemyHelper.find_nearest_player_unit(get_tree(), global_position, detect_range)
 	if (target != null):
 		state = State.CHASE
 		velocity.x = 0;

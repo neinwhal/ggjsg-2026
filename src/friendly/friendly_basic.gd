@@ -24,7 +24,7 @@ var desired_distance := 0.0
 @export var distance_variation := 128.0
 
 # for damage flash
-@export var flash_duration := 0.1
+@export var flash_duration := 0.2
 var is_flashing := false
 
 func find_player() -> void:

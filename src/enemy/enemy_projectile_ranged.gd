@@ -41,5 +41,5 @@ func _on_area_body_entered(body: Node) -> void:
 	if body.is_in_group("player") or body.is_in_group("unit"):
 		if body.has_method("take_damage"):
 			body.take_damage(damage)
-		print("hit something")
+		#print("hit something")
 		queue_free()
