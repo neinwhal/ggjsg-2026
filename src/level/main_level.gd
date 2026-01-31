@@ -44,6 +44,7 @@ func generate_end_section(xpos: int) -> void:
 	is_end_generated = true
 	var end_scene := preload("res://src/level/end_section.tscn").instantiate()
 	end_scene.position.x = xpos
+	end_scene._on_final_extent_entered.connect(open_branching_mrt)
 	call_deferred("add_child", end_scene)
 
 ## Obtain random scene from container
@@ -56,6 +57,9 @@ func generate_random_section(xpos: int) -> void:
 		mid_section_count += 1
 	else:
 		print_debug("Trying to obtain scene from empty scene selection container!!!")
+
+func open_branching_mrt() -> void:
+	print_debug("Open branching mrt")
 
 func _on_right_extent_body_entered(body: Node2D) -> void:
 	#print_debug("Hit right extent!!!")

@@ -1,11 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://b77tgxo88nrfq"]
+[gd_scene load_steps=4 format=3 uid="uid://b77tgxo88nrfq"]
 
+[ext_resource type="Script" uid="uid://6wpsctahhvdf" path="res://src/level/end_section.gd" id="1_a1rqp"]
 [ext_resource type="PackedScene" uid="uid://dnu462jogtt5y" path="res://src/level/base_section.tscn" id="1_q70ny"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q70ny"]
+size = Vector2(20, 200)
+
 [node name="EndSection" type="Node2D"]
+script = ExtResource("1_a1rqp")
 
 [node name="BaseSection" parent="." instance=ExtResource("1_q70ny")]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 573.0
 offset_bottom = 40.0
+
+[node name="FinalExtent" type="Area2D" parent="."]
+position = Vector2(950, -20)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FinalExtent"]
+shape = SubResource("RectangleShape2D_q70ny")
+
+[connection signal="body_entered" from="FinalExtent" to="." method="_on_final_extent_body_entered"]
