@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b77tgxo88nrfq"]
+
+[ext_resource type="PackedScene" uid="uid://dnu462jogtt5y" path="res://src/level/base_section.tscn" id="1_q70ny"]
+
+[node name="EndSection" type="Node2D"]
+
+[node name="BaseSection" parent="." instance=ExtResource("1_q70ny")]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 573.0
+offset_bottom = 40.0
