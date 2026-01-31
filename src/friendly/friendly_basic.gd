@@ -77,7 +77,7 @@ func state_idle(delta: float) -> void:
 		velocity.x = friendly_direction * (speed / 4.0)
 	
 func state_follow(delta: float) -> void:
-	print("FOLLOWMAN")
+	#print("FOLLOWMAN")
 	# horizontal follow logic
 	var dx = target_player.global_position.x - global_position.x
 	var abs_dx = abs(dx)

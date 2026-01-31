@@ -12,15 +12,28 @@ var max_count : int = 1
 
 func spawn_friendly() -> void:
 	spawn_count = spawn_count + 1
-	if (spawn_count <= max_count):
-		var e := FriendlyScene.instantiate()
-		e.global_position = Vector2(600, 300)
-		add_child(e)
+	var e := FriendlyScene.instantiate()
+	e.global_position = Vector2(600, 300)
+	add_child(e)
 
+
+var temp_spawning_stop : bool = false;
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	spawn_timer += delta
-
-	if spawn_timer >= 1.0:
-		spawn_timer = 0.0
-		spawn_friendly()
+	
+	if (spawn_count <= max_count):
+		spawn_timer += delta
+		
+		if spawn_timer >= 1.0:
+			spawn_timer = 0.0
+			spawn_friendly()
+		
+	#### CHEAT SPAWNS
+	if Input.is_key_pressed(KEY_X):
+		if (!temp_spawning_stop):
+			temp_spawning_stop = true
+			spawn_friendly()
+	else:
+		if (temp_spawning_stop):
+			temp_spawning_stop = false
+		
