@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://pg36k17msbsb"]
+[gd_scene load_steps=9 format=3 uid="uid://pg36k17msbsb"]
 
 [ext_resource type="Script" uid="uid://b8tjt3djlac7y" path="res://src/level/main_level.gd" id="1_k7mun"]
 [ext_resource type="PackedScene" uid="uid://dn4gfhwdccfj3" path="res://src/player/player_basic.tscn" id="2_bjc6m"]
-[ext_resource type="PackedScene" uid="uid://b57787sd0uw3v" path="res://src/ui/branching_mrt_map.tscn" id="3_3pl5h"]
+[ext_resource type="PackedScene" path="res://src/ui/branching_mrt_map.tscn" id="3_3pl5h"]
 [ext_resource type="PackedScene" uid="uid://b1b6to0cic5bn" path="res://src/ui/pause_menu.tscn" id="3_j0j6y"]
+[ext_resource type="Script" uid="uid://c0p3hiag1magf" path="res://src/map/global_enemy_spawner.gd" id="4_nnc65"]
+[ext_resource type="Script" uid="uid://c24y84bx0oe0i" path="res://src/map/global_friendly_spawner.gd" id="5_o4euc"]
+[ext_resource type="Script" uid="uid://b2h2aw4i0k668" path="res://src/level/selection_manager.gd" id="7_aquyv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bjc6m"]
 size = Vector2(20, 200)
@@ -20,13 +23,22 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightExtent"]
 shape = SubResource("RectangleShape2D_bjc6m")
 
-[node name="PlayerBasic" parent="." instance=ExtResource("2_bjc6m")]
-top_level = true
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BranchingMrtMap" parent="CanvasLayer" instance=ExtResource("3_3pl5h")]
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("3_j0j6y")]
+
+[node name="GlobalEnemySpawner" type="Node2D" parent="."]
+script = ExtResource("4_nnc65")
+
+[node name="GlobalFriendlySpawner" type="Node2D" parent="."]
+script = ExtResource("5_o4euc")
+
+[node name="PlayerBasic" parent="." instance=ExtResource("2_bjc6m")]
+top_level = true
+
+[node name="SelectionManager" type="Node2D" parent="."]
+script = ExtResource("7_aquyv")
 
 [connection signal="body_entered" from="RightExtent" to="." method="_on_right_extent_body_entered"]
