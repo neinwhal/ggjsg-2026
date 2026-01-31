@@ -4,7 +4,7 @@ var scene_selection: Array[PackedScene]
 var rand: RandomNumberGenerator
 
 #const SECTION_WIDTH: int = 2304 #x2 viewport x
-const SECTION_WIDTH: int = 2048 # x2 size of texture
+const SECTION_WIDTH: int = 2016
 #const VIEWPORT_SIZE: int = 1152
 const MAX_MID_SECTIONS: int = 3
 var current_max_x: int = SECTION_WIDTH
