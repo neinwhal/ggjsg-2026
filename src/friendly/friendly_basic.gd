@@ -1,5 +1,4 @@
 extends CharacterBody2D
-class_name FriendlyBasic
 
 @export var dead_timer := 5.0 # time before deleted after death
 @export var dead_fall_velocity : float = 5.0
@@ -11,10 +10,9 @@ class_name FriendlyBasic
 @export var attack_damage := 10
 var attack_timer := 0.0
 
-enum State { IDLE, FOLLOW, ORDER_MOVE, ORDER_ATTACK, CHASE, ATTACK, DEAD }
 var friendly_HP : float = 500
 
-var state: int = State.IDLE
+var state: int = FriendlyHelper.State.IDLE
 
 var target_player: Node2D = null
 var target_enemy: Node2D = null
@@ -67,13 +65,13 @@ func state_idle(delta: float) -> void:
 	# if too far from player, change to follow state
 	var dist_to_player := global_position.distance_to(target_player.global_position)
 	if dist_to_player > (follow_distance + 5.0):
-		state = State.FOLLOW
+		state = FriendlyHelper.State.FOLLOW
 		return
 	# if got enemies nearby change to chase state
 	var nearby_enemy := _find_nearest_in_group("enemy", 175.0)
 	if nearby_enemy != null:
 		target_enemy = nearby_enemy
-		state = State.CHASE
+		state = FriendlyHelper.State.CHASE
 		return
 	# idle state, just walk ard/stand still
 	friendly_change_time -= delta
@@ -99,7 +97,7 @@ func state_follow(delta: float) -> void:
 		target_vx = sign(dx) * speed
 	elif abs_dx < desired_distance - stop_buffer:
 		target_vx = 0.0
-		state = State.IDLE
+		state = FriendlyHelper.State.IDLE
 		return;
 		
 	velocity.x = move_toward(velocity.x, target_vx, speed * 4.0 * delta)
@@ -122,7 +120,7 @@ func state_order_move(delta: float) -> void:
 func state_order_attack(delta: float) -> void:
 	print("attack order!")
 	if target_enemy == null:
-		state = State.IDLE
+		state = FriendlyHelper.State.IDLE
 		return
 		
 	var to_target := target_enemy.global_position - global_position
@@ -131,7 +129,7 @@ func state_order_attack(delta: float) -> void:
 	var stop_dist := randf_range(15.0, 50.0)
 	if dist <= stop_dist:
 		velocity.x = 0.0
-		state = State.ATTACK
+		state = FriendlyHelper.State.ATTACK
 		return
 	# move towards target
 	var dir : float = sign(to_target.x)
@@ -142,7 +140,7 @@ func state_chase(delta: float) -> void:
 	#print("CHASEMAN")
 	# no target, go back to idle
 	if target_enemy == null:
-		state = State.IDLE
+		state = FriendlyHelper.State.IDLE
 		return
 	
 	var to_target := target_enemy.global_position - global_position
@@ -150,13 +148,13 @@ func state_chase(delta: float) -> void:
 	# if target too far -> stop chasing
 	if dist > 110.0:
 		target_enemy = null
-		state = State.IDLE
+		state = FriendlyHelper.State.IDLE
 		return
 	# keep moving until random stop distance
 	var stop_dist := randf_range(15.0, 50.0)
 	if dist <= stop_dist:
 		velocity.x = 0.0
-		state = State.ATTACK
+		state = FriendlyHelper.State.ATTACK
 		return
 	# move towards target
 	var dir : float = sign(to_target.x)
@@ -165,14 +163,14 @@ func state_chase(delta: float) -> void:
 func state_attack(delta: float) -> void:
 	#print("ATTACKMAN")
 	if target_enemy == null:
-		state = State.IDLE
+		state = FriendlyHelper.State.IDLE
 		return
 		
 	var dist := global_position.distance_to(target_enemy.global_position)
 	# target out of attack range -> target too far, back to idle
 	if dist > 60.0:
 		target_enemy = null
-		state = State.IDLE
+		state = FriendlyHelper.State.IDLE
 		return
 	
 	# target in attack range
@@ -205,7 +203,7 @@ func state_dead(delta: float) -> void:
 		queue_free()
 
 func take_damage(amount: int) -> void:
-	if state == State.DEAD:
+	if state == FriendlyHelper.State.DEAD:
 		return
 	friendly_HP -= amount
 	DamageHelper.flash_red($AnimatedSprite2D, get_tree(), is_flashing, flash_duration)
@@ -226,23 +224,23 @@ func _process(delta: float) -> void:
 		# disable collisions so it does not block anything
 		if has_node("CollisionShape2D"):
 			$CollisionShape2D.disabled = true
-		state = State.DEAD
+		state = FriendlyHelper.State.DEAD
 	
-	if state == State.DEAD:
+	if state == FriendlyHelper.State.DEAD:
 		state_dead(delta)
 		return
 	
-	if state == State.IDLE:
+	if state == FriendlyHelper.State.IDLE:
 		state_idle(delta)
-	elif state == State.FOLLOW:
+	elif state == FriendlyHelper.State.FOLLOW:
 		state_follow(delta)
-	elif state == State.ORDER_MOVE:
+	elif state == FriendlyHelper.State.ORDER_MOVE:
 		state_order_move(delta)
-	elif state == State.ORDER_ATTACK:
+	elif state == FriendlyHelper.State.ORDER_ATTACK:
 		state_order_attack(delta)
-	elif state == State.CHASE:
+	elif state == FriendlyHelper.State.CHASE:
 		state_chase(delta)
-	elif state == State.ATTACK:
+	elif state == FriendlyHelper.State.ATTACK:
 		state_attack(delta)
 
 	# gravity
@@ -255,8 +253,8 @@ func _process(delta: float) -> void:
 	var sprite := $AnimatedSprite2D
 	var flip_when_moving_right := false # set to false if your sprite faces right by default
 	var moving: bool = abs(velocity.x) > 0.0
-	if (state != State.ORDER_MOVE):
-		if (state != State.ATTACK):
+	if (state != FriendlyHelper.State.ORDER_MOVE):
+		if (state != FriendlyHelper.State.ATTACK):
 			if moving:
 				var moving_right: bool = velocity.x > 0.0
 
@@ -269,7 +267,7 @@ func _process(delta: float) -> void:
 			else:
 				if sprite.animation != "bianlian_idle":
 					sprite.play("bianlian_idle")
-		elif (state == State.ATTACK):
+		elif (state == FriendlyHelper.State.ATTACK):
 			# attack state, just turn towards enemy
 			sprite.flip_h = target_enemy.global_position.x < global_position.x
 		

@@ -103,8 +103,8 @@ func _input(event: InputEvent) -> void:
 					if unit.is_in_group("enemy"):
 						# send existing selected units to force attack enemy!
 						for u in selected_units:
-							if (u.state != FriendlyBasic.State.ORDER_ATTACK):
-								u.state = FriendlyBasic.State.ORDER_ATTACK
+							if (u.state != FriendlyHelper.State.ORDER_ATTACK):
+								u.state = FriendlyHelper.State.ORDER_ATTACK
 								u.target_enemy = unit			
 						return
 					
@@ -136,7 +136,7 @@ func _process(delta: float) -> void:
 	# move towards x position
 	for u in selected_units:
 		# skip if selected unit is considered dead
-		if (u.state == FriendlyBasic.State.DEAD):
+		if (u.state == FriendlyHelper.State.DEAD):
 			continue
 		
 		var pos := u.global_position
@@ -144,8 +144,8 @@ func _process(delta: float) -> void:
 		
 		pos.x = move_toward(pos.x, target_pos.x, move_speed * delta)
 		u.global_position = pos
-		if (u.state != FriendlyBasic.State.ORDER_MOVE):
-			u.state = FriendlyBasic.State.ORDER_MOVE
+		if (u.state != FriendlyHelper.State.ORDER_MOVE):
+			u.state = FriendlyHelper.State.ORDER_MOVE
 		
 		var dir_x := pos.x - old_x # negative = moved left, positive = moved right
 		if absf(dir_x) > 0.001:
@@ -166,8 +166,8 @@ func _process(delta: float) -> void:
 			if spr.animation != "bianlian_idle":
 				spr.play("bianlian_idle")
 				
-			if (u.state != FriendlyBasic.State.IDLE):
-				u.state = FriendlyBasic.State.IDLE
+			if (u.state != FriendlyHelper.State.IDLE):
+				u.state = FriendlyHelper.State.IDLE
 				
 			clear_selected_unit();
 			

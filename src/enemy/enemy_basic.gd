@@ -17,8 +17,7 @@ extends CharacterBody2D
 @export var dead_timer := 5.0 # time before getting deleted AFTER death
 @export var dead_fall_velocity : float = 5.0 # death falling speed
 # various states
-enum State { WANDER, CHASE, ATTACK, DEAD }
-var state: int = State.WANDER
+var state: int = EnemyHelper.State.WANDER
 
 # for damage flash
 @export var flash_duration := 0.2
@@ -46,13 +45,13 @@ func state_wander(delta: float) -> void:
 	#try to find target
 	target = EnemyHelper.find_nearest_player_unit(get_tree(), global_position, detect_range)
 	if (target != null):
-		state = State.CHASE
+		state = EnemyHelper.State.CHASE
 		velocity.x = 0;
 		
 func state_chase(delta: float) -> void:
 	# if no target, go back to wander state
 	if target == null:
-		state = State.WANDER
+		state = EnemyHelper.State.WANDER
 		return
 		
 	var to_target := target.global_position - global_position
@@ -60,14 +59,14 @@ func state_chase(delta: float) -> void:
 	# if target too far -> stop chasing
 	if dist > detect_range:
 		target = null
-		state = State.WANDER
+		state = EnemyHelper.State.WANDER
 		return
 		
 	# keep moving until random stop distance
 	var stop_dist := randf_range(stop_distance_min, stop_distance_max)
 	if dist <= stop_dist:
 		velocity.x = 0.0
-		state = State.ATTACK
+		state = EnemyHelper.State.ATTACK
 		return
 		
 	# move towards target
@@ -77,7 +76,7 @@ func state_chase(delta: float) -> void:
 		
 func state_attack(delta: float) -> void:
 	if target == null:
-		state = State.WANDER
+		state = EnemyHelper.State.WANDER
 		return
 	
 	var dist := global_position.distance_to(target.global_position)
@@ -85,7 +84,7 @@ func state_attack(delta: float) -> void:
 	# target out of attack range -> wander again -> find new target
 	if dist > attack_range_max:
 		target = null
-		state = State.WANDER
+		state = EnemyHelper.State.WANDER
 		$AnimatedSprite2D.play("enemy_move")
 		return
 		
@@ -115,7 +114,7 @@ func state_dead(delta: float) -> void:
 		queue_free()
 
 func take_damage(amount: int) -> void:
-	if state == State.DEAD:
+	if state == EnemyHelper.State.DEAD:
 		return
 	enemy_HP -= amount
 	DamageHelper.flash_red($AnimatedSprite2D, get_tree(), is_flashing, flash_duration)
@@ -132,19 +131,19 @@ func _process(delta: float) -> void:
 		# disable collisions so it does not block anything
 		if has_node("CollisionShape2D"):
 			$CollisionShape2D.disabled = true
-		state = State.DEAD
+		state = EnemyHelper.State.DEAD
 	
-	if state == State.DEAD:
+	if state == EnemyHelper.State.DEAD:
 		state_dead(delta)
 		return
 	
-	if state == State.WANDER:
+	if state == EnemyHelper.State.WANDER:
 		state_wander(delta)
 		
-	elif state == State.CHASE:
+	elif state == EnemyHelper.State.CHASE:
 		state_chase(delta)
 		
-	elif state == State.ATTACK:
+	elif state == EnemyHelper.State.ATTACK:
 		state_attack(delta)
 	
 	# gravity
@@ -153,7 +152,7 @@ func _process(delta: float) -> void:
 	else:
 		velocity.y = 0.0
 	# flip sprite
-	if state == State.WANDER:
+	if state == EnemyHelper.State.WANDER:
 		if enemy_direction != 0:
 			$AnimatedSprite2D.flip_h = enemy_direction < 0
 	else:
