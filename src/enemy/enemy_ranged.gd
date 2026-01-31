@@ -1,40 +1,38 @@
 extends CharacterBody2D
 
-@export var speed := 80.0
-@export var gravity := 1200.0
-# time before deleted after death
-var dead_timer := 5.0
-# various states
-var state: int = EnemyHelper.State.WANDER
-# enemy stats
-var enemy_HP = 100
-@export var detect_range := 500.0
-
-
-var attack_timer = 0.0
+@export var enemy_HP : float = 100.0
+@export var speed : float = 80.0
+@export var gravity : float = 1200.0
+@export var detect_range := 800.0
 var attack_cooldown = 3.0
-
+# missing attack dmg
+# missing wander time
+# missing stop distance
+# projectile stats
 @onready var BulletScene: PackedScene = preload("res://src/enemy/enemy_projectile_ranged.tscn")
 @export var bullet_spawn_offset := Vector2(20, -10)
 @export var bullet_speed := 500.0
 @export var bullet_arc_up := 280.0  # how "high" the arc starts
-
-
+# death timers
+@export var dead_timer := 5.0 # time before getting deleted AFTER death
+# missing death velocity
+# various states
+var state: int = EnemyHelper.State.WANDER
 # for damage flash
-@export var flash_duration := 0.1
+@export var flash_duration := 0.2
 var is_flashing := false
-# other internal values
+# other internal values/timers
 var target: Node2D = null
+var attack_timer = 0.0
+# for wandering
+var enemy_direction : float = 0.0
+var enemy_change_time : float = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
 	$AnimatedSprite2D.play("enemy_move")
 	add_to_group("enemy") # add to unit group
-
-var direction : float = 0.0
-var change_time : float = 0.0
-
 
 func find_nearest_player_unit(max_dist: float) -> Node2D:
 	var nearest: Node2D = null
@@ -54,12 +52,12 @@ func find_nearest_player_unit(max_dist: float) -> Node2D:
 	return nearest
 
 func state_wander(delta: float) -> void:
-	change_time -= delta
-	if change_time <= 0.0:
-		direction = [-1, 1].pick_random()
-		change_time = randf_range(0.5, 1.5)
+	enemy_change_time -= delta
+	if enemy_change_time <= 0.0:
+		enemy_direction = [-1, 1].pick_random()
+		enemy_change_time = randf_range(0.5, 1.5)
 	# horizontal
-	velocity.x = direction * speed
+	velocity.x = enemy_direction * speed
 	#try to find target
 	target = find_nearest_player_unit(detect_range)
 	if (target != null):
@@ -172,7 +170,7 @@ func _process(delta: float) -> void:
 		# stop movement + stop targeting/ai
 		velocity.x = 0.0
 		target = null
-		direction = 0.0
+		enemy_direction = 0.0
 		# disable collisions so it does not block anything
 		if has_node("CollisionShape2D"):
 			$CollisionShape2D.disabled = true
@@ -198,8 +196,8 @@ func _process(delta: float) -> void:
 		velocity.y = 0.0
 	# flip sprite
 	if state == EnemyHelper.State.WANDER:
-		if direction != 0:
-			$AnimatedSprite2D.flip_h = direction < 0
+		if enemy_direction != 0:
+			$AnimatedSprite2D.flip_h = enemy_direction < 0
 	else:
 		if target != null:
 			$AnimatedSprite2D.flip_h = target.global_position.x < global_position.x
