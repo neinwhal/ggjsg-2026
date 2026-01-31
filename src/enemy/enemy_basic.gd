@@ -9,6 +9,11 @@ extends CharacterBody2D
 @export var speed : float = 80.0
 @export var gravity : float = 1200.0
 
+@export var attack_cooldown : float = 0.8
+@export var attack_damage_min : int = 8
+@export var attack_damage_max : int = 12
+var attack_timer := 0.0
+
 @export var wander_time_min : float = 0.5 # wandering time
 @export var wander_time_max : float = 1.5
 @export var stop_distance_min : float = 15.0 # distance before stopping near target
@@ -106,7 +111,15 @@ func state_attack(delta: float) -> void:
 		
 	# target in attack range
 	velocity.x = 0.0
-	$AnimatedSprite2D.play("enemy_attack")
+	if $AnimatedSprite2D.animation != "enemy_attack":
+		$AnimatedSprite2D.play("enemy_attack")
+	# attacking
+	attack_timer -= delta
+	if attack_timer <= 0.0:
+		attack_timer = attack_cooldown
+		# apply damage ONCE per cooldown
+		if target.has_method("take_damage"):
+			target.take_damage(randi_range(attack_damage_min, attack_damage_max))
 
 func state_dead(delta: float) -> void:
 	if is_on_floor():
