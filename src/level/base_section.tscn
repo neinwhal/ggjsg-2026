@@ -1,11 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnu462jogtt5y"]
+[gd_scene load_steps=4 format=3 uid="uid://dnu462jogtt5y"]
 
 [ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/level/base_section.gd" id="1_euiep"]
 [ext_resource type="Texture2D" uid="uid://b4mcifmi0jqr2" path="res://assets/level/BG.png" id="2_uh3jv"]
-[ext_resource type="Texture2D" uid="uid://ij22x2wb5gyu" path="res://assets/level/test_stone_tile.webp" id="3_4t1fm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n6jeu"]
-size = Vector2(2304, 1296)
+size = Vector2(2304, 122)
 
 [node name="BaseSection" type="Node2D"]
 script = ExtResource("1_euiep")
@@ -21,10 +20,5 @@ position = Vector2(0, 648)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(0, -587)
 shape = SubResource("RectangleShape2D_n6jeu")
-
-[node name="Sprite2D" type="Sprite2D" parent="Floor"]
-texture_repeat = 2
-texture = ExtResource("3_4t1fm")
-region_enabled = true
-region_rect = Rect2(0, 0, 2304, 1296)
