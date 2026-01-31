@@ -121,29 +121,11 @@ func state_dead(delta: float) -> void:
 	if dead_timer <= 0.0:
 		queue_free()
 
-func flash_red(_is_flashing: bool) -> void:
-	if _is_flashing:
-		return
-
-	_is_flashing = true
-	var sprite := $AnimatedSprite2D
-	sprite.modulate = Color(1, 0, 0)
-	var tween := get_tree().create_tween()
-	tween.tween_property(
-		sprite,
-		"modulate",
-		Color(1, 1, 1),
-		flash_duration
-	)
-	tween.finished.connect(func():
-		_is_flashing = false
-	)
-
 func take_damage(amount: int) -> void:
 	if state == State.DEAD:
 		return
 	enemy_HP -= amount
-	flash_red(is_flashing)
+	DamageHelper.flash_red($AnimatedSprite2D, get_tree(), is_flashing, flash_duration)
 	if enemy_HP <= 0:
 		enemy_HP = 0
 
