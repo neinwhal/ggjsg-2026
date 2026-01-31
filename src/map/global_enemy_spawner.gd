@@ -10,6 +10,7 @@ func _ready() -> void:
 var spawn_timer := 0.0
 
 func spawn_enemy() -> void:
+	print("spawning")
 	var player := get_tree().get_first_node_in_group("player")
 	if player == null:
 		return
@@ -30,7 +31,7 @@ func spawn_enemy() -> void:
 	# X relative to player, Y fixed
 	e.global_position = Vector2(
 		player_pos.x + 1000.0 * side,
-		300.0
+		-500.0
 	)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

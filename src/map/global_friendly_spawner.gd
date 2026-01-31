@@ -13,7 +13,7 @@ var max_count : int = 1
 func spawn_friendly() -> void:
 	spawn_count = spawn_count + 1
 	var e := FriendlyScene.instantiate()
-	e.global_position = Vector2(600, 300)
+	e.global_position = Vector2(0, -500)
 	add_child(e)
 
 
