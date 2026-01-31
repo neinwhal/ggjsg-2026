@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dnu462jogtt5y"]
 
 [ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/level/base_section.gd" id="1_euiep"]
-[ext_resource type="Texture2D" uid="uid://b01pu1wjk2wu1" path="res://assets/level/test_brick_wall.webp" id="2_u0r2v"]
+[ext_resource type="Texture2D" uid="uid://b4mcifmi0jqr2" path="res://assets/level/BG.png" id="2_uh3jv"]
 [ext_resource type="Texture2D" uid="uid://ij22x2wb5gyu" path="res://assets/level/test_stone_tile.webp" id="3_4t1fm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n6jeu"]
@@ -11,10 +11,10 @@ size = Vector2(2304, 1296)
 script = ExtResource("1_euiep")
 
 [node name="Background" type="Sprite2D" parent="."]
-texture_repeat = 2
-texture = ExtResource("2_u0r2v")
-region_enabled = true
-region_rect = Rect2(0, 0, 2304, 1728)
+texture_filter = 1
+position = Vector2(0, -40)
+scale = Vector2(2, 2)
+texture = ExtResource("2_uh3jv")
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2(0, 648)
