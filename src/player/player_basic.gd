@@ -1,6 +1,10 @@
 extends CharacterBody2D
 class_name PlayerBasic
 
+# for damage flash
+@export var flash_duration := 0.3
+var is_flashing := false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_to_group("player") # add to player group
@@ -10,11 +14,23 @@ func _ready() -> void:
 @export var speed := 200.0
 @export var jump_velocity := -400.0
 @export var gravity := 1200.0
+@export var player_HP : float = 1000;
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
+func take_damage(amount: int) -> void:
+	if player_HP <= 0:
+		return
+		
+	player_HP -= amount
+	DamageHelper.flash_red($AnimatedSprite2D, get_tree(), is_flashing, flash_duration)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if player_HP <= 0:
+		### TODO: GAME OVER AND QUIT TO MAIN MENU	
+		print("GAMEOVER!")
+	
 	# horizontal movement
 	var dir := 0
 	if Input.is_action_pressed("MoveLeft"):
