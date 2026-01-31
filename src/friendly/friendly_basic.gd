@@ -41,6 +41,7 @@ func _ready() -> void:
 	desired_distance = follow_distance + randf_range(-distance_variation, distance_variation)
 	# play default anim
 	$AnimatedSprite2D.play("bianlian_idle")
+	$SelectIndicator.visible = false
 
 var direction : float = 0.0
 var change_time : float = 0.0
@@ -103,6 +104,11 @@ func state_follow(delta: float) -> void:
 		
 	velocity.x = move_toward(velocity.x, target_vx, speed * 4.0 * delta)
 
+func select_unit() -> void:
+	$SelectIndicator.visible = true
+	
+func deselect_unit() -> void:
+	$SelectIndicator.visible = false
 
 func state_order(delta: float) -> void:
 	#print("ORDERMAN")

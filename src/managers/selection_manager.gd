@@ -3,9 +3,22 @@ extends Node2D
 @export var move_speed := 150.0
 @export var drag_threshold := 8.0 # pixels before we treat it as a drag
 
-var selected: Node2D = null
 var target_pos: Vector2
 var has_target := false
+
+var is_dragging := false
+var drag_start := Vector2.ZERO
+var drag_end := Vector2.ZERO
+
+var selected: Node2D = null
+var selected_units: Array[Node2D] = []
+
+func clear_selected_unit() -> void:
+	for u in selected_units:
+		if u != null and u.has_method("deselect_unit"):
+			u.deselect_unit()
+	#selected_units.clear()
+	
 
 func select_unit_under_mouse(mouse_pos: Vector2) -> Node2D:
 	var space_state := get_world_2d().direct_space_state
@@ -21,6 +34,7 @@ func select_unit_under_mouse(mouse_pos: Vector2) -> Node2D:
 		var collider: Object = h["collider"]
 
 		if collider != null and collider.is_in_group("unit"):
+			collider.select_unit()
 			return collider as Node2D
 
 	return null
@@ -48,15 +62,11 @@ func select_units_in_rectangle(a: Vector2, b: Vector2) -> Array[Node2D]:
 		if collider != null and collider.is_in_group("unit"):
 			var n := collider as Node2D
 			if n != null and not out.has(n):
+				n.select_unit()
 				out.append(n)
 
 	return out
 
-
-var is_dragging := false
-var drag_start := Vector2.ZERO
-var drag_end := Vector2.ZERO
-var selected_units: Array[Node2D] = []
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -76,6 +86,7 @@ func _input(event: InputEvent) -> void:
 				
 				is_dragging = false # stop drawing
 				queue_redraw() # froce redraw to clear rectangle
+				#clear_selected_unit()
 				return
 
 			# treat as a click (not a drag)
@@ -85,12 +96,14 @@ func _input(event: InputEvent) -> void:
 				selected_units = [unit]
 				has_target = false
 				queue_redraw()
+				#clear_selected_unit()
 				return
 
 			# click empty space: set destination if anything selected
 			if selected_units.size() > 0:
 				target_pos = mouse_pos
 				has_target = true
+				clear_selected_unit()
 
 	if event is InputEventMouseMotion:
 		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
