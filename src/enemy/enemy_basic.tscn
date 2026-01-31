@@ -93,6 +93,12 @@ size = Vector2(46, 58)
 [node name="EnemyBasic" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_d3put")
+dead_timer = null
+enemy_HP = null
+detect_range = null
+speed = null
+gravity = null
+flash_duration = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

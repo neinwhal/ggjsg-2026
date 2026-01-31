@@ -1,32 +1,38 @@
 extends CharacterBody2D
 
-@export var speed := 80.0
-@export var gravity := 1200.0
-# time before deleted after death
-var dead_timer := 5.0
+
+@export var dead_timer := 5.0 # time before deleted after death
+@export var dead_fall_velocity : float = 5.0
+# enemy stats
+@export var enemy_HP: float = 100.0
+@export var detect_range : float = 250.0
+@export var speed : float = 80.0
+@export var gravity : float = 1200.0
+
+@export var wander_time_min : float = 0.5 # wandering time
+@export var wander_time_max : float = 1.5
+@export var stop_distance_min : float = 15.0 # distance before stopping near target
+@export var stop_distance_max : float = 50.0
+@export var attack_range_max : float = 60.0 # distance to stop attacking
+
 # various states
 enum State { WANDER, CHASE, ATTACK, DEAD }
 var state: int = State.WANDER
-# enemy stats
-var enemy_HP = 100
-@export var detect_range := 250.0
-
 
 # for damage flash
-@export var flash_duration := 0.1
+@export var flash_duration := 0.2
 var is_flashing := false
 # other internal values
 var target: Node2D = null
+# for wandering
+var enemy_direction : float = 0.0
+var enemy_change_time : float = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
 	$AnimatedSprite2D.play("enemy_move")
 	add_to_group("enemy") # add to unit group
-
-var direction : float = 0.0
-var change_time : float = 0.0
-
 
 func find_nearest_player_unit(max_dist: float) -> Node2D:
 	var nearest: Node2D = null
@@ -46,12 +52,12 @@ func find_nearest_player_unit(max_dist: float) -> Node2D:
 	return nearest
 
 func state_wander(delta: float) -> void:
-	change_time -= delta
-	if change_time <= 0.0:
-		direction = [-1, 1].pick_random()
-		change_time = randf_range(0.5, 1.5)
+	enemy_change_time -= delta
+	if enemy_change_time <= 0.0:
+		enemy_direction = [-1, 1].pick_random()
+		enemy_change_time = randf_range(wander_time_min, wander_time_max)
 	# horizontal
-	velocity.x = direction * speed
+	velocity.x = enemy_direction * speed
 	#try to find target
 	target = find_nearest_player_unit(detect_range)
 	if (target != null):
@@ -67,13 +73,13 @@ func state_chase(delta: float) -> void:
 	var to_target := target.global_position - global_position
 	var dist := to_target.length()
 	# if target too far -> stop chasing
-	if dist > 250.0:
+	if dist > detect_range:
 		target = null
 		state = State.WANDER
 		return
 		
 	# keep moving until random stop distance
-	var stop_dist := randf_range(15.0, 50.0)
+	var stop_dist := randf_range(stop_distance_min, stop_distance_max)
 	if dist <= stop_dist:
 		velocity.x = 0.0
 		state = State.ATTACK
@@ -91,14 +97,8 @@ func state_attack(delta: float) -> void:
 	
 	var dist := global_position.distance_to(target.global_position)
 	# target too far, back to wandering
-	if dist > 250.0:
-		target = null
-		state = State.WANDER
-		$AnimatedSprite2D.play("enemy_move")
-		return
-		
 	# target out of attack range -> wander again -> find new target
-	if dist > 60.0:
+	if dist > attack_range_max:
 		target = null
 		state = State.WANDER
 		$AnimatedSprite2D.play("enemy_move")
@@ -110,7 +110,7 @@ func state_attack(delta: float) -> void:
 
 func state_dead(delta: float) -> void:
 	if is_on_floor():
-		velocity.y = 5.0
+		velocity.y = dead_fall_velocity
 	else:
 		velocity.y += gravity * delta
 
@@ -121,11 +121,11 @@ func state_dead(delta: float) -> void:
 	if dead_timer <= 0.0:
 		queue_free()
 
-func flash_red() -> void:
-	if is_flashing:
+func flash_red(_is_flashing: bool) -> void:
+	if _is_flashing:
 		return
 
-	is_flashing = true
+	_is_flashing = true
 	var sprite := $AnimatedSprite2D
 	sprite.modulate = Color(1, 0, 0)
 	var tween := get_tree().create_tween()
@@ -136,14 +136,14 @@ func flash_red() -> void:
 		flash_duration
 	)
 	tween.finished.connect(func():
-		is_flashing = false
+		_is_flashing = false
 	)
 
 func take_damage(amount: int) -> void:
 	if state == State.DEAD:
 		return
 	enemy_HP -= amount
-	flash_red()
+	flash_red(is_flashing)
 	if enemy_HP <= 0:
 		enemy_HP = 0
 
@@ -154,7 +154,7 @@ func _process(delta: float) -> void:
 		# stop movement + stop targeting/ai
 		velocity.x = 0.0
 		target = null
-		direction = 0.0
+		enemy_direction = 0.0
 		# disable collisions so it does not block anything
 		if has_node("CollisionShape2D"):
 			$CollisionShape2D.disabled = true
@@ -180,8 +180,8 @@ func _process(delta: float) -> void:
 		velocity.y = 0.0
 	# flip sprite
 	if state == State.WANDER:
-		if direction != 0:
-			$AnimatedSprite2D.flip_h = direction < 0
+		if enemy_direction != 0:
+			$AnimatedSprite2D.flip_h = enemy_direction < 0
 	else:
 		if target != null:
 			$AnimatedSprite2D.flip_h = target.global_position.x < global_position.x
