@@ -53,7 +53,7 @@ func generate_start_section() -> void:
 	elif current_level == 2:
 		start_scene = preload(LEVEL_2_START).instantiate()
 	start_scene.position.x = 0
-	call_deferred("add_child", start_scene)
+	$SpawnedSections.call_deferred("add_child", start_scene)
 
 func generate_end_section(xpos: int) -> void:
 	if is_end_generated:
@@ -67,15 +67,14 @@ func generate_end_section(xpos: int) -> void:
 	end_scene.position.x = xpos
 	end_scene._on_final_extent_entered.connect(open_branching_mrt)
 	end_scene._on_mrt_map_exited.connect(close_branching_mrt)
-	call_deferred("add_child", end_scene)
+	$SpawnedSections.call_deferred("add_child", end_scene)
 
 ## Obtain random scene from container
 func generate_random_section(xpos: int) -> void:
 	if not scene_selection.is_empty():
 		var new_scene := scene_selection[rand.randi_range(0, scene_selection.size() - 1)].instantiate()
 		new_scene.position.x = xpos
-		#add_child(new_scene)
-		call_deferred("add_child", new_scene)
+		$SpawnedSections.call_deferred("add_child", new_scene)
 		mid_section_count += 1
 	else:
 		print_debug("Trying to obtain scene from empty scene selection container!!!")

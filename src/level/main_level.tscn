@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8tjt3djlac7y" path="res://src/level/main_level.gd" id="1_k7mun"]
 [ext_resource type="PackedScene" uid="uid://dn4gfhwdccfj3" path="res://src/player/player_basic.tscn" id="2_bjc6m"]
-[ext_resource type="PackedScene" path="res://src/ui/branching_mrt_map.tscn" id="3_3pl5h"]
+[ext_resource type="PackedScene" uid="uid://b57787sd0uw3v" path="res://src/ui/branching_mrt_map.tscn" id="3_3pl5h"]
 [ext_resource type="PackedScene" uid="uid://b1b6to0cic5bn" path="res://src/ui/pause_menu.tscn" id="3_j0j6y"]
 [ext_resource type="Script" uid="uid://c0p3hiag1magf" path="res://src/map/global_enemy_spawner.gd" id="4_nnc65"]
 [ext_resource type="Script" uid="uid://c24y84bx0oe0i" path="res://src/map/global_friendly_spawner.gd" id="5_o4euc"]
@@ -13,6 +13,8 @@ size = Vector2(20, 200)
 
 [node name="MainLevel" type="Node2D"]
 script = ExtResource("1_k7mun")
+
+[node name="SpawnedSections" type="Node2D" parent="."]
 
 [node name="RightExtent" type="Area2D" parent="."]
 top_level = true
