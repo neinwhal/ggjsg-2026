@@ -1,11 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnu462jogtt5y"]
+[gd_scene load_steps=5 format=3 uid="uid://dnu462jogtt5y"]
 
 [ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/level/base_section.gd" id="1_euiep"]
 [ext_resource type="Texture2D" uid="uid://b01pu1wjk2wu1" path="res://assets/level/test_brick_wall.webp" id="2_u0r2v"]
 [ext_resource type="Texture2D" uid="uid://ij22x2wb5gyu" path="res://assets/level/test_stone_tile.webp" id="3_4t1fm"]
-[ext_resource type="PackedScene" uid="uid://dn4gfhwdccfj3" path="res://src/player/player_basic.tscn" id="4_n5rdq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n6jeu"]
+size = Vector2(2304, 1296)
 
 [node name="BaseSection" type="Node2D"]
 script = ExtResource("1_euiep")
@@ -14,10 +14,10 @@ script = ExtResource("1_euiep")
 texture_repeat = 2
 texture = ExtResource("2_u0r2v")
 region_enabled = true
-region_rect = Rect2(0, 0, 500, 400)
+region_rect = Rect2(0, 0, 2304, 1728)
 
 [node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(576, 324)
+position = Vector2(0, 648)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
@@ -27,6 +27,4 @@ shape = SubResource("RectangleShape2D_n6jeu")
 texture_repeat = 2
 texture = ExtResource("3_4t1fm")
 region_enabled = true
-region_rect = Rect2(0, 0, 500, 400)
-
-[node name="PlayerBasic" parent="." instance=ExtResource("4_n5rdq")]
+region_rect = Rect2(0, 0, 2304, 1296)
