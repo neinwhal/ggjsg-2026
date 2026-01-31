@@ -3,10 +3,8 @@ extends Node2D
 var scene_selection: Array[PackedScene]
 var rand: RandomNumberGenerator
 
-#const SECTION_WIDTH: int = 2304 #x2 viewport x
 const SECTION_WIDTH: int = 2016
 #const VIEWPORT_SIZE: int = 1152
-const MAX_MID_SECTIONS: int = 3
 
 const LEVEL_1_START : String = "res://src/level/start_section.tscn"
 const LEVEL_1_END : String = "res://src/level/end_section.tscn"
@@ -19,7 +17,7 @@ var is_end_generated: bool = false
 var current_level: int = 1
 
 
-# Called when the node enters the scene tree for the first time.
+# Called when the node enters the scene tree for the first time.d
 func _ready() -> void:
 	pass # Replace with function body.
 	current_level = CurrentLevel.lvl
@@ -27,6 +25,14 @@ func _ready() -> void:
 		scene_selection.append(preload("res://src/level/section_a.tscn"))
 		scene_selection.append(preload("res://src/level/section_b.tscn"))
 		scene_selection.append(preload("res://src/level/section_c.tscn"))
+	
+	## Use this if floor is to match exact wall length
+	#$Floor/CollisionShape2D.shape.size.x = SECTION_WIDTH * (scene_selection.size() + 2) # +2 for start and end
+	#$Floor.position.x = ($Floor/CollisionShape2D.shape.size.x / 2.0) - (SECTION_WIDTH / 2.0)
+	
+	## Use this if floor is to extend by 1 SECTION_WIDTH past the wall sprite of both ends
+	$Floor/CollisionShape2D.shape.size.x = SECTION_WIDTH * (scene_selection.size() + 4)
+	$Floor.position.x = ($Floor/CollisionShape2D.shape.size.x / 2.0) - (SECTION_WIDTH * 1.5)
 	
 	rand = RandomNumberGenerator.new()
 	rand.randomize()
@@ -106,7 +112,7 @@ func pause() -> void:
 func _on_right_extent_body_entered(body: Node2D) -> void:
 	#print_debug("Hit right extent!!!")
 	## Spawn section to right
-	if mid_section_count == MAX_MID_SECTIONS:
+	if mid_section_count == scene_selection.size():
 		current_max_x += SECTION_WIDTH
 		generate_end_section(current_max_x)
 	else:

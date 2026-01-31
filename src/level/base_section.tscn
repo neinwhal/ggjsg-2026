@@ -1,10 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dnu462jogtt5y"]
+[gd_scene load_steps=3 format=3 uid="uid://dnu462jogtt5y"]
 
 [ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/level/base_section.gd" id="1_euiep"]
 [ext_resource type="Texture2D" uid="uid://b4mcifmi0jqr2" path="res://assets/level/BG.png" id="2_uh3jv"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n6jeu"]
-size = Vector2(2304, 122)
 
 [node name="BaseSection" type="Node2D"]
 script = ExtResource("1_euiep")
@@ -14,11 +11,3 @@ texture_filter = 1
 position = Vector2(0, -40)
 scale = Vector2(2, 2)
 texture = ExtResource("2_uh3jv")
-
-[node name="Floor" type="StaticBody2D" parent="."]
-position = Vector2(0, 648)
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2(0, -587)
-shape = SubResource("RectangleShape2D_n6jeu")
