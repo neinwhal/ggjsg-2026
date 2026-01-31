@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b1b6to0cic5bn" path="res://src/ui/pause_menu.tscn" id="3_j0j6y"]
 [ext_resource type="Script" uid="uid://c0p3hiag1magf" path="res://src/map/global_enemy_spawner.gd" id="4_nnc65"]
 [ext_resource type="Script" uid="uid://c24y84bx0oe0i" path="res://src/map/global_friendly_spawner.gd" id="5_o4euc"]
-[ext_resource type="Script" uid="uid://b2h2aw4i0k668" path="res://src/level/selection_manager.gd" id="7_aquyv"]
+[ext_resource type="Script" uid="uid://b2h2aw4i0k668" path="res://src/map/selection_manager.gd" id="7_aquyv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bjc6m"]
 size = Vector2(20, 200)
