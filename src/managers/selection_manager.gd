@@ -32,10 +32,15 @@ func select_unit_under_mouse(mouse_pos: Vector2) -> Node2D:
 	# find first hit that belongs to "unit" group
 	for h in hits:
 		var collider: Object = h["collider"]
-
-		if collider != null and collider.is_in_group("unit"):
-			collider.select_unit()
-			return collider as Node2D
+		
+		if collider != null:
+			if selected_units.size() > 0:
+				if collider.is_in_group("enemy"):
+					return collider as Node2D
+			
+			if collider.is_in_group("unit"):
+				collider.select_unit()
+				return collider as Node2D
 
 	return null
 	
@@ -92,6 +97,17 @@ func _input(event: InputEvent) -> void:
 			# treat as a click (not a drag)
 			var unit := select_unit_under_mouse(mouse_pos)
 			if unit != null:
+				
+				if selected_units.size() > 0:
+					if unit.is_in_group("enemy"):
+						# send existing selected units to force attack enemy!
+						for u in selected_units:
+							if (u.state != FriendlyBasic.State.ORDER_ATTACK):
+								u.state = FriendlyBasic.State.ORDER_ATTACK
+								u.target_enemy = unit
+							
+						return
+					
 				selected = unit
 				selected_units = [unit]
 				has_target = false
@@ -128,8 +144,8 @@ func _process(delta: float) -> void:
 		
 		pos.x = move_toward(pos.x, target_pos.x, move_speed * delta)
 		u.global_position = pos
-		if (u.state != FriendlyBasic.State.ORDER):
-			u.state = FriendlyBasic.State.ORDER
+		if (u.state != FriendlyBasic.State.ORDER_MOVE):
+			u.state = FriendlyBasic.State.ORDER_MOVE
 		
 		var dir_x := pos.x - old_x # negative = moved left, positive = moved right
 		if absf(dir_x) > 0.001:

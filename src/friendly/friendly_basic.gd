@@ -11,7 +11,7 @@ class_name FriendlyBasic
 @export var attack_damage := 10
 var attack_timer := 0.0
 
-enum State { IDLE, FOLLOW, ORDER, CHASE, ATTACK, DEAD }
+enum State { IDLE, FOLLOW, ORDER_MOVE, ORDER_ATTACK, CHASE, ATTACK, DEAD }
 var friendly_HP : float = 500
 
 var state: int = State.IDLE
@@ -110,11 +110,33 @@ func select_unit() -> void:
 func deselect_unit() -> void:
 	$SelectIndicator.visible = false
 
-func state_order(delta: float) -> void:
+func state_order_move(delta: float) -> void:
 	#print("ORDERMAN")
 	velocity.x = 0
+	# clear all targets!
+	if target_enemy != null:
+		target_enemy = null
 	# logic for orders are in selection manager!
 	# todo maybe move here so its easier to configure for each unit type? idkkk
+	
+func state_order_attack(delta: float) -> void:
+	print("attack order!")
+	if target_enemy == null:
+		state = State.IDLE
+		return
+		
+	var to_target := target_enemy.global_position - global_position
+	var dist := to_target.length()
+	# keep moving until random stop distance
+	var stop_dist := randf_range(15.0, 50.0)
+	if dist <= stop_dist:
+		velocity.x = 0.0
+		state = State.ATTACK
+		return
+	# move towards target
+	var dir : float = sign(to_target.x)
+	velocity.x = dir * speed
+	
 	
 func state_chase(delta: float) -> void:
 	#print("CHASEMAN")
@@ -214,8 +236,10 @@ func _process(delta: float) -> void:
 		state_idle(delta)
 	elif state == State.FOLLOW:
 		state_follow(delta)
-	elif state == State.ORDER:
-		state_order(delta)
+	elif state == State.ORDER_MOVE:
+		state_order_move(delta)
+	elif state == State.ORDER_ATTACK:
+		state_order_attack(delta)
 	elif state == State.CHASE:
 		state_chase(delta)
 	elif state == State.ATTACK:
@@ -231,7 +255,7 @@ func _process(delta: float) -> void:
 	var sprite := $AnimatedSprite2D
 	var flip_when_moving_right := false # set to false if your sprite faces right by default
 	var moving: bool = abs(velocity.x) > 0.0
-	if (state != State.ORDER):
+	if (state != State.ORDER_MOVE):
 		if (state != State.ATTACK):
 			if moving:
 				var moving_right: bool = velocity.x > 0.0
