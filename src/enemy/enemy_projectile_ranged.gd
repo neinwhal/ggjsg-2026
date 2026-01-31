@@ -24,6 +24,9 @@ func _process(delta: float) -> void:
 
 	# gravity makes the arc
 	velocity.y += actual_gravity * delta
+	# rotate to face movement direction
+	if velocity.length() > 0.01:
+		rotation = velocity.angle()
 
 	move_and_slide()
 
