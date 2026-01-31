@@ -8,8 +8,9 @@ extends CharacterBody2D
 var life := 0.0
 
 func _ready() -> void:
-	randomize()
 	$AnimatedSprite2D.play("default")
+	# detect overlap hits via Area2D (player/unit)
+	$Area2D.body_entered.connect(_on_area_body_entered)
 
 func _process(delta: float) -> void:
 	life += delta
@@ -22,7 +23,17 @@ func _process(delta: float) -> void:
 
 	move_and_slide()
 
-func _on_hit(body: Node) -> void:
-	if body != null and body.has_method("take_damage"):
-		body.take_damage(damage)
-	queue_free()
+	# disappear upon hitting floor
+	if get_slide_collision_count() > 0:
+		queue_free()
+		return
+
+func _on_area_body_entered(body: Node) -> void:
+	if body == null:
+		return
+
+	if body.is_in_group("player") or body.is_in_group("unit"):
+		if body.has_method("take_damage"):
+			body.take_damage(damage)
+		print("hit something")
+		queue_free()

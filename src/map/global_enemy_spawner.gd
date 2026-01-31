@@ -14,7 +14,7 @@ func spawn_enemy() -> void:
 	if player == null:
 		return
 
-	# randomize spawning creatures	
+	# randomize spawning creatures
 	var roll := randi_range(1, 2)
 	var enemy_scene: PackedScene
 	if roll == 1:

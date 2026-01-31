@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://of5txpnrf7pp"]
+[gd_scene load_steps=10 format=3 uid="uid://of5txpnrf7pp"]
 
 [ext_resource type="Script" uid="uid://dn8o2ptodukgx" path="res://src/enemy/enemy_projectile_ranged.gd" id="1_g21ms"]
 [ext_resource type="Texture2D" uid="uid://dh2in4rfxjl55" path="res://assets/enemy/RANGER_PROJECTILE.png" id="2_j0mqf"]
@@ -39,16 +39,15 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4r66f"]
-size = Vector2(24, 24)
+[sub_resource type="CircleShape2D" id="CircleShape2D_j0mqf"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g21ms"]
+radius = 12.0
 
 [node name="enemy_projectile_ranged" type="CharacterBody2D"]
 collision_layer = 0
 script = ExtResource("1_g21ms")
-speed = null
-gravity = null
-lifetime = null
-damage = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
@@ -57,4 +56,11 @@ sprite_frames = SubResource("SpriteFrames_rdrxd")
 frame_progress = 0.23668647
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_4r66f")
+shape = SubResource("CircleShape2D_j0mqf")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_g21ms")
