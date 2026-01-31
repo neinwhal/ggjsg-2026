@@ -8,7 +8,7 @@ func _ready() -> void:
 
 var spawn_timer := 0.0
 var spawn_count : int = 0
-var max_count : int = 3
+var max_count : int = 1
 
 func spawn_friendly() -> void:
 	spawn_count = spawn_count + 1

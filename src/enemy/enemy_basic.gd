@@ -3,10 +3,6 @@ extends CharacterBody2D
 @export var speed := 80.0
 @export var gravity := 1200.0
 
-# various enemy states
-# WANDER
-# CHASE
-# ATTACK
 enum State { WANDER, CHASE, ATTACK }
 var state: int = State.WANDER
 var target: Node2D = null
@@ -17,6 +13,7 @@ var target: Node2D = null
 func _ready() -> void:
 	randomize()
 	$AnimatedSprite2D.play("enemy_move")
+	add_to_group("enemy") # add to unit group
 
 var direction : float = 0.0
 var change_time : float = 0.0

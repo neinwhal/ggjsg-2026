@@ -111,7 +111,8 @@ func _process(delta: float) -> void:
 		
 		pos.x = move_toward(pos.x, target_pos.x, move_speed * delta)
 		u.global_position = pos
-		u.force_moving = true
+		if (u.state != FriendlyBasic.State.ORDER):
+			u.state = FriendlyBasic.State.ORDER
 		
 		var dir_x := pos.x - old_x # negative = moved left, positive = moved right
 		if absf(dir_x) > 0.001:
@@ -127,7 +128,9 @@ func _process(delta: float) -> void:
 		for u in selected_units:
 			var p := u.global_position
 			p.x = target_pos.x
-			u.force_moving = false
+			if (u.state != FriendlyBasic.State.IDLE):
+				u.state = FriendlyBasic.State.IDLE
+				
 			var spr: AnimatedSprite2D = u.get_node("AnimatedSprite2D")
 			if spr.animation != "bianlian_idle":
 				spr.play("bianlian_idle")
