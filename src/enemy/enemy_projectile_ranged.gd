@@ -2,15 +2,19 @@ extends CharacterBody2D
 
 @export var speed := 500.0
 @export var gravity := 1200.0
-@export var lifetime := 3.0
+@export var gravity_variation := 500.0
+@export var lifetime := 5.0
 @export var damage := 10
 
+
+var actual_gravity := 0.0
 var life := 0.0
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("default")
 	# detect overlap hits via Area2D (player/unit)
 	$Area2D.body_entered.connect(_on_area_body_entered)
+	actual_gravity = gravity + randf_range(-gravity_variation, gravity_variation)
 
 func _process(delta: float) -> void:
 	life += delta
@@ -19,7 +23,7 @@ func _process(delta: float) -> void:
 		return
 
 	# gravity makes the arc
-	velocity.y += gravity * delta
+	velocity.y += actual_gravity * delta
 
 	move_and_slide()
 
