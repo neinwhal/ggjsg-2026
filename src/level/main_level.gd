@@ -48,6 +48,7 @@ func generate_end_section(xpos: int) -> void:
 	var end_scene := preload("res://src/level/end_section.tscn").instantiate()
 	end_scene.position.x = xpos
 	end_scene._on_final_extent_entered.connect(open_branching_mrt)
+	end_scene._on_mrt_map_exited.connect(close_branching_mrt)
 	call_deferred("add_child", end_scene)
 
 ## Obtain random scene from container
@@ -62,7 +63,12 @@ func generate_random_section(xpos: int) -> void:
 		print_debug("Trying to obtain scene from empty scene selection container!!!")
 
 func open_branching_mrt() -> void:
-	print_debug("Open branching mrt")
+	#print_debug("Open branching mrt")
+	$CanvasLayer/BranchingMrtMap.show()
+
+func close_branching_mrt() -> void:
+	#print_debug("Close branching mrt")
+	$CanvasLayer/BranchingMrtMap.hide()
 
 func pause() -> void:
 	print_debug("Pause")
