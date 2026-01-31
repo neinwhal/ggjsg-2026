@@ -36,8 +36,10 @@ func select_units_in_rectangle(a: Vector2, b: Vector2) -> Array[Node2D]:
 	var params := PhysicsShapeQueryParameters2D.new()
 	params.shape = shape
 	params.transform = Transform2D(0.0, center)
-	params.collide_with_areas = true
+	# only scan the "units" layer 2
 	params.collide_with_bodies = true
+	params.collide_with_areas = true
+	params.collision_mask = 2 # layer 2
 	# determine possible hits
 	var results := space_state.intersect_shape(params, 128)
 	var out: Array[Node2D] = []
@@ -56,7 +58,7 @@ var drag_start := Vector2.ZERO
 var drag_end := Vector2.ZERO
 var selected_units: Array[Node2D] = []
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		var mouse_pos := get_global_mouse_position()
 

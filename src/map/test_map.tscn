@@ -19,9 +19,6 @@ script = ExtResource("2_ss0hp")
 [node name="PlayerSpawner" type="Node2D" parent="."]
 script = ExtResource("2_wac4r")
 
-[node name="SelectionManager" type="Node2D" parent="."]
-script = ExtResource("4_4rv12")
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(433.62952, 472.19843)
 collision_mask = 0
@@ -35,3 +32,6 @@ offset_bottom = 196.80157
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-442.62952, 93.90082)
 shape = SubResource("RectangleShape2D_wac4r")
+
+[node name="SelectionManager" type="Node2D" parent="."]
+script = ExtResource("4_4rv12")

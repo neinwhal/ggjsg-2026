@@ -21,6 +21,8 @@ func _ready() -> void:
 	find_player()
 	# each friendly gets a slightly different stop distance
 	desired_distance = follow_distance + randf_range(-distance_variation, distance_variation)
+	# play default anim
+	$AnimatedSprite2D.play("bianlian_idle")
 
 var direction : float = 0.0
 var change_time : float = 0.0
@@ -54,5 +56,24 @@ func _process(delta: float) -> void:
 	
 	# Smooth acceleration / deceleration
 	velocity.x = move_toward(velocity.x, target_vx, speed * 4.0 * delta)
+
+	# --- visuals (flip + anim) ---
+	var sprite := $AnimatedSprite2D
+
+	var flip_when_moving_right := true # set to false if your sprite faces right by default
+
+	var moving: bool = abs(velocity.x) > 5.0
+	if moving:
+		var moving_right: bool = velocity.x > 0.0
+
+		# If sprite faces LEFT by default, flip when moving right.
+		# If sprite faces RIGHT by default, flip when moving left.
+		sprite.flip_h = moving_right if flip_when_moving_right else (not moving_right)
+
+		if sprite.animation != "bianlian_move":
+			sprite.play("bianlian_move")
+	else:
+		if sprite.animation != "bianlian_idle":
+			sprite.play("bianlian_idle")
 
 	move_and_slide()

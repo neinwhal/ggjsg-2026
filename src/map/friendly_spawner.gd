@@ -7,11 +7,15 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 var spawn_timer := 0.0
+var spawn_count : int = 0
+var max_count : int = 3
 
 func spawn_friendly() -> void:
-	var e := FriendlyScene.instantiate()
-	e.global_position = Vector2(600, 300)
-	add_child(e)
+	spawn_count = spawn_count + 1
+	if (spawn_count <= max_count):
+		var e := FriendlyScene.instantiate()
+		e.global_position = Vector2(600, 300)
+		add_child(e)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
