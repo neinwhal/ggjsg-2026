@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://of5txpnrf7pp"]
+
+[ext_resource type="Script" uid="uid://dn8o2ptodukgx" path="res://src/enemy/enemy_projectile_ranged.gd" id="1_g21ms"]
+[ext_resource type="Texture2D" uid="uid://dh2in4rfxjl55" path="res://assets/enemy/RANGER_PROJECTILE.png" id="2_j0mqf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nra2c"]
+atlas = ExtResource("2_j0mqf")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t2cak"]
+atlas = ExtResource("2_j0mqf")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kuwu"]
+atlas = ExtResource("2_j0mqf")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmw6n"]
+atlas = ExtResource("2_j0mqf")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rdrxd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nra2c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2cak")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kuwu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmw6n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4r66f"]
+size = Vector2(24, 24)
+
+[node name="enemy_projectile_ranged" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_g21ms")
+speed = null
+gravity = null
+lifetime = null
+damage = null
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_rdrxd")
+frame_progress = 0.23668647
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4r66f")

@@ -9,7 +9,16 @@ enum State { WANDER, CHASE, ATTACK, DEAD }
 var state: int = State.WANDER
 # enemy stats
 var enemy_HP = 100
-@export var detect_range := 250.0
+@export var detect_range := 500.0
+
+
+var attack_timer = 0.0
+var attack_cooldown = 3.0
+
+@onready var BulletScene: PackedScene = preload("res://src/enemy/enemy_projectile_ranged.tscn")
+@export var bullet_spawn_offset := Vector2(20, -10)
+@export var bullet_speed := 500.0
+@export var bullet_arc_up := 280.0  # how "high" the arc starts
 
 
 # for damage flash
@@ -67,13 +76,13 @@ func state_chase(delta: float) -> void:
 	var to_target := target.global_position - global_position
 	var dist := to_target.length()
 	# if target too far -> stop chasing
-	if dist > 250.0:
+	if dist > detect_range:
 		target = null
 		state = State.WANDER
 		return
 		
 	# keep moving until random stop distance
-	var stop_dist := randf_range(15.0, 50.0)
+	var stop_dist := randf_range(220.0, 280.0)
 	if dist <= stop_dist:
 		velocity.x = 0.0
 		state = State.ATTACK
@@ -83,7 +92,30 @@ func state_chase(delta: float) -> void:
 	var dir : float = sign(to_target.x)
 	velocity.x = dir * speed
 		
-		
+
+func fire_bullet() -> void:
+	if target == null:
+		return
+
+	var b := BulletScene.instantiate() as CharacterBody2D
+	get_parent().add_child(b) # add to same parent as enemy (not as child)
+
+	# spawn position
+	var spawn_pos := global_position + bullet_spawn_offset
+	b.global_position = spawn_pos
+
+	# direction to target
+	var to_target := (target.global_position - spawn_pos)
+	var dir_x : float = sign(to_target.x)
+
+	# initial velocity: forward + a bit upward for arc
+	# (negative Y is up in Godot 2D)
+	b.velocity = Vector2(dir_x * bullet_speed, -bullet_arc_up)
+
+	# if your bullet script has damage, set it (optional)
+	if "damage" in b:
+		b.damage = 10
+
 func state_attack(delta: float) -> void:
 	if target == null:
 		state = State.WANDER
@@ -91,14 +123,14 @@ func state_attack(delta: float) -> void:
 	
 	var dist := global_position.distance_to(target.global_position)
 	# target too far, back to wandering
-	if dist > 250.0:
+	if dist > detect_range:
 		target = null
 		state = State.WANDER
 		$AnimatedSprite2D.play("enemy_move")
 		return
 		
 	# target out of attack range -> wander again -> find new target
-	if dist > 60.0:
+	if dist > 280.0:
 		target = null
 		state = State.WANDER
 		$AnimatedSprite2D.play("enemy_move")
@@ -107,6 +139,11 @@ func state_attack(delta: float) -> void:
 	# target in attack range
 	velocity.x = 0.0
 	$AnimatedSprite2D.play("enemy_attack")
+	# cooldown logic (example)
+	attack_timer -= delta
+	if attack_timer <= 0.0:
+		attack_timer = attack_cooldown
+		fire_bullet()
 
 func state_dead(delta: float) -> void:
 	if is_on_floor():
