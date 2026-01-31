@@ -267,4 +267,4 @@ texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_6uo6n")
 animation = &"bianlian_attack"
-frame_progress = 0.050238833
+frame_progress = 0.60044694

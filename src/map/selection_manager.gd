@@ -107,8 +107,18 @@ func _process(delta: float) -> void:
 	# move towards x position
 	for u in selected_units:
 		var pos := u.global_position
+		var old_x := pos.x
+		
 		pos.x = move_toward(pos.x, target_pos.x, move_speed * delta)
 		u.global_position = pos
+		u.force_moving = true
+		
+		var dir_x := pos.x - old_x # negative = moved left, positive = moved right
+		if absf(dir_x) > 0.001:
+			var spr: AnimatedSprite2D = u.get_node("AnimatedSprite2D")
+			if spr.animation != "bianlian_move":
+				spr.play("bianlian_move")
+			spr.flip_h = dir_x < 0.0
 
 	# Stop when close enough
 	# Stop when the "leader" is close enough on X
@@ -117,7 +127,10 @@ func _process(delta: float) -> void:
 		for u in selected_units:
 			var p := u.global_position
 			p.x = target_pos.x
-			u.global_position = p
+			u.force_moving = false
+			var spr: AnimatedSprite2D = u.get_node("AnimatedSprite2D")
+			if spr.animation != "bianlian_idle":
+				spr.play("bianlian_idle")
 		has_target = false
 
 func _draw() -> void:

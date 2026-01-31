@@ -8,6 +8,7 @@ var desired_distance := 0.0
 
 @export var follow_distance := 256.0
 @export var distance_variation := 128.0
+@export var force_moving : bool = false
 
 func find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
@@ -43,37 +44,36 @@ func _process(delta: float) -> void:
 		return
 		
 	# horizontal follow logic
-	var dx = target.global_position.x - global_position.x
-	var abs_dx = abs(dx)
-
-	var target_vx := 0.0
-
-	if abs_dx > desired_distance + stop_buffer:
-		target_vx = sign(dx) * speed
-	elif abs_dx < desired_distance - stop_buffer:
-		target_vx = 0.0
-	# else: stay as-is (dead zone)
-	
-	# Smooth acceleration / deceleration
-	velocity.x = move_toward(velocity.x, target_vx, speed * 4.0 * delta)
+	if (!force_moving): # if not being force moved, attempt to follow player
+		var dx = target.global_position.x - global_position.x
+		var abs_dx = abs(dx)
+		var target_vx := 0.0
+		if abs_dx > desired_distance + stop_buffer:
+			target_vx = sign(dx) * speed
+		elif abs_dx < desired_distance - stop_buffer:
+			target_vx = 0.0
+		# else: stay as-is (dead zone)
+		# Smooth acceleration / deceleration
+		velocity.x = move_toward(velocity.x, target_vx, speed * 4.0 * delta)
 
 	# --- visuals (flip + anim) ---
 	var sprite := $AnimatedSprite2D
+	var flip_when_moving_right := false # set to false if your sprite faces right by default
+	var moving: bool = abs(velocity.x) > 0.0
+	if (!force_moving):
+		if moving:
+			var moving_right: bool = velocity.x > 0.0
 
-	var flip_when_moving_right := true # set to false if your sprite faces right by default
+			# If sprite faces LEFT by default, flip when moving right.
+			# If sprite faces RIGHT by default, flip when moving left.
+			sprite.flip_h = moving_right if flip_when_moving_right else (not moving_right)
 
-	var moving: bool = abs(velocity.x) > 5.0
-	if moving:
-		var moving_right: bool = velocity.x > 0.0
-
-		# If sprite faces LEFT by default, flip when moving right.
-		# If sprite faces RIGHT by default, flip when moving left.
-		sprite.flip_h = moving_right if flip_when_moving_right else (not moving_right)
-
-		if sprite.animation != "bianlian_move":
-			sprite.play("bianlian_move")
-	else:
-		if sprite.animation != "bianlian_idle":
-			sprite.play("bianlian_idle")
+			if sprite.animation != "bianlian_move":
+				sprite.play("bianlian_move")
+				#print("movingggg")
+		else:
+			if sprite.animation != "bianlian_idle":
+				sprite.play("bianlian_idle")
+				#print("idleeee")
 
 	move_and_slide()
