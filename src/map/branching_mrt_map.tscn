@@ -63,17 +63,17 @@ grow_vertical = 2
 script = ExtResource("1_0m4hf")
 
 [node name="MapUI" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(384, 336)
+custom_minimum_size = Vector2(768, 672)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -192.0
-offset_top = -192.0
-offset_right = 192.0
-offset_bottom = 192.0
+offset_left = -384.0
+offset_top = -336.0
+offset_right = 384.0
+offset_bottom = 336.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -84,17 +84,17 @@ stretch_mode = 5
 script = ExtResource("3_6pw1s")
 
 [node name="MapFrame(debug)" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(384, 336)
+custom_minimum_size = Vector2(768, 672)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -56.0
-offset_right = 64.0
-offset_bottom = 56.0
+offset_left = -384.0
+offset_top = -336.0
+offset_right = 384.0
+offset_bottom = 336.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_6pw1s")
@@ -102,17 +102,17 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Nodes" type="Control" parent="."]
-custom_minimum_size = Vector2(384, 336)
+custom_minimum_size = Vector2(768, 672)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -384.0
+offset_top = -336.0
+offset_right = 384.0
+offset_bottom = 336.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -125,6 +125,8 @@ anchor_right = 0.08
 anchor_bottom = 0.51
 offset_right = 40.0
 offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
 texture_normal = SubResource("AtlasTexture_61dor")
 stretch_mode = 5
 script = ExtResource("6_61dor")
