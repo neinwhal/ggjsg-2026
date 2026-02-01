@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Rat"
+config/name="Train To Yishun"
 run/main_scene="uid://dvial75jpqhcg"
 config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
