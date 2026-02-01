@@ -21,23 +21,23 @@ func spawn_enemy() -> void:
 		return
 
 	# randomize spawning creatures
-	var roll := randi_range(1, 8)
+	var roll := randi_range(1, 14)
 	var enemy_scene: PackedScene
-	if roll == 1:
+	if roll == 1 || roll == 2 || roll == 3:
 		enemy_scene = EnemyShambler
-	elif roll == 2:
+	elif roll == 4 || roll == 5:
 		enemy_scene = EnemyRusher
-	elif roll == 3:
-		enemy_scene = EnemyRager
-	elif roll == 4:
-		enemy_scene = EnemyDodger
-	elif roll == 5:
-		enemy_scene = EnemyRanger
 	elif roll == 6:
-		enemy_scene = EnemyRanger2
+		enemy_scene = EnemyRager
 	elif roll == 7:
+		enemy_scene = EnemyDodger
+	elif roll == 8 || roll == 9:
+		enemy_scene = EnemyRanger
+	elif roll == 10:
+		enemy_scene = EnemyRanger2
+	elif roll == 11 || roll == 12 || roll == 13:
 		enemy_scene = EnemyRat
-	elif roll == 8:
+	elif roll == 14:
 		enemy_scene = EnemyTanker
 		
 	# actually psawn
@@ -53,9 +53,21 @@ func spawn_enemy() -> void:
 	)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+
+var elapsed_time := 0.0
 func _process(delta: float) -> void:
 	spawn_timer += delta
-
-	if spawn_timer >= 1.0:
-		spawn_timer = 0.0
-		spawn_enemy()
+	elapsed_time = elapsed_time + delta
+	
+	if (elapsed_time <= 60.0):
+		if spawn_timer >= 5.0:
+			spawn_timer = 0.0
+			spawn_enemy()
+	elif (elapsed_time <= 100.0):
+		if spawn_timer >= 2.5:
+			spawn_timer = 0.0
+			spawn_enemy()
+	elif (elapsed_time <= 150.0):
+		if spawn_timer >= 1.0:
+			spawn_timer = 0.0
+			spawn_enemy()
