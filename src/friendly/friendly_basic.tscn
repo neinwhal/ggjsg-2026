@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://ccgc8r6vlg6qe"]
+[gd_scene load_steps=44 format=3 uid="uid://ccgc8r6vlg6qe"]
 
 [ext_resource type="Script" uid="uid://jnyvuj24mxda" path="res://src/friendly/friendly_basic.gd" id="1_s8x24"]
 [ext_resource type="Texture2D" uid="uid://bvc8ax3irbbcd" path="res://assets/friendly/NORMAL_BIAN_LIAN_ATTACK.png" id="2_g71pk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b60r5drynsb42" path="res://assets/friendly/NORMAL_BIAN_LIAN_ATTACK_HEAVY.png" id="3_h6g5j"]
 [ext_resource type="Texture2D" uid="uid://i5nq6bo3d7gd" path="res://assets/friendly/NORMAL_BIAN_LIAN_FACESWAP_TO_FIRE.png" id="4_lb2x1"]
 [ext_resource type="Texture2D" uid="uid://t8j4vkjwsnks" path="res://assets/friendly/NORMAL_BIAN_LIAN_IDLE.png" id="5_uxhco"]
+[ext_resource type="Texture2D" uid="uid://ciqoh0bf110h" path="res://assets/ui/TRIANGLE_MARKER.png" id="7_h6g5j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s8x24"]
 size = Vector2(64, 64)
@@ -255,6 +256,28 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb2x1"]
+atlas = ExtResource("7_h6g5j")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxhco"]
+atlas = ExtResource("7_h6g5j")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o0di8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lb2x1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uxhco")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
 [node name="FriendlyBasic" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_s8x24")
@@ -269,9 +292,9 @@ sprite_frames = SubResource("SpriteFrames_6uo6n")
 animation = &"bianlian_attack"
 frame_progress = 0.60044694
 
-[node name="SelectIndicator" type="ColorRect" parent="."]
-offset_left = -6.0
-offset_top = -69.0
-offset_right = 6.0
-offset_bottom = -56.0
-color = Color(1, 1, 0, 1)
+[node name="Indicator" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -67)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_o0di8")
+frame_progress = 0.12895645
