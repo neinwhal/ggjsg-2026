@@ -239,9 +239,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_m6vva")
 }],
-"loop": true,
+"loop": false,
 "name": &"enemy_transform",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -301,8 +301,9 @@ script = ExtResource("1_ojdix")
 texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_bo7b1")
-animation = &"enemy_transform_move"
-frame_progress = 0.02293899
+animation = &"enemy_transform"
+frame = 13
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 1)

@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 # enemy stats
-@export var enemy_HP: float = 150.0
-@export var enemy_HP_max: float = 150.0
+@export var enemy_HP: float = 1500.0
+@export var enemy_HP_max: float = 1500.0
 @export var speed : float = 80.0
 @export var gravity : float = 1200.0
 @export var detect_range : float = 500.0
@@ -15,6 +15,8 @@ extends CharacterBody2D
 @export var stop_distance_min : float = 20.0 # distance before stopping near target
 @export var stop_distance_max : float = 55.0
 @export var attack_range_max : float = 60.0 # distance to stop attacking
+@export var transform_percent : float = 0.5 # 30% of max health for transformation
+var transformed : bool = false
 # hitbox
 @onready var hitbox: Area2D = $AttackHitbox
 # death timers
@@ -33,13 +35,27 @@ var attack_timer := 0.0
 var enemy_direction : float = 0.0
 var enemy_change_time : float = 0.0
 
+func get_trans_anim(param_string: String) -> String:
+	if transformed:
+		return "enemy_transform_" + param_string
+	else:
+		return "enemy_" + param_string
+
+func _on_animation_finished() -> void:
+	if $AnimatedSprite2D.animation == "enemy_transform":
+		enemy_HP = (enemy_HP_max * 3)
+		transformed = true
+		print("TRANSFORMED!!!!")
+		state = EnemyHelper.State.WANDER
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
-	$AnimatedSprite2D.play("enemy_move")
+	$AnimatedSprite2D.play(get_trans_anim("move"))
 	add_to_group("enemy") # add to unit group
 	hitbox.monitoring = true
 	hitbox.monitorable = false
+	$AnimatedSprite2D.animation_finished.connect(_on_animation_finished)
 
 func state_wander(delta: float) -> void:
 	enemy_change_time -= delta
@@ -101,13 +117,13 @@ func state_attack(delta: float) -> void:
 	if dist > attack_range_max:
 		target = null
 		state = EnemyHelper.State.WANDER
-		$AnimatedSprite2D.play("enemy_move")
+		$AnimatedSprite2D.play(get_trans_anim("move"))
 		return
 		
 	# target in attack range
 	velocity.x = 0.0
-	if $AnimatedSprite2D.animation != "enemy_attack":
-		$AnimatedSprite2D.play("enemy_attack")
+	if $AnimatedSprite2D.animation != get_trans_anim("attack"):
+		$AnimatedSprite2D.play(get_trans_anim("attack"))
 	# attacking
 	attack_timer -= delta
 	if attack_timer <= 0.0:
@@ -130,6 +146,11 @@ func state_dead(delta: float) -> void:
 	dead_timer -= delta
 	if dead_timer <= 0.0:
 		queue_free()
+		
+func state_transform(delta: float) -> void:
+	if (velocity.x != 0.0): velocity.x = 0.0
+	if $AnimatedSprite2D.animation != "enemy_transform":
+		$AnimatedSprite2D.play("enemy_transform")
 
 func take_damage(amount: int) -> void:
 	if state == EnemyHelper.State.DEAD:
@@ -150,12 +171,20 @@ func _process(delta: float) -> void:
 		if has_node("CollisionShape2D"):
 			$CollisionShape2D.disabled = true
 		state = EnemyHelper.State.DEAD
+		
+	
 	
 	if state == EnemyHelper.State.DEAD:
 		state_dead(delta)
 		return
 	
-	if state == EnemyHelper.State.WANDER:
+	if ((enemy_HP <= enemy_HP_max * transform_percent) && !transformed):
+		state = EnemyHelper.State.TRANSFORM
+	
+	if state == EnemyHelper.State.TRANSFORM:
+		state_transform(delta)
+	
+	elif state == EnemyHelper.State.WANDER:
 		state_wander(delta)
 		
 	elif state == EnemyHelper.State.CHASE:
