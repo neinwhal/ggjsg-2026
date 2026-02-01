@@ -6,6 +6,7 @@ func _ready() -> void:
 	texture = load(texture_path % random_number)
 	position.y = -40
 	scale = Vector2(2,2)
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
