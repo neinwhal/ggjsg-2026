@@ -1,12 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://b57787sd0uw3v"]
+[gd_scene load_steps=9 format=3 uid="uid://b57787sd0uw3v"]
 
 [ext_resource type="Script" uid="uid://be1jo7qkdrnv" path="res://src/map/branching_mrt_map.gd" id="1_0m4hf"]
 [ext_resource type="Texture2D" uid="uid://c7buqhpvx6qug" path="res://assets/map/NEW_MAP.png" id="2_74pbq"]
 [ext_resource type="Script" uid="uid://lboq80aklq2m" path="res://src/map/map_ui.gd" id="3_6pw1s"]
-[ext_resource type="Texture2D" uid="uid://cya37c6rofj0w" path="res://assets/map/SINGLE_MAP_FRAME.png" id="4_6pw1s"]
+[ext_resource type="Texture2D" uid="uid://bkfu3rwnh3mra" path="res://assets/map/SINGLE_MAP_FRAME.png" id="4_6pw1s"]
+[ext_resource type="Texture2D" uid="uid://m1j8joewaqw" path="res://assets/map/GREEN_NODE_FLASHING.png" id="5_61dor"]
+[ext_resource type="Script" uid="uid://ctpbdaxr28mno" path="res://src/map/node_logic.gd" id="6_61dor"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6pw1s"]
 atlas = ExtResource("2_74pbq")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61dor"]
+atlas = ExtResource("5_61dor")
 
 [node name="BranchingMrtMap" type="Control"]
 layout_mode = 3
@@ -56,7 +61,7 @@ texture = ExtResource("4_6pw1s")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Control" type="Control" parent="."]
+[node name="Nodes" type="Control" parent="."]
 custom_minimum_size = Vector2(384, 336)
 layout_mode = 1
 anchors_preset = 8
@@ -71,7 +76,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Node(1,1)" type="TextureButton" parent="Control"]
+[node name="Node(1,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.07
@@ -80,8 +85,11 @@ anchor_right = 0.08
 anchor_bottom = 0.51
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_61dor")
+stretch_mode = 5
+script = ExtResource("6_61dor")
 
-[node name="Node(2,1)" type="TextureButton" parent="Control"]
+[node name="Node(2,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2
@@ -91,7 +99,7 @@ anchor_bottom = 0.36
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(2,2)" type="TextureButton" parent="Control"]
+[node name="Node(2,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2
@@ -101,7 +109,7 @@ anchor_bottom = 0.66
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(3,1)" type="TextureButton" parent="Control"]
+[node name="Node(3,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.32
@@ -111,7 +119,7 @@ anchor_bottom = 0.22
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(3,2)" type="TextureButton" parent="Control"]
+[node name="Node(3,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.32
@@ -121,7 +129,7 @@ anchor_bottom = 0.51
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(3,3)" type="TextureButton" parent="Control"]
+[node name="Node(3,3)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.32
@@ -131,7 +139,7 @@ anchor_bottom = 0.8
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(4,1)" type="TextureButton" parent="Control"]
+[node name="Node(4,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.44
@@ -141,7 +149,7 @@ anchor_bottom = 0.36
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(4,2)" type="TextureButton" parent="Control"]
+[node name="Node(4,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.44
@@ -151,7 +159,7 @@ anchor_bottom = 0.66
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(5,1)" type="TextureButton" parent="Control"]
+[node name="Node(5,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.56
@@ -161,7 +169,7 @@ anchor_bottom = 0.22
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(5,2)" type="TextureButton" parent="Control"]
+[node name="Node(5,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.56
@@ -171,7 +179,7 @@ anchor_bottom = 0.51
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(5,3)" type="TextureButton" parent="Control"]
+[node name="Node(5,3)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.56
@@ -181,7 +189,7 @@ anchor_bottom = 0.8
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(6,1)" type="TextureButton" parent="Control"]
+[node name="Node(6,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.7
@@ -191,7 +199,7 @@ anchor_bottom = 0.36
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(6,2)" type="TextureButton" parent="Control"]
+[node name="Node(6,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.7
@@ -201,7 +209,7 @@ anchor_bottom = 0.66
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Node(7,1)" type="TextureButton" parent="Control"]
+[node name="Node(7,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.82
@@ -210,3 +218,18 @@ anchor_right = 0.83
 anchor_bottom = 0.51
 offset_right = 40.0
 offset_bottom = 40.0
+
+[connection signal="pressed" from="Nodes/Node(1,1)" to="." method="_on_node_11_pressed"]
+[connection signal="pressed" from="Nodes/Node(2,1)" to="." method="_on_node_21_pressed"]
+[connection signal="pressed" from="Nodes/Node(2,2)" to="." method="_on_node_22_pressed"]
+[connection signal="pressed" from="Nodes/Node(3,1)" to="." method="_on_node_31_pressed"]
+[connection signal="pressed" from="Nodes/Node(3,2)" to="." method="_on_node_32_pressed"]
+[connection signal="pressed" from="Nodes/Node(3,3)" to="." method="_on_node_33_pressed"]
+[connection signal="pressed" from="Nodes/Node(4,1)" to="." method="_on_node_41_pressed"]
+[connection signal="pressed" from="Nodes/Node(4,2)" to="." method="_on_node_42_pressed"]
+[connection signal="pressed" from="Nodes/Node(5,1)" to="." method="_on_node_51_pressed"]
+[connection signal="pressed" from="Nodes/Node(5,2)" to="." method="_on_node_52_pressed"]
+[connection signal="pressed" from="Nodes/Node(5,3)" to="." method="_on_node_53_pressed"]
+[connection signal="pressed" from="Nodes/Node(6,1)" to="." method="_on_node_61_pressed"]
+[connection signal="pressed" from="Nodes/Node(6,2)" to="." method="_on_node_62_pressed"]
+[connection signal="pressed" from="Nodes/Node(7,1)" to="." method="_on_node_71_pressed"]
