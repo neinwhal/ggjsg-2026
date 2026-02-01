@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh8ijwlsvhect"]
+
+[ext_resource type="Script" uid="uid://cpvidm0p3i3us" path="res://rescue_event.gd" id="1_ok7o1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ok7o1"]
+radius = 50.0
+
+[node name="RescueEvent" type="Node2D"]
+script = ExtResource("1_ok7o1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+hframes = 4
+
+[node name="RescueArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RescueArea"]
+shape = SubResource("CircleShape2D_ok7o1")
+
+[connection signal="body_entered" from="RescueArea" to="." method="_on_rescue_area_body_entered"]
+[connection signal="body_exited" from="RescueArea" to="." method="_on_rescue_area_body_exited"]
