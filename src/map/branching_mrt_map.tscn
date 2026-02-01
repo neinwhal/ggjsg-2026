@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b57787sd0uw3v"]
+[gd_scene load_steps=22 format=3 uid="uid://b57787sd0uw3v"]
 
 [ext_resource type="Script" uid="uid://be1jo7qkdrnv" path="res://src/map/branching_mrt_map.gd" id="1_0m4hf"]
 [ext_resource type="Texture2D" uid="uid://c7buqhpvx6qug" path="res://assets/map/NEW_MAP.png" id="2_74pbq"]
@@ -11,6 +11,45 @@
 atlas = ExtResource("2_74pbq")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_61dor"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5or0s"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8l36"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ldpqy"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6eris"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vejkc"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehfkc"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oiw72"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wo0un"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_muv01"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4lqr8"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_53tpu"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2scm"]
+atlas = ExtResource("5_61dor")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74whj"]
 atlas = ExtResource("5_61dor")
 
 [node name="BranchingMrtMap" type="Control"]
@@ -99,6 +138,9 @@ anchor_right = 0.21
 anchor_bottom = 0.36
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_5or0s")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(2,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -109,6 +151,9 @@ anchor_right = 0.21
 anchor_bottom = 0.66
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_y8l36")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(3,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -119,6 +164,9 @@ anchor_right = 0.33
 anchor_bottom = 0.22
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_ldpqy")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(3,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -129,6 +177,9 @@ anchor_right = 0.33
 anchor_bottom = 0.51
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_6eris")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(3,3)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -139,6 +190,9 @@ anchor_right = 0.33
 anchor_bottom = 0.8
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_vejkc")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(4,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -149,6 +203,9 @@ anchor_right = 0.45
 anchor_bottom = 0.36
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_ehfkc")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(4,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -159,6 +216,9 @@ anchor_right = 0.45
 anchor_bottom = 0.66
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_oiw72")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(5,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -169,6 +229,9 @@ anchor_right = 0.57
 anchor_bottom = 0.22
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_wo0un")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(5,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -179,6 +242,9 @@ anchor_right = 0.57
 anchor_bottom = 0.51
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_muv01")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(5,3)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -189,6 +255,9 @@ anchor_right = 0.57
 anchor_bottom = 0.8
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_4lqr8")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(6,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -199,6 +268,9 @@ anchor_right = 0.71
 anchor_bottom = 0.36
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_53tpu")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(6,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -209,6 +281,9 @@ anchor_right = 0.71
 anchor_bottom = 0.66
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_x2scm")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [node name="Node(7,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 1
@@ -219,6 +294,9 @@ anchor_right = 0.83
 anchor_bottom = 0.51
 offset_right = 40.0
 offset_bottom = 40.0
+texture_normal = SubResource("AtlasTexture_74whj")
+stretch_mode = 4
+script = ExtResource("6_61dor")
 
 [connection signal="pressed" from="Nodes/Node(1,1)" to="." method="_on_node_11_pressed"]
 [connection signal="pressed" from="Nodes/Node(2,1)" to="." method="_on_node_21_pressed"]
