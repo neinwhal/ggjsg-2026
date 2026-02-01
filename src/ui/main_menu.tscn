@@ -1,6 +1,149 @@
-[gd_scene load_steps=2 format=3 uid="uid://dvial75jpqhcg"]
+[gd_scene load_steps=32 format=3 uid="uid://dvial75jpqhcg"]
 
 [ext_resource type="Script" uid="uid://buy0emrvnwk28" path="res://src/ui/main_menu.gd" id="1_qkuje"]
+[ext_resource type="Texture2D" uid="uid://qmbx3ihb5gb2" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL.png" id="2_f0s2b"]
+[ext_resource type="Texture2D" uid="uid://b87srs7c7y1g2" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_1.png" id="2_kabri"]
+[ext_resource type="Texture2D" uid="uid://cw2q8iry0wpu5" path="res://assets/ui/TITLE.png" id="3_5mgu5"]
+[ext_resource type="Texture2D" uid="uid://bvxv5mkijoqxe" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_2.png" id="3_rbrv2"]
+[ext_resource type="Texture2D" uid="uid://dwa4cg6cpup3v" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_11.png" id="4_fnoj8"]
+[ext_resource type="Texture2D" uid="uid://ohhl2iv473x0" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_12.png" id="5_e8782"]
+[ext_resource type="Texture2D" uid="uid://dhiirmgknv3mb" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_13.png" id="6_ce4te"]
+[ext_resource type="Texture2D" uid="uid://dpdwxk5axcdg0" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_3.png" id="7_11oxo"]
+[ext_resource type="Texture2D" uid="uid://fjjfhmphf0xd" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_4.png" id="8_gwglq"]
+[ext_resource type="Texture2D" uid="uid://lc4krk556y7f" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_5.png" id="9_gu3uc"]
+[ext_resource type="Texture2D" uid="uid://bh343bog84lrh" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_6.png" id="10_nc7ba"]
+[ext_resource type="Texture2D" uid="uid://db0h8utthhl8b" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_7.png" id="11_fmpcb"]
+[ext_resource type="Texture2D" uid="uid://63hwmwwwh55y" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_8.png" id="12_r7bj7"]
+[ext_resource type="Texture2D" uid="uid://cjcq2t1l8hud4" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_9.png" id="13_rkl1j"]
+[ext_resource type="Texture2D" uid="uid://bxberj35a8bfu" path="res://assets/ui/TITLE_SCREEN_CUT_FINAL_10.png" id="14_280ux"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_vmxns"]
+frames = 13
+speed_scale = 3.0
+frame_0/texture = ExtResource("2_kabri")
+frame_1/texture = ExtResource("3_rbrv2")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("7_11oxo")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("8_gwglq")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("9_gu3uc")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("10_nc7ba")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("11_fmpcb")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("12_r7bj7")
+frame_7/duration = 1.0
+frame_8/texture = ExtResource("13_rkl1j")
+frame_8/duration = 1.0
+frame_9/texture = ExtResource("14_280ux")
+frame_9/duration = 1.0
+frame_10/texture = ExtResource("4_fnoj8")
+frame_10/duration = 1.0
+frame_11/texture = ExtResource("5_e8782")
+frame_11/duration = 1.0
+frame_12/texture = ExtResource("6_ce4te")
+frame_12/duration = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h03rr"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ljhhu"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35tjg"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmx6h"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1bnh"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(1024, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vob5f"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(1280, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0prml"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(1536, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yipxn"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(1792, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxqo5"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(2048, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wdmux"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(2304, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4fdh4"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(2560, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kabri"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(2816, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbrv2"]
+atlas = ExtResource("2_f0s2b")
+region = Rect2(3072, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fnoj8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h03rr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ljhhu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35tjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tmx6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1bnh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vob5f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0prml")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yipxn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxqo5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wdmux")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4fdh4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kabri")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbrv2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -18,47 +161,54 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 64
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 64
-theme_override_constants/margin_bottom = 32
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+texture_filter = 1
 layout_mode = 2
+texture = SubResource("AnimatedTexture_vmxns")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+[node name="TextureRect2" type="TextureRect" parent="MarginContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_5mgu5")
+stretch_mode = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "Mrt Game"
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/VBoxContainer"]
+visible = false
+texture_filter = 1
+position = Vector2(34, -90)
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_fnoj8")
+frame_progress = 0.51138717
 
-[node name="Spacer" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer"]
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="StartButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
+[node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Start"
 
-[node name="CreditsButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
+[node name="CreditsButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Credits"
 
-[node name="QuitButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Quit"
 
-[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
