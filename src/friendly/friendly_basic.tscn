@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://ccgc8r6vlg6qe"]
+[gd_scene load_steps=45 format=3 uid="uid://ccgc8r6vlg6qe"]
 
 [ext_resource type="Script" uid="uid://jnyvuj24mxda" path="res://src/friendly/friendly_basic.gd" id="1_s8x24"]
 [ext_resource type="Texture2D" uid="uid://bvc8ax3irbbcd" path="res://assets/friendly/NORMAL_BIAN_LIAN_ATTACK.png" id="2_g71pk"]
@@ -278,6 +278,9 @@ animations = [{
 "speed": 3.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h6g5j"]
+size = Vector2(81, 40.5)
+
 [node name="FriendlyBasic" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_s8x24")
@@ -297,4 +300,12 @@ texture_filter = 1
 position = Vector2(0, -67)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_o0di8")
-frame_progress = 0.946762
+frame_progress = 0.8607984
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+position = Vector2(40.5, 0.25)
+shape = SubResource("RectangleShape2D_h6g5j")

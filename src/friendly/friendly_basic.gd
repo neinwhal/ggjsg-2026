@@ -24,6 +24,8 @@ var desired_distance := 0.0
 @export var follow_speed_multiplier : float = 4.0 # multiplier when following
 @export var distance_variation := 128.0
 @export var follow_stop_buffer := 8.0   # pixels of tolerance
+# hitbox
+@onready var hitbox: Area2D = $AttackHitbox
 # death timers
 @export var dead_timer := 5.0 # time before getting deleted AFTER death
 @export var dead_fall_velocity : float = 5.0 # death falling speed
@@ -56,6 +58,8 @@ func _ready() -> void:
 	$AnimatedSprite2D.play("bianlian_idle")
 	$Indicator.visible = false
 	$Indicator.play("default")
+	hitbox.monitoring = true
+	hitbox.monitorable = false
 
 func _find_nearest_in_group(group_name: String, max_dist: float) -> Node2D:
 	var nearest: Node2D = null
@@ -127,7 +131,7 @@ func state_order_move(delta: float) -> void:
 	# todo maybe move here so its easier to configure for each unit type? idkkk
 	
 func state_order_attack(delta: float) -> void:
-	print("attack order!")
+	#print("attack order!")
 	if target_enemy == null:
 		state = FriendlyHelper.State.IDLE
 		return
@@ -169,6 +173,18 @@ func state_chase(delta: float) -> void:
 	var dir : float = sign(to_target.x)
 	velocity.x = dir * speed
 	
+	
+func do_splash_attack() -> void:
+	await get_tree().physics_frame
+	var dmg := randi_range(attack_damage_min, attack_damage_max)
+	# splash damage
+	for body in hitbox.get_overlapping_bodies():
+		if body != null \
+		and body.is_in_group("enemy") \
+		and body.has_method("take_damage"):
+			print("do damage!")
+			body.take_damage(dmg)
+	
 func state_attack(delta: float) -> void:
 	#print("ATTACKMAN")
 	if target_enemy == null:
@@ -190,10 +206,10 @@ func state_attack(delta: float) -> void:
 	attack_timer -= delta
 	if attack_timer <= 0.0:
 		attack_timer = attack_cooldown
-
+		do_splash_attack()
 		# apply damage ONCE per cooldown
-		if target_enemy.has_method("take_damage"):
-			target_enemy.take_damage(randi_range(attack_damage_min, attack_damage_max))
+		# if target_enemy.has_method("take_damage"):
+		#	target_enemy.take_damage(randi_range(attack_damage_min, attack_damage_max))
 
 func state_dead(delta: float) -> void:
 	if is_on_floor():
@@ -275,7 +291,11 @@ func _process(delta: float) -> void:
 					sprite.play("bianlian_idle")
 		elif (state == FriendlyHelper.State.ATTACK):
 			# attack state, just turn towards enemy
-			sprite.flip_h = target_enemy.global_position.x < global_position.x
+			# sprite.flip_h = target_enemy.global_position.x < global_position.x
+			# determine facing from enemy position
+			var facing_dir = -1 if target_enemy.global_position.x < global_position.x else 1
+			sprite.flip_h = facing_dir < 0 # visual flip
+			hitbox.scale.x = facing_dir # hitbox flip
 		
 
 	move_and_slide()
