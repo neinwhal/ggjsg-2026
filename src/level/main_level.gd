@@ -6,32 +6,58 @@ var rand: RandomNumberGenerator
 const SECTION_WIDTH: int = 2016
 #const VIEWPORT_SIZE: int = 1152
 
-const LEVEL_1_START : String = "res://src/level/start_section.tscn"
-const LEVEL_1_END : String = "res://src/level/end_section.tscn"
-const LEVEL_2_START : String = "res://src/level/base_section.tscn"
-const LEVEL_2_END : String = "res://src/level/base_section.tscn"
+const START_SCENE : String = "res://src/level/start_section.tscn"
+const END_SCENE : String = "res://src/level/end_section.tscn"
+
+@export var GREEN_DIFFICULTY_COUNT: int = 2
+@export var YELLOW_DIFFICULTY_COUNT: int = 3
+@export var RED_DIFFICULTY_COUNT: int = 4
 
 var current_max_x: int = SECTION_WIDTH
-var mid_section_count: int = 0
+var mid_section_count: int = 1
 var is_end_generated: bool = false
-var current_level: int = 1
+### Tracks map progresion
+#var current_level: int
+### Indicates current map pool (assigned by branching mrt map)
+#var current_zone: String
+### Indicates number of mid_section_count
+#var current_colour_difficulty: String
 
 
 # Called when the node enters the scene tree for the first time.d
 func _ready() -> void:
 	pass # Replace with function body.
-	current_level = CurrentLevel.lvl
-	if current_level == 1:
-		scene_selection.append(preload("res://src/level/section_a.tscn"))
-		scene_selection.append(preload("res://src/level/section_b.tscn"))
-		scene_selection.append(preload("res://src/level/section_c.tscn"))
+	#current_level = CurrentLevel.lvl
+	
+	match Progression.zone:
+		"A":
+			scene_selection.append(preload("res://src/level/section_a.tscn"))
+			scene_selection.append(preload("res://src/level/section_b.tscn"))
+			scene_selection.append(preload("res://src/level/section_c.tscn"))
+		"B":
+			pass
+		"C":
+			pass
+		"D":
+			pass
+		_:
+			print_debug("Invalid progression zone: ", Progression.zone, "!!!")
+	match Progression.color_difficulty:
+		"GREEN":
+			mid_section_count = GREEN_DIFFICULTY_COUNT
+		"YELLOW":
+			mid_section_count = YELLOW_DIFFICULTY_COUNT
+		"RED":
+			mid_section_count = RED_DIFFICULTY_COUNT
+		_:
+			print_debug("Invalid progression color difficulty: ", Progression.color_difficulty, "!!!")
 	
 	## Use this if floor is to match exact wall length
 	#$Floor/CollisionShape2D.shape.size.x = SECTION_WIDTH * (scene_selection.size() + 2) # +2 for start and end
 	#$Floor.position.x = ($Floor/CollisionShape2D.shape.size.x / 2.0) - (SECTION_WIDTH / 2.0)
 	
 	## Use this if floor is to extend by 1 SECTION_WIDTH past the wall sprite of both ends
-	$Floor/CollisionShape2D.shape.size.x = SECTION_WIDTH * (scene_selection.size() + 4)
+	$Floor/CollisionShape2D.shape.size.x = SECTION_WIDTH * (mid_section_count + 2 + 2) # +2 for begin/end, +2 for extra width for enemy spawn
 	$Floor.position.x = ($Floor/CollisionShape2D.shape.size.x / 2.0) - (SECTION_WIDTH * 1.5)
 	
 	rand = RandomNumberGenerator.new()
@@ -40,9 +66,9 @@ func _ready() -> void:
 	generate_start_section()
 	generate_random_section(SECTION_WIDTH)
 	$RightExtent.position.x = SECTION_WIDTH
-	print_debug("Current level is: ", current_level)
+	print_debug("Current node is: ", Progression.node)
 	
-	#$CanvasLayer/BranchingMrtMap._on_lvl_2_button_pressed.connect(go_next_level)
+	$CanvasLayer/BranchingMrtMap.on_mrt_node_pressed.connect(go_next_level)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -54,10 +80,8 @@ func _input(event: InputEvent) -> void:
 
 func generate_start_section() -> void:
 	var start_scene : Node2D
-	if current_level == 1:
-		start_scene = preload(LEVEL_1_START).instantiate()
-	elif current_level == 2:
-		start_scene = preload(LEVEL_2_START).instantiate()
+	## Only change if we want to have diff start sections per lvl
+	start_scene = preload(START_SCENE).instantiate()
 	start_scene.position.x = 0
 	$SpawnedSections.call_deferred("add_child", start_scene)
 
@@ -66,10 +90,9 @@ func generate_end_section(xpos: int) -> void:
 		return
 	is_end_generated = true
 	var end_scene : Node2D
-	if current_level == 1:
-		end_scene = preload(LEVEL_1_END).instantiate()
-	elif current_level == 2:
-		end_scene = preload(LEVEL_2_END).instantiate()
+	## Only change if we want to have diff end sections per lvl
+	end_scene = preload(END_SCENE).instantiate()
+	
 	end_scene.position.x = xpos
 	end_scene._on_final_extent_entered.connect(open_branching_mrt)
 	end_scene._on_mrt_map_exited.connect(close_branching_mrt)
@@ -87,22 +110,27 @@ func generate_random_section(xpos: int) -> void:
 
 func open_branching_mrt() -> void:
 	#print_debug("Open branching mrt")
-	$CanvasLayer/BranchingMrtMap.show()
+	$CanvasLayer/BranchingMrtMap.open_branching_mrt()
 
 func close_branching_mrt() -> void:
 	#print_debug("Close branching mrt")
 	$CanvasLayer/BranchingMrtMap.hide()
 
-func go_next_level() -> void:
-	if current_level == 1:
-		current_level += 1
-		CurrentLevel.lvl = current_level
-		get_tree().reload_current_scene()
-	elif current_level == 2:
-		## Go finish screen
-		pass
-	else:
-		print_debug("Current level is invalid: ", current_level)
+func go_next_level(next_lvl: int, zone: String, colour_difficulty: String) -> void:
+	#current_level += 1
+	Progression.node = next_lvl
+	Progression.zone = zone
+	Progression.color_difficulty = colour_difficulty
+	get_tree().reload_current_scene()
+	#if current_level == 1:
+		#current_level += 1
+		#CurrentLevel.lvl = current_level
+		#get_tree().reload_current_scene()
+	#elif current_level == 2:
+		### Go finish screen
+		#pass
+	#else:
+		#print_debug("Current level is invalid: ", current_level)
 
 func pause() -> void:
 	print_debug("Pause")
