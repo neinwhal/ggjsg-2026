@@ -231,7 +231,7 @@ func state_attack(delta: float) -> void:
 		
 	if dist < attack_range_min:
 		state = FriendlyHelper.State.REPOSITION
-		$AnimatedSprite2D.play("enemy_move")
+		$AnimatedSprite2D.play("move")
 		return
 	
 	# target in attack range

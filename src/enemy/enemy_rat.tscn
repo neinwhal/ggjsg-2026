@@ -41,7 +41,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_jtlnd")
 }],
 "loop": true,
-"name": &"enemy_idle",
+"name": &"enemy_attack",
 "speed": 5.0
 }, {
 "frames": [{
@@ -73,8 +73,8 @@ script = ExtResource("1_3b1t4")
 texture_filter = 1
 scale = Vector2(-2, 2)
 sprite_frames = SubResource("SpriteFrames_mgwow")
-animation = &"enemy_idle"
-frame_progress = 0.3633739
+animation = &"enemy_move"
+frame_progress = 0.50573695
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -14)
