@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://b57787sd0uw3v"]
+
+[ext_resource type="Script" uid="uid://be1jo7qkdrnv" path="res://src/map/branching_mrt_map.gd" id="1_0m4hf"]
+[ext_resource type="Texture2D" uid="uid://c7buqhpvx6qug" path="res://assets/map/NEW_MAP.png" id="2_74pbq"]
+[ext_resource type="Script" uid="uid://lboq80aklq2m" path="res://src/map/map_ui.gd" id="3_6pw1s"]
+[ext_resource type="Texture2D" uid="uid://cya37c6rofj0w" path="res://assets/map/Single_MAP_FRAME.png" id="4_6pw1s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pw1s"]
+atlas = ExtResource("2_74pbq")
+
+[node name="BranchingMrtMap" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0m4hf")
+
+[node name="MapUI" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(384, 384)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -192.0
+offset_right = 192.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_6pw1s")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("3_6pw1s")
+
+[node name="MapFrame(debug)" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(384, 384)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -56.0
+offset_right = 64.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_6pw1s")
+expand_mode = 1
+stretch_mode = 5

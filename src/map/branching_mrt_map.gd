@@ -1,6 +1,9 @@
 extends Control
 
-signal _on_lvl_2_button_pressed()
+#signal _on_lvl_2_button_pressed()
+
+## Map logic
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,6 +15,6 @@ func _process(delta: float) -> void:
 	pass
 
 
-func _on_go_level_2_pressed() -> void:
-	hide()
-	_on_lvl_2_button_pressed.emit()
+#func _on_go_level_2_pressed() -> void:
+	#hide()
+	#_on_lvl_2_button_pressed.emit()
