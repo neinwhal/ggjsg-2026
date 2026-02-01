@@ -1,29 +1,44 @@
 extends CharacterBody2D
 
-@export var dead_timer := 5.0 # time before deleted after death
-@export var dead_fall_velocity : float = 5.0
-
-@export var speed := 150.0
-@export var gravity := 1200.0
-
-@export var attack_cooldown := 0.8
-@export var attack_damage := 10
-var attack_timer := 0.0
-
-var friendly_HP : float = 500
-
-var state: int = FriendlyHelper.State.IDLE
-
-var target_player: Node2D = null
-var target_enemy: Node2D = null
+# friendly stats
+@export var friendly_HP : float = 500.0
+@export var speed : float = 150.0
+@export var gravity : float = 1200.0
+@export var detect_range : float = 750.0
+@export var attack_cooldown : float = 0.8
+@export var attack_damage_min : int = 20 # damage dealt
+@export var attack_damage_max : int = 35
+@export var chase_max_distance : float = 550.0 # stop chasing after exceeding this distance
+@export var wander_time_min : float = 0.0 # wandering time
+@export var wander_time_max : float = 1.0
+@export var idle_time_min : float = 2.0 # idle time
+@export var idle_time_max : float = 5.0
+@export var idle_speed_multiplier : float = 0.25 # multipler when wandering idle
+@export var stop_distance_min : float = 15.0 # distance before stopping near target
+@export var stop_distance_max : float = 50.0
+@export var attack_range_max : float = 60.0 # distance to stop attacking
+# follow variables
 var desired_distance := 0.0
-
-@export var follow_distance := 350.0
+@export var follow_distance : float = 350.0
+@export var follow_trigger_deviation : float = 5.0 # how far away from follow distance to trigger follow
+@export var follow_speed_multiplier : float = 4.0 # multiplier when following
 @export var distance_variation := 128.0
-
+@export var follow_stop_buffer := 8.0   # pixels of tolerance
+# death timers
+@export var dead_timer := 5.0 # time before getting deleted AFTER death
+@export var dead_fall_velocity : float = 5.0 # death falling speed
+# various states
+var state: int = FriendlyHelper.State.IDLE
 # for damage flash
 @export var flash_duration := 0.2
 var is_flashing := false
+# other internal values/timers
+var target_player: Node2D = null
+var target_enemy: Node2D = null
+var attack_timer := 0.0
+# for wandering
+var friendly_direction : float = 0.0
+var friendly_change_time : float = 0.0
 
 func find_player() -> void:
 	var players = get_tree().get_nodes_in_group("player")
@@ -42,11 +57,6 @@ func _ready() -> void:
 	$Indicator.visible = false
 	$Indicator.play("default")
 
-var direction : float = 0.0
-var change_time : float = 0.0
-
-@export var stop_buffer := 8.0   # pixels of tolerance
-
 func _find_nearest_in_group(group_name: String, max_dist: float) -> Node2D:
 	var nearest: Node2D = null
 	var nearest_dist := max_dist
@@ -59,17 +69,15 @@ func _find_nearest_in_group(group_name: String, max_dist: float) -> Node2D:
 			nearest = n
 	return nearest
 
-var friendly_direction : float = 0.0
-var friendly_change_time : float = 0.0
 func state_idle(delta: float) -> void:
 	#print("IDLEMAN")
 	# if too far from player, change to follow state
 	var dist_to_player := global_position.distance_to(target_player.global_position)
-	if dist_to_player > (follow_distance + 5.0):
+	if dist_to_player > (follow_distance + follow_trigger_deviation):
 		state = FriendlyHelper.State.FOLLOW
 		return
 	# if got enemies nearby change to chase state
-	var nearby_enemy := _find_nearest_in_group("enemy", 175.0)
+	var nearby_enemy := _find_nearest_in_group("enemy", detect_range)
 	if nearby_enemy != null:
 		target_enemy = nearby_enemy
 		state = FriendlyHelper.State.CHASE
@@ -79,14 +87,14 @@ func state_idle(delta: float) -> void:
 	if friendly_change_time <= 0.0:
 		friendly_direction = [-1, 1, 2, 3].pick_random()
 		if (friendly_direction > 2):
-			friendly_change_time = randf_range(2.0, 5.0)
+			friendly_change_time = randf_range(idle_time_min, idle_time_max)
 		else:
-			friendly_change_time = randf_range(0.0, 1.0)
+			friendly_change_time = randf_range(wander_time_min, wander_time_max)
 	# horizontal movement
 	if (friendly_direction > 1):
 		velocity.x = 0.0
 	else:
-		velocity.x = friendly_direction * (speed / 4.0)
+		velocity.x = friendly_direction * (speed * idle_speed_multiplier)
 	
 func state_follow(delta: float) -> void:
 	#print("FOLLOWMAN")
@@ -94,14 +102,14 @@ func state_follow(delta: float) -> void:
 	var dx = target_player.global_position.x - global_position.x
 	var abs_dx = abs(dx)
 	var target_vx := 0.0
-	if abs_dx > desired_distance + stop_buffer:
+	if abs_dx > desired_distance + follow_stop_buffer:
 		target_vx = sign(dx) * speed
-	elif abs_dx < desired_distance - stop_buffer:
+	elif abs_dx < desired_distance - follow_stop_buffer:
 		target_vx = 0.0
 		state = FriendlyHelper.State.IDLE
 		return;
 		
-	velocity.x = move_toward(velocity.x, target_vx, speed * 4.0 * delta)
+	velocity.x = move_toward(velocity.x, target_vx, speed * follow_speed_multiplier * delta)
 
 func select_unit() -> void:
 	$Indicator.visible = true
@@ -127,7 +135,7 @@ func state_order_attack(delta: float) -> void:
 	var to_target := target_enemy.global_position - global_position
 	var dist := to_target.length()
 	# keep moving until random stop distance
-	var stop_dist := randf_range(15.0, 50.0)
+	var stop_dist := randf_range(stop_distance_min, stop_distance_max)
 	if dist <= stop_dist:
 		velocity.x = 0.0
 		state = FriendlyHelper.State.ATTACK
@@ -147,12 +155,12 @@ func state_chase(delta: float) -> void:
 	var to_target := target_enemy.global_position - global_position
 	var dist := to_target.length()
 	# if target too far -> stop chasing
-	if dist > 110.0:
+	if dist > chase_max_distance:
 		target_enemy = null
 		state = FriendlyHelper.State.IDLE
 		return
 	# keep moving until random stop distance
-	var stop_dist := randf_range(15.0, 50.0)
+	var stop_dist := randf_range(stop_distance_min, stop_distance_max)
 	if dist <= stop_dist:
 		velocity.x = 0.0
 		state = FriendlyHelper.State.ATTACK
@@ -169,7 +177,7 @@ func state_attack(delta: float) -> void:
 		
 	var dist := global_position.distance_to(target_enemy.global_position)
 	# target out of attack range -> target too far, back to idle
-	if dist > 60.0:
+	if dist > attack_range_max:
 		target_enemy = null
 		state = FriendlyHelper.State.IDLE
 		return
@@ -185,10 +193,7 @@ func state_attack(delta: float) -> void:
 
 		# apply damage ONCE per cooldown
 		if target_enemy.has_method("take_damage"):
-			target_enemy.take_damage(attack_damage)
-		else:
-			# fallback if you directly modify HP
-			target_enemy.enemy_HP -= attack_damage
+			target_enemy.take_damage(randi_range(attack_damage_min, attack_damage_max))
 
 func state_dead(delta: float) -> void:
 	if is_on_floor():
