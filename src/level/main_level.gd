@@ -42,7 +42,7 @@ func _ready() -> void:
 	$RightExtent.position.x = SECTION_WIDTH
 	print_debug("Current level is: ", current_level)
 	
-	$CanvasLayer/BranchingMrtMap._on_lvl_2_button_pressed.connect(go_next_level)
+	#$CanvasLayer/BranchingMrtMap._on_lvl_2_button_pressed.connect(go_next_level)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

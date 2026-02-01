@@ -99,7 +99,7 @@ texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_e5h7t")
 animation = &"enemy_move"
-frame_progress = 0.16828232
+frame_progress = 0.7447256
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
