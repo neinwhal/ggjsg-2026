@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var gravity := 1200.0
 @export var gravity_variation := 500.0
 @export var lifetime := 5.0
-@export var damage := 10
+@export var damage : int = 10
 
 var actual_gravity := 0.0
 var life := 0.0

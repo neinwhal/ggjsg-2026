@@ -4,10 +4,15 @@ extends CharacterBody2D
 @export var speed : float = 80.0
 @export var gravity : float = 1200.0
 @export var detect_range := 800.0
-var attack_cooldown = 3.0
-# missing attack dmg
-# missing wander time
-# missing stop distance
+@export var attack_cooldown = 3.0 # time between attacks
+@export var attack_damage_min : int = 8 # damage dealt
+@export var attack_damage_max : int = 12
+@export var wander_time_min : float = 0.5 # wandering time
+@export var wander_time_max : float = 1.5
+@export var stop_distance_min : float = 220.0 # distance before stopping near target
+@export var stop_distance_max : float = 280.0
+@export var attack_range_min : float = 215.0 # distance to stop attacking
+@export var attack_range_max : float = 285.0 # distance to stop attacking
 # projectile stats
 @onready var BulletScene: PackedScene = preload("res://src/enemy/enemy_projectile_ranged.tscn")
 @export var bullet_spawn_offset := Vector2(20, -10)
@@ -15,9 +20,10 @@ var attack_cooldown = 3.0
 @export var bullet_arc_up := 280.0  # how "high" the arc starts
 # death timers
 @export var dead_timer := 5.0 # time before getting deleted AFTER death
-# missing death velocity
+@export var dead_fall_velocity : float = 5.0 # death falling speed
 # various states
 var state: int = EnemyHelper.State.WANDER
+
 # for damage flash
 @export var flash_duration := 0.2
 var is_flashing := false
@@ -55,7 +61,7 @@ func state_wander(delta: float) -> void:
 	enemy_change_time -= delta
 	if enemy_change_time <= 0.0:
 		enemy_direction = [-1, 1].pick_random()
-		enemy_change_time = randf_range(0.5, 1.5)
+		enemy_change_time = randf_range(wander_time_min, wander_time_max)
 	# horizontal
 	velocity.x = enemy_direction * speed
 	#try to find target
@@ -79,7 +85,7 @@ func state_chase(delta: float) -> void:
 		return
 		
 	# keep moving until random stop distance
-	var stop_dist := randf_range(220.0, 280.0)
+	var stop_dist := randf_range(stop_distance_min, stop_distance_max)
 	if dist <= stop_dist:
 		velocity.x = 0.0
 		state = EnemyHelper.State.ATTACK
@@ -111,7 +117,7 @@ func fire_bullet() -> void:
 
 	# if your bullet script has damage, set it (optional)
 	if "damage" in b:
-		b.damage = 10
+		b.damage = randi_range(attack_damage_min, attack_damage_max)
 
 func state_attack(delta: float) -> void:
 	if target == null:
@@ -127,9 +133,14 @@ func state_attack(delta: float) -> void:
 		return
 		
 	# target out of attack range -> wander again -> find new target
-	if dist > 280.0:
+	if dist > attack_range_max:
 		target = null
 		state = EnemyHelper.State.WANDER
+		$AnimatedSprite2D.play("enemy_move")
+		return
+		
+	if dist < attack_range_min:
+		state = EnemyHelper.State.REPOSITION
 		$AnimatedSprite2D.play("enemy_move")
 		return
 		
@@ -144,7 +155,7 @@ func state_attack(delta: float) -> void:
 
 func state_dead(delta: float) -> void:
 	if is_on_floor():
-		velocity.y = 5.0
+		velocity.y = dead_fall_velocity
 	else:
 		velocity.y += gravity * delta
 
@@ -154,6 +165,37 @@ func state_dead(delta: float) -> void:
 	dead_timer -= delta
 	if dead_timer <= 0.0:
 		queue_free()
+		
+func state_reposition(delta: float) -> void:
+	if target == null:
+		target = null
+		state = EnemyHelper.State.WANDER
+		$AnimatedSprite2D.play("enemy_move")
+		return
+	
+	var to_target: Vector2 = target.global_position - global_position
+	var dist: float = to_target.length()
+	# if we are not too close anymore, we can attack
+	if dist >= attack_range_min:
+		velocity.x = 0.0
+		state = EnemyHelper.State.ATTACK
+		$AnimatedSprite2D.play("enemy_attack")
+		return
+	# too close -> reposition to a random distance in [attack_range_min, attack_range_max]
+	var desired_dist: float = randf_range(attack_range_min, attack_range_max)
+	# direction away from target (fallback if overlapping)
+	var away_dir: Vector2
+	if dist > 0.001:
+		away_dir = (-to_target / dist)
+	else:
+		away_dir = Vector2([-1.0, 1.0].pick_random(), 0.0)
+
+	var desired_pos: Vector2 = target.global_position + away_dir * desired_dist
+	# move horizontally toward desired position
+	var dir_x: float = sign(desired_pos.x - global_position.x)
+	velocity.x = dir_x * speed
+	
+	
 
 func take_damage(amount: int) -> void:
 	if state == EnemyHelper.State.DEAD:
@@ -188,6 +230,9 @@ func _process(delta: float) -> void:
 		
 	elif state == EnemyHelper.State.ATTACK:
 		state_attack(delta)
+		
+	elif state == EnemyHelper.State.REPOSITION:
+		state_reposition(delta)
 	
 	# gravity
 	if not is_on_floor():
