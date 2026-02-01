@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtt4ejjainjlc"]
+
+[ext_resource type="Script" uid="uid://b7qxyudygno8n" path="res://src/level/normal_background.gd" id="1_5nnyk"]
+
+[node name="Normal(healing)" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+script = ExtResource("1_5nnyk")

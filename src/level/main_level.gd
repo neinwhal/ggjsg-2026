@@ -33,26 +33,30 @@ func _ready() -> void:
 		"A":
 			## Normal Normal
 			scene_selection.append(preload("res://src/level/normal_section.tscn"))
-			## Normal
-			## Normal
-			## Big
-			## Ranged
-			## Ranged
+			## Normal (Healing)
+			scene_selection.append(preload("res://src/level/normal(healing).tscn"))
+			## Normal (rusher + rescue)
+			scene_selection.append(preload("res://src/level/normal(rusher+rescue).tscn"))
+			## Big (big + rescue)
+			## Ranged (ranger + rescue)
+			## Ranged (rusher + healing)
 			
 		"B":
 			pass
 			## Normal Normal
-			## Normal Healing
-			## Big
-			## Big
-			## Mega
-			## Ranged
+			scene_selection.append(preload("res://src/level/normal_section.tscn"))
+			## Normal (Healing)
+			scene_selection.append(preload("res://src/level/normal(healing).tscn"))
+			## Big (tanker + rescue melee elite)
+			## Big (tanker + ranger + rescue)
+			## Mega (mega + rescue bianlian)
+			## Ranged (ranged elite + rescue ranger)
 		"C":
 			pass
-			## Big
-			## Mega
-			## Mega
-			## Mega
+			## Big (big + heal)
+			## Mega (rager + double recruit)
+			## Mega (mega + rescue bianlian)
+			## Mega Mega
 		"D":
 			pass
 		_:
