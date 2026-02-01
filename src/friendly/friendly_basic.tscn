@@ -300,7 +300,7 @@ texture_filter = 1
 position = Vector2(0, -67)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_o0di8")
-frame_progress = 0.8607984
+frame_progress = 0.8922434
 
 [node name="AttackHitbox" type="Area2D" parent="."]
 collision_layer = 4

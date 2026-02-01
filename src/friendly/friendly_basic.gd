@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var gravity : float = 1200.0
 @export var detect_range : float = 750.0
 @export var attack_cooldown : float = 0.8
+@export var do_splash_dmg : bool = false
 @export var attack_damage_min : int = 20 # damage dealt
 @export var attack_damage_max : int = 35
 @export var chase_max_distance : float = 550.0 # stop chasing after exceeding this distance
@@ -182,7 +183,6 @@ func do_splash_attack() -> void:
 		if body != null \
 		and body.is_in_group("enemy") \
 		and body.has_method("take_damage"):
-			print("do damage!")
 			body.take_damage(dmg)
 	
 func state_attack(delta: float) -> void:
@@ -206,10 +206,11 @@ func state_attack(delta: float) -> void:
 	attack_timer -= delta
 	if attack_timer <= 0.0:
 		attack_timer = attack_cooldown
-		do_splash_attack()
-		# apply damage ONCE per cooldown
-		# if target_enemy.has_method("take_damage"):
-		#	target_enemy.take_damage(randi_range(attack_damage_min, attack_damage_max))
+		if do_splash_dmg:
+			do_splash_attack()
+		else:
+			if target_enemy.has_method("take_damage"):
+				target_enemy.take_damage(randi_range(attack_damage_min, attack_damage_max))
 
 func state_dead(delta: float) -> void:
 	if is_on_floor():
