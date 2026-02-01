@@ -1,7 +1,8 @@
 extends Node2D
 
-@onready var EnemyScene: PackedScene = preload("res://src/enemy/enemy_basic.tscn")
+@onready var EnemyScene: PackedScene = preload("res://src/enemy/enemy_shambler.tscn")
 @onready var EnemyRangedScene: PackedScene = preload("res://src/enemy/enemy_ranged.tscn")
+@onready var EnemyTest: PackedScene = preload("res://src/enemy/enemy_dodger.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,7 +21,7 @@ func spawn_enemy() -> void:
 	if roll == 1:
 		enemy_scene = EnemyScene
 	else:
-		enemy_scene = EnemyScene #EnemyRangedScene
+		enemy_scene = EnemyTest #EnemyRangedScene
 	# actually psawn
 	var e := enemy_scene.instantiate()
 	add_child(e)

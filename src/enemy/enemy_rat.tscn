@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://wac6b4slxxfl"]
+
+[ext_resource type="Script" uid="uid://dilrrahxr3xxf" path="res://src/enemy/enemy_rat.gd" id="1_3b1t4"]
+[ext_resource type="Texture2D" uid="uid://bdqv61vr74xg" path="res://assets/enemy/RAT_IDLE.png" id="2_3b1t4"]
+[ext_resource type="Texture2D" uid="uid://q5vq71h1xpmw" path="res://assets/enemy/RAT_MOVE.png" id="3_wbsue"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nkx2e"]
+atlas = ExtResource("2_3b1t4")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4cfg"]
+atlas = ExtResource("2_3b1t4")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jtlnd"]
+atlas = ExtResource("2_3b1t4")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1h6l"]
+atlas = ExtResource("3_wbsue")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixqi8"]
+atlas = ExtResource("3_wbsue")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtj6q"]
+atlas = ExtResource("3_wbsue")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mgwow"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nkx2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4cfg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jtlnd")
+}],
+"loop": true,
+"name": &"enemy_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1h6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixqi8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtj6q")
+}],
+"loop": true,
+"name": &"enemy_move",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3put"]
+size = Vector2(46, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yjc8o"]
+size = Vector2(43, 26)
+
+[node name="EnemyRat" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_3b1t4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(-2, 2)
+sprite_frames = SubResource("SpriteFrames_mgwow")
+animation = &"enemy_idle"
+frame_progress = 0.3633739
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -14)
+shape = SubResource("RectangleShape2D_d3put")
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+position = Vector2(21.5, -13)
+shape = SubResource("RectangleShape2D_yjc8o")

@@ -52,6 +52,7 @@ func find_player() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_to_group("unit") # add to unit group
+	add_to_group("ranged")
 	randomize()
 	find_player()
 	# each friendly gets a slightly different stop distance
