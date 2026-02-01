@@ -28,7 +28,7 @@ var is_end_generated: bool = false
 func _ready() -> void:
 	pass # Replace with function body.
 	#current_level = CurrentLevel.lvl
-	
+	scene_selection.clear()
 	match Progression.zone:
 		"A":
 			## Normal Normal
@@ -151,6 +151,8 @@ func pause() -> void:
 	$CanvasLayer/PauseMenu.show()
 
 func _on_right_extent_body_entered(body: Node2D) -> void:
+	if not body is PlayerBasic:
+		return
 	#print_debug("Hit right extent!!!")
 	## Spawn section to right
 	if mid_section_count >= mid_section_max:
