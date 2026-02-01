@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://thsq2vg2si40"]
+
+[ext_resource type="Script" uid="uid://bgi2nrt8dvd7o" path="res://src/level/mega_background.gd" id="1_3sbu7"]
+
+[node name="Mega(rager+doublerecruit)" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+script = ExtResource("1_3sbu7")

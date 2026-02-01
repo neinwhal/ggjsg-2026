@@ -55,6 +55,7 @@ func _ready() -> void:
 			## Big (tanker + ranger + rescue)
 			scene_selection.append(preload("res://src/level/big(tanker+ranger+rescue).tscn"))
 			## Mega (mega + rescue bianlian)
+			scene_selection.append(preload("res://src/level/mega(mega+rescuebianlian).tscn"))
 			## Ranged (ranged elite + rescue ranger)
 			scene_selection.append(preload("res://src/level/ranged(rangeelite+rescueranger)).tscn"))
 		"C":
@@ -62,8 +63,11 @@ func _ready() -> void:
 			## Big (big + heal)
 			scene_selection.append(preload("res://src/level/big(heal).tscn"))
 			## Mega (rager + double recruit)
+			scene_selection.append(preload("res://src/level/mega(rager+doublerecruit).tscn"))
 			## Mega (mega + rescue bianlian)
+			scene_selection.append(preload("res://src/level/mega(mega+rescuebianlian).tscn"))
 			## Mega Mega
+			scene_selection.append(preload("res://src/level/mega(puremega).tscn"))
 		"D":
 			pass
 		_:
