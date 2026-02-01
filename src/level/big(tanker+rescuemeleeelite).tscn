@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://hv1vbvgax40d"]
+
+[ext_resource type="Script" uid="uid://b4jvdbwb2g5vj" path="res://src/level/big_background.gd" id="1_rbj7t"]
+
+[node name="Big(tanker+rescuemeleeelite)" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+script = ExtResource("1_rbj7t")

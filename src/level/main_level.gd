@@ -38,6 +38,7 @@ func _ready() -> void:
 			## Normal (rusher + rescue)
 			scene_selection.append(preload("res://src/level/normal(rusher+rescue).tscn"))
 			## Big (big + rescue)
+			scene_selection.append(preload("res://src/level/big(rescue).tscn"))
 			## Ranged (ranger + rescue)
 			## Ranged (rusher + healing)
 			
@@ -48,12 +49,15 @@ func _ready() -> void:
 			## Normal (Healing)
 			scene_selection.append(preload("res://src/level/normal(healing).tscn"))
 			## Big (tanker + rescue melee elite)
+			scene_selection.append(preload("res://src/level/big(tanker+rescuemeleeelite).tscn"))
 			## Big (tanker + ranger + rescue)
+			scene_selection.append(preload("res://src/level/big(tanker+ranger+rescue).tscn"))
 			## Mega (mega + rescue bianlian)
 			## Ranged (ranged elite + rescue ranger)
 		"C":
 			pass
 			## Big (big + heal)
+			scene_selection.append(preload("res://src/level/big(heal).tscn"))
 			## Mega (rager + double recruit)
 			## Mega (mega + rescue bianlian)
 			## Mega Mega
