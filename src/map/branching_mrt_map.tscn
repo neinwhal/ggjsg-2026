@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://be1jo7qkdrnv" path="res://src/map/branching_mrt_map.gd" id="1_0m4hf"]
 [ext_resource type="Texture2D" uid="uid://c7buqhpvx6qug" path="res://assets/map/NEW_MAP.png" id="2_74pbq"]
 [ext_resource type="Script" uid="uid://lboq80aklq2m" path="res://src/map/map_ui.gd" id="3_6pw1s"]
-[ext_resource type="Texture2D" uid="uid://cya37c6rofj0w" path="res://assets/map/Single_MAP_FRAME.png" id="4_6pw1s"]
+[ext_resource type="Texture2D" uid="uid://cya37c6rofj0w" path="res://assets/map/SINGLE_MAP_FRAME.png" id="4_6pw1s"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6pw1s"]
 atlas = ExtResource("2_74pbq")
