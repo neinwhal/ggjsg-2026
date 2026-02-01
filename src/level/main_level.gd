@@ -1,7 +1,6 @@
 extends Node2D
 
 var scene_selection: Array[PackedScene]
-var rand: RandomNumberGenerator
 
 const SECTION_WIDTH: int = 2016
 #const VIEWPORT_SIZE: int = 1152
@@ -31,9 +30,11 @@ func _ready() -> void:
 	
 	match Progression.zone:
 		"A":
-			scene_selection.append(preload("res://src/level/section_a.tscn"))
-			scene_selection.append(preload("res://src/level/section_b.tscn"))
-			scene_selection.append(preload("res://src/level/section_c.tscn"))
+			pass
+			scene_selection.append(preload("res://src/level/normal_section.tscn"))
+			#scene_selection.append(preload("res://src/level/section_a.tscn"))
+			#scene_selection.append(preload("res://src/level/section_b.tscn"))
+			#scene_selection.append(preload("res://src/level/section_c.tscn"))
 		"B":
 			pass
 		"C":
@@ -60,8 +61,6 @@ func _ready() -> void:
 	$Floor/CollisionShape2D.shape.size.x = SECTION_WIDTH * (mid_section_count + 2 + 2) # +2 for begin/end, +2 for extra width for enemy spawn
 	$Floor.position.x = ($Floor/CollisionShape2D.shape.size.x / 2.0) - (SECTION_WIDTH * 1.5)
 	
-	rand = RandomNumberGenerator.new()
-	rand.randomize()
 	
 	generate_start_section()
 	generate_random_section(SECTION_WIDTH)
@@ -101,7 +100,7 @@ func generate_end_section(xpos: int) -> void:
 ## Obtain random scene from container
 func generate_random_section(xpos: int) -> void:
 	if not scene_selection.is_empty():
-		var new_scene := scene_selection[rand.randi_range(0, scene_selection.size() - 1)].instantiate()
+		var new_scene := scene_selection[Progression.rand.randi_range(0, scene_selection.size() - 1)].instantiate()
 		new_scene.position.x = xpos
 		$SpawnedSections.call_deferred("add_child", new_scene)
 		mid_section_count += 1

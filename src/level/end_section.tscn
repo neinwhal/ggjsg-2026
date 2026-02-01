@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b77tgxo88nrfq"]
+[gd_scene load_steps=6 format=3 uid="uid://b77tgxo88nrfq"]
 
 [ext_resource type="Script" uid="uid://6wpsctahhvdf" path="res://src/level/end_section.gd" id="1_a1rqp"]
-[ext_resource type="PackedScene" uid="uid://dnu462jogtt5y" path="res://src/level/base_section.tscn" id="1_q70ny"]
+[ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/level/mrt_background.gd" id="2_a1rqp"]
+[ext_resource type="Texture2D" uid="uid://b1nboppa1sgny" path="res://assets/level/CABIN_FRONT_BACK.png" id="2_iyfca"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q70ny"]
 size = Vector2(20, 200)
@@ -12,11 +13,9 @@ radius = 127.03
 [node name="EndSection" type="Node2D"]
 script = ExtResource("1_a1rqp")
 
-[node name="BaseSection" parent="." instance=ExtResource("1_q70ny")]
-
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 573.0
-offset_bottom = 40.0
+[node name="MRTBackground" type="Sprite2D" parent="."]
+texture = ExtResource("2_iyfca")
+script = ExtResource("2_a1rqp")
 
 [node name="FinalExtent" type="Area2D" parent="."]
 position = Vector2(950, -20)

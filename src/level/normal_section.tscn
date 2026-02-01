@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4nl3654e3rc3"]
+
+[ext_resource type="Script" uid="uid://b7qxyudygno8n" path="res://src/level/normal_section.gd" id="1_60t4k"]
+
+[node name="NormalSection" type="Node2D"]
+script = ExtResource("1_60t4k")
+
+[node name="MRTBackground" type="Sprite2D" parent="."]
