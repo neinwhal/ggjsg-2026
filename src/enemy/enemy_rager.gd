@@ -1,21 +1,21 @@
 extends CharacterBody2D
 
 # enemy stats
-@export var enemy_HP: float = 1500.0
-@export var enemy_HP_max: float = 1500.0
+@export var enemy_HP: float = 50.0
+@export var enemy_HP_max: float = 50.0
 @export var speed : float = 80.0
 @export var gravity : float = 1200.0
 @export var detect_range : float = 500.0
-@export var attack_cooldown : float = 0.8 # time between attacks
+@export var attack_cooldown : float = 1.6 # time between attacks
 @export var do_splash_dmg : bool = false
-@export var attack_damage_min : int = 8 # damage dealt
-@export var attack_damage_max : int = 12
+@export var attack_damage_min : int = 5 # damage dealt
+@export var attack_damage_max : int = 10
 @export var wander_time_min : float = 0.5 # wandering time
 @export var wander_time_max : float = 1.5
 @export var stop_distance_min : float = 20.0 # distance before stopping near target
 @export var stop_distance_max : float = 55.0
 @export var attack_range_max : float = 60.0 # distance to stop attacking
-@export var transform_percent : float = 0.5 # 30% of max health for transformation
+@export var transform_percent : float = 0.3 # 30% of max health for transformation
 var transformed : bool = false
 # hitbox
 @onready var hitbox: Area2D = $AttackHitbox

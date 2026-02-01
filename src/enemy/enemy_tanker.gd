@@ -1,12 +1,12 @@
 extends CharacterBody2D
 
 # enemy stats
-@export var enemy_HP: float = 9000.0
-@export var enemy_HP_max: float = 150.0
+@export var enemy_HP: float = 75.0
+@export var enemy_HP_max: float = 75.0
 @export var speed : float = 80.0
 @export var gravity : float = 1200.0
 @export var detect_range : float = 500.0
-@export var attack_cooldown : float = 0.8 # time between attacks
+@export var attack_cooldown : float = 2 # time between attacks
 @export var do_splash_dmg : bool = true
 @export var attack_damage_min : int = 5 # damage dealt
 @export var attack_damage_max : int = 9

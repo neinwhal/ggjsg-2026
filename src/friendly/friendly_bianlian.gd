@@ -1,18 +1,18 @@
 extends CharacterBody2D
 
 # friendly stats
-@export var friendly_HP : float = 50000.0
-@export var friendly_max_HP : float = 50000.0
+@export var friendly_HP : float = 200.0
+@export var friendly_max_HP : float = 200.0
 @export var speed : float = 180.0
 @export var fire_speed : float = 40.0 # speed in fire mode
 @export var gravity : float = 1200.0
 @export var detect_range : float = 750.0
 @export var attack_cooldown : float = 1.5
-@export var fire_attack_cooldown : float = 0.4
+@export var fire_attack_cooldown : float = 0.8
 @export var do_splash_dmg : bool = true
-@export var attack_damage_min : int = 20 # damage dealt in normal mode
-@export var attack_damage_max : int = 35
-@export var attack_fire_damage_min : int = 10 # damage dealt in fire mode
+@export var attack_damage_min : int = 30 # damage dealt in normal mode
+@export var attack_damage_max : int = 30
+@export var attack_fire_damage_min : int = 70 # damage dealt in fire mode
 @export var attack_fire_damage_max : int = 70
 @export var chase_max_distance : float = 550.0 # stop chasing after exceeding this distance
 @export var wander_time_min : float = 0.0 # wandering time

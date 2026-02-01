@@ -14,7 +14,7 @@ func _ready() -> void:
 @export var speed := 200.0
 @export var jump_velocity := -400.0
 @export var gravity := 1200.0
-@export var player_HP : float = 1000;
+@export var player_HP : float = 10000000;
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 

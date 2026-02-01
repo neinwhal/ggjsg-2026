@@ -6,10 +6,10 @@ extends CharacterBody2D
 @export var speed : float = 120.0
 @export var gravity : float = 1200.0
 @export var detect_range : float = 1750.0
-@export var attack_cooldown : float = 0.4
+@export var attack_cooldown : float = 2
 @export var do_splash_dmg : bool = true
-@export var attack_damage_min : int = 20 # damage dealt
-@export var attack_damage_max : int = 35
+@export var attack_damage_min : int = 7 # damage dealt
+@export var attack_damage_max : int = 12
 @export var chase_max_distance : float = 550.0 # stop chasing after exceeding this distance
 @export var wander_time_min : float = 0.0 # wandering time
 @export var wander_time_max : float = 1.0

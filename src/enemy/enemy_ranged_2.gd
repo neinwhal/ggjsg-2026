@@ -1,13 +1,13 @@
 extends CharacterBody2D
 
-@export var enemy_HP : float = 100.0
-@export var enemy_HP_max : float = 100.0
+@export var enemy_HP : float = 30.0
+@export var enemy_HP_max : float = 30.0
 @export var speed : float = 80.0
 @export var gravity : float = 1200.0
 @export var detect_range := 800.0
-@export var attack_cooldown = 3.0 # time between attacks
-@export var attack_damage_min : int = 8 # damage dealt
-@export var attack_damage_max : int = 12
+@export var attack_cooldown = 2.4 # time between attacks
+@export var attack_damage_min : int = 2 # damage dealt
+@export var attack_damage_max : int = 3
 @export var wander_time_min : float = 0.5 # wandering time
 @export var wander_time_max : float = 1.5
 @export var stop_distance_min : float = 220.0 # distance before stopping near target
