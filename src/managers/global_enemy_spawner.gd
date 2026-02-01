@@ -21,7 +21,7 @@ func spawn_enemy() -> void:
 		return
 
 	# randomize spawning creatures
-	var roll := randi_range(1, 8)
+	var roll := 4 #randi_range(1, 8)
 	var enemy_scene: PackedScene
 	if roll == 1:
 		enemy_scene = EnemyShambler

@@ -15,6 +15,7 @@ extends CharacterBody2D
 @export var stop_distance_min : float = 20.0 # distance before stopping near target
 @export var stop_distance_max : float = 55.0
 @export var attack_range_max : float = 60.0 # distance to stop attacking
+@export var dodge_chance : float = 0.3 # dodge chance
 # hitbox
 @onready var hitbox: Area2D = $AttackHitbox
 # death timers
@@ -33,6 +34,10 @@ var attack_timer := 0.0
 var enemy_direction : float = 0.0
 var enemy_change_time : float = 0.0
 
+func _on_animation_finished() -> void:
+	if state == EnemyHelper.State.DODGE:
+		state = EnemyHelper.State.WANDER
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
@@ -40,6 +45,7 @@ func _ready() -> void:
 	add_to_group("enemy") # add to unit group
 	hitbox.monitoring = true
 	hitbox.monitorable = false
+	$AnimatedSprite2D.animation_finished.connect(_on_animation_finished)
 
 func state_wander(delta: float) -> void:
 	enemy_change_time -= delta
@@ -134,10 +140,32 @@ func state_dead(delta: float) -> void:
 func take_damage(amount: int) -> void:
 	if state == EnemyHelper.State.DEAD:
 		return
+	
+	if randf() < dodge_chance:
+		state = EnemyHelper.State.DODGE
+		return
+	
 	enemy_HP -= amount
 	DamageHelper.flash_red($AnimatedSprite2D, get_tree(), is_flashing, flash_duration)
 	if enemy_HP <= 0:
 		enemy_HP = 0
+
+func state_dodge(delta: float) -> void:
+	if $AnimatedSprite2D.animation != "enemy_dodge":
+		$AnimatedSprite2D.play("enemy_dodge")
+	# no target -> no dodge movement
+	if target == null or not is_instance_valid(target):
+		velocity.x = 0.0
+		return
+	# direction away from target
+	var to_target: Vector2 = target.global_position - global_position
+	var dir_x: float
+	if abs(to_target.x) > 0.01:
+		dir_x = -sign(to_target.x)
+	else:
+		dir_x = [-1.0, 1.0].pick_random()
+	# apply dodge speed (usually faster than normal move)
+	velocity.x = dir_x * (speed * 2.0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -154,16 +182,15 @@ func _process(delta: float) -> void:
 	if state == EnemyHelper.State.DEAD:
 		state_dead(delta)
 		return
-	
+		
 	if state == EnemyHelper.State.WANDER:
 		state_wander(delta)
-		
 	elif state == EnemyHelper.State.CHASE:
 		state_chase(delta)
-		
 	elif state == EnemyHelper.State.ATTACK:
 		state_attack(delta)
-	
+	elif state == EnemyHelper.State.DODGE:
+		state_dodge(delta)
 	
 	# gravity
 	if not is_on_floor():

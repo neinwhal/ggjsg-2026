@@ -163,7 +163,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_b3jss")
 }],
-"loop": true,
+"loop": false,
 "name": &"enemy_dodge",
 "speed": 5.0
 }, {
@@ -205,8 +205,9 @@ script = ExtResource("1_glmdy")
 texture_filter = 1
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_h0rrr")
-animation = &"enemy_attack"
-frame_progress = 0.18982597
+animation = &"enemy_dodge"
+frame = 6
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)

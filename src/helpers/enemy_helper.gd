@@ -1,7 +1,7 @@
 extends Object
 class_name EnemyHelper
 
-enum State { WANDER, CHASE, ATTACK, REPOSITION, DEAD }
+enum State { WANDER, CHASE, ATTACK, REPOSITION, DEAD, DODGE }
 
 static func find_nearest_player_unit(tree: SceneTree, from_pos: Vector2, max_dist: float) -> Node2D:
 	var nearest: Node2D = null
