@@ -3,10 +3,10 @@ extends CharacterBody2D
 # friendly stats
 @export var friendly_HP : float = 150.0
 @export var friendly_max_HP : float = 150.0
-@export var speed : float = 90.0
+@export var speed : float = 120.0
 @export var gravity : float = 1200.0
-@export var detect_range : float = 750.0
-@export var attack_cooldown : float = 0.8
+@export var detect_range : float = 1750.0
+@export var attack_cooldown : float = 0.4
 @export var do_splash_dmg : bool = true
 @export var attack_damage_min : int = 20 # damage dealt
 @export var attack_damage_max : int = 35
@@ -16,9 +16,9 @@ extends CharacterBody2D
 @export var idle_time_min : float = 2.0 # idle time
 @export var idle_time_max : float = 5.0
 @export var idle_speed_multiplier : float = 0.25 # multipler when wandering idle
-@export var stop_distance_min : float = 15.0 # distance before stopping near target
-@export var stop_distance_max : float = 50.0
-@export var attack_range_max : float = 60.0 # distance to stop attacking
+@export var stop_distance_min : float = 220.0 # distance before stopping near target
+@export var stop_distance_max : float = 280.0
+@export var attack_range_max : float = 285.0 # distance to stop attacking
 # follow variables
 var desired_distance := 0.0
 @export var follow_distance : float = 350.0
@@ -26,6 +26,11 @@ var desired_distance := 0.0
 @export var follow_speed_multiplier : float = 4.0 # multiplier when following
 @export var distance_variation := 128.0
 @export var follow_stop_buffer := 8.0   # pixels of tolerance
+# projectile stats
+@onready var BulletScene: PackedScene = preload("res://src/friendly/friendly_projectile_ranged.tscn")
+@export var bullet_spawn_offset := Vector2(20, -10)
+@export var bullet_speed := 500.0
+@export var bullet_arc_up := 280.0  # how "high" the arc starts
 # hitbox
 @onready var hitbox: Area2D = $AttackHitbox
 # death timers
@@ -187,6 +192,29 @@ func do_splash_attack() -> void:
 		and body.has_method("take_damage"):
 			body.take_damage(dmg)
 	
+func fire_bullet() -> void:
+	if target_enemy == null:
+		return
+
+	var b := BulletScene.instantiate() as CharacterBody2D
+	get_parent().add_child(b) # add to same parent as enemy (not as child)
+
+	# spawn position
+	var spawn_pos := global_position + bullet_spawn_offset
+	b.global_position = spawn_pos
+
+	# direction to target
+	var to_target := (target_enemy.global_position - spawn_pos)
+	var dir_x : float = sign(to_target.x)
+
+	# initial velocity: forward + a bit upward for arc
+	# (negative Y is up in Godot 2D)
+	b.velocity = Vector2(dir_x * bullet_speed, -bullet_arc_up)
+
+	# if your bullet script has damage, set it (optional)
+	if "damage" in b:
+		b.damage = randi_range(attack_damage_min, attack_damage_max)
+	
 func state_attack(delta: float) -> void:
 	#print("ATTACKMAN")
 	if target_enemy == null:
@@ -208,11 +236,7 @@ func state_attack(delta: float) -> void:
 	attack_timer -= delta
 	if attack_timer <= 0.0:
 		attack_timer = attack_cooldown
-		if do_splash_dmg:
-			do_splash_attack()
-		else:
-			if target_enemy.has_method("take_damage"):
-				target_enemy.take_damage(randi_range(attack_damage_min, attack_damage_max))
+		fire_bullet()
 
 func state_dead(delta: float) -> void:
 	if is_on_floor():

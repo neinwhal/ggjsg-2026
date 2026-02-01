@@ -7,6 +7,9 @@ extends Node2D
 @onready var FriendlyMelee2: PackedScene = preload("res://src/friendly/friendly_melee_2.tscn")
 @onready var FriendlyBianlian: PackedScene = preload("res://src/friendly/friendly_bianlian.tscn")
 
+@onready var FriendlyRanged: PackedScene = preload("res://src/friendly/friendly_ranged.tscn")
+@onready var FriendlyRanged2: PackedScene = preload("res://src/friendly/friendly_ranged_2.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -22,9 +25,9 @@ func spawn_friendly() -> void:
 	
 	spawn_count = spawn_count + 1
 	var e := FriendlyTank.instantiate()
-	var e2 := FriendlyMelee.instantiate()
-	var e3 := FriendlyMelee2.instantiate()
-	var e4 := FriendlyBianlian.instantiate()
+	var e2 := FriendlyTank.instantiate()
+	var e3 := FriendlyRanged.instantiate()
+	var e4 := FriendlyRanged.instantiate()
 	e.global_position = Vector2(player.global_position.x + randf_range(-250.0, 250.0), -500.0)
 	e2.global_position = Vector2(player.global_position.x + randf_range(-250.0, 250.0), -500.0)
 	e3.global_position = Vector2(player.global_position.x + randf_range(-250.0, 250.0), -500.0)
