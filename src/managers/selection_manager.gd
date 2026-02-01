@@ -150,8 +150,8 @@ func _process(delta: float) -> void:
 		var dir_x := pos.x - old_x # negative = moved left, positive = moved right
 		if absf(dir_x) > 0.001:
 			var spr: AnimatedSprite2D = u.get_node("AnimatedSprite2D")
-			if spr.animation != "bianlian_move":
-				spr.play("bianlian_move")
+			#if spr.animation != "bianlian_move":
+			#	spr.play("bianlian_move")
 			spr.flip_h = dir_x < 0.0
 
 	# Stop when close enough
@@ -163,8 +163,8 @@ func _process(delta: float) -> void:
 			p.x = target_pos.x
 				
 			var spr: AnimatedSprite2D = u.get_node("AnimatedSprite2D")
-			if spr.animation != "bianlian_idle":
-				spr.play("bianlian_idle")
+			#if spr.animation != "bianlian_idle":
+			#	spr.play("bianlian_idle")
 				
 			if (u.state != FriendlyHelper.State.IDLE):
 				u.state = FriendlyHelper.State.IDLE
