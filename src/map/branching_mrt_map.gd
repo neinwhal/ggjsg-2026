@@ -68,52 +68,65 @@ func _on_node_11_pressed() -> void:
 
 
 func _on_node_21_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(21, "A", "GREEN")
 
 
 func _on_node_22_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(22, "A", "GREEN")
 
 
 func _on_node_31_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(31, "B", "GREEN")
 
 
 func _on_node_32_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(32, "B", "GREEN")
 
 
 func _on_node_33_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(33, "B", "GREEN")
 
 
 func _on_node_41_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(41, "B", "GREEN")
 
 
 func _on_node_42_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(42, "B", "GREEN")
 
 
 func _on_node_51_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(51, "C", "GREEN")
 
 
 func _on_node_52_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(52, "C", "GREEN")
 
 
 func _on_node_53_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(53, "C", "GREEN")
 
 
 func _on_node_61_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(61, "C", "GREEN")
 
 
 func _on_node_62_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(62, "C", "GREEN")
 
 
 func _on_node_71_pressed() -> void:
-	pass # Replace with function body.
+	hide()
+	on_mrt_node_pressed.emit(71, "D", "GREEN")
