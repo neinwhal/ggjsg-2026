@@ -1,13 +1,13 @@
 extends CharacterBody2D
 
 # friendly stats
-@export var friendly_HP : float = 500.0
-@export var friendly_max_HP : float = 500.0
-@export var speed : float = 150.0
+@export var friendly_HP : float = 150.0
+@export var friendly_max_HP : float = 150.0
+@export var speed : float = 90.0
 @export var gravity : float = 1200.0
 @export var detect_range : float = 750.0
 @export var attack_cooldown : float = 0.8
-@export var do_splash_dmg : bool = false
+@export var do_splash_dmg : bool = true
 @export var attack_damage_min : int = 20 # damage dealt
 @export var attack_damage_max : int = 35
 @export var chase_max_distance : float = 550.0 # stop chasing after exceeding this distance
@@ -57,7 +57,7 @@ func _ready() -> void:
 	# each friendly gets a slightly different stop distance
 	desired_distance = follow_distance + randf_range(-distance_variation, distance_variation)
 	# play default anim
-	$AnimatedSprite2D.play("bianlian_idle")
+	$AnimatedSprite2D.play("idle")
 	$Indicator.visible = false
 	$Indicator.play("default")
 	hitbox.monitoring = true
@@ -201,8 +201,8 @@ func state_attack(delta: float) -> void:
 	
 	# target in attack range
 	velocity.x = 0.0
-	if $AnimatedSprite2D.animation != "bianlian_attack":
-		$AnimatedSprite2D.play("bianlian_attack")
+	if $AnimatedSprite2D.animation != "attack":
+		$AnimatedSprite2D.play("attack")
 	# attacking
 	attack_timer -= delta
 	if attack_timer <= 0.0:
@@ -286,11 +286,11 @@ func _process(delta: float) -> void:
 				# If sprite faces RIGHT by default, flip when moving left.
 				sprite.flip_h = moving_right if flip_when_moving_right else (not moving_right)
 
-				if sprite.animation != "bianlian_move":
-					sprite.play("bianlian_move")
+				if sprite.animation != "move":
+					sprite.play("move")
 			else:
-				if sprite.animation != "bianlian_idle":
-					sprite.play("bianlian_idle")
+				if sprite.animation != "idle":
+					sprite.play("idle")
 		elif (state == FriendlyHelper.State.ATTACK):
 			# attack state, just turn towards enemy
 			# sprite.flip_h = target_enemy.global_position.x < global_position.x
