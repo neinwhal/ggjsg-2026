@@ -1,8 +1,13 @@
 extends Node2D
 
-@onready var EnemyScene: PackedScene = preload("res://src/enemy/enemy_shambler.tscn")
-@onready var EnemyRangedScene: PackedScene = preload("res://src/enemy/enemy_ranged.tscn")
-@onready var EnemyTest: PackedScene = preload("res://src/enemy/enemy_dodger.tscn")
+@onready var EnemyShambler: PackedScene = preload("res://src/enemy/enemy_shambler.tscn")
+@onready var EnemyRusher: PackedScene = preload("res://src/enemy/enemy_rusher.tscn")
+@onready var EnemyRager: PackedScene = preload("res://src/enemy/enemy_rager.tscn")
+@onready var EnemyDodger: PackedScene = preload("res://src/enemy/enemy_dodger.tscn")
+@onready var EnemyRanger: PackedScene = preload("res://src/enemy/enemy_ranged.tscn")
+@onready var EnemyRanger2: PackedScene = preload("res://src/enemy/enemy_ranged_2.tscn")
+@onready var EnemyRat: PackedScene = preload("res://src/enemy/enemy_rat.tscn")
+@onready var EnemyTanker: PackedScene = preload("res://src/enemy/enemy_tanker.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,12 +21,25 @@ func spawn_enemy() -> void:
 		return
 
 	# randomize spawning creatures
-	var roll := randi_range(1, 2)
+	var roll := randi_range(1, 8)
 	var enemy_scene: PackedScene
 	if roll == 1:
-		enemy_scene = EnemyScene
-	else:
-		enemy_scene = EnemyTest #EnemyRangedScene
+		enemy_scene = EnemyShambler
+	elif roll == 2:
+		enemy_scene = EnemyRusher
+	elif roll == 3:
+		enemy_scene = EnemyRager
+	elif roll == 4:
+		enemy_scene = EnemyDodger
+	elif roll == 5:
+		enemy_scene = EnemyRanger
+	elif roll == 6:
+		enemy_scene = EnemyRanger2
+	elif roll == 7:
+		enemy_scene = EnemyRat
+	elif roll == 8:
+		enemy_scene = EnemyTanker
+		
 	# actually psawn
 	var e := enemy_scene.instantiate()
 	add_child(e)
