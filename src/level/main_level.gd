@@ -40,7 +40,9 @@ func _ready() -> void:
 			## Big (big + rescue)
 			scene_selection.append(preload("res://src/level/big(rescue).tscn"))
 			## Ranged (ranger + rescue)
+			scene_selection.append(preload("res://src/level/ranged(ranger+rescue).tscn"))
 			## Ranged (rusher + healing)
+			scene_selection.append(preload("res://src/level/ranger(rusher+healing).tscn"))
 			
 		"B":
 			pass
@@ -54,6 +56,7 @@ func _ready() -> void:
 			scene_selection.append(preload("res://src/level/big(tanker+ranger+rescue).tscn"))
 			## Mega (mega + rescue bianlian)
 			## Ranged (ranged elite + rescue ranger)
+			scene_selection.append(preload("res://src/level/ranged(rangeelite+rescueranger)).tscn"))
 		"C":
 			pass
 			## Big (big + heal)

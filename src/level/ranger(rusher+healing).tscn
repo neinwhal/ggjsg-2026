@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgwehqto7ytpf"]
+
+[ext_resource type="Script" uid="uid://cdjt72s6iy3xy" path="res://src/level/ranged_background.gd" id="1_55h61"]
+
+[node name="Ranger(rusher+healing)" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+script = ExtResource("1_55h61")
