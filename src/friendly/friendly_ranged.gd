@@ -18,6 +18,7 @@ extends CharacterBody2D
 @export var idle_speed_multiplier : float = 0.25 # multipler when wandering idle
 @export var stop_distance_min : float = 220.0 # distance before stopping near target
 @export var stop_distance_max : float = 280.0
+@export var attack_range_min : float = 215.0 # distance to stop attacking
 @export var attack_range_max : float = 285.0 # distance to stop attacking
 # follow variables
 var desired_distance := 0.0
@@ -226,6 +227,11 @@ func state_attack(delta: float) -> void:
 	if dist > attack_range_max:
 		target_enemy = null
 		state = FriendlyHelper.State.IDLE
+		return
+		
+	if dist < attack_range_min:
+		state = EnemyHelper.State.REPOSITION
+		$AnimatedSprite2D.play("enemy_move")
 		return
 	
 	# target in attack range

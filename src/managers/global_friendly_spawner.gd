@@ -26,7 +26,7 @@ func spawn_friendly() -> void:
 	spawn_count = spawn_count + 1
 	var e := FriendlyTank.instantiate()
 	var e2 := FriendlyTank.instantiate()
-	var e3 := FriendlyRanged.instantiate()
+	var e3 := FriendlyRanged2.instantiate()
 	var e4 := FriendlyRanged.instantiate()
 	e.global_position = Vector2(player.global_position.x + randf_range(-250.0, 250.0), -500.0)
 	e2.global_position = Vector2(player.global_position.x + randf_range(-250.0, 250.0), -500.0)
