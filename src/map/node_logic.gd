@@ -56,10 +56,13 @@ func _process(delta: float) -> void:
 
 
 func set_unlighted() -> void:
+	disabled = true
 	animation_state = NodeAnimation.UNLIGHTED
 
 func set_blinking() -> void:
+	disabled = false
 	animation_state = NodeAnimation.BLINKING
 
 func set_clicked() -> void:
+	disabled = false
 	animation_state = NodeAnimation.CLICKED

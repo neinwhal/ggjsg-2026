@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-CurrentLevel="*res://src/level/current_level.gd"
+Progression="*res://src/level/progression.gd"
 
 [input]
 

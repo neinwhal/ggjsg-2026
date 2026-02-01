@@ -48,12 +48,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Start"
 
-[node name="LevelSelectButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-text = "Level Select"
-
 [node name="CreditsButton" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
