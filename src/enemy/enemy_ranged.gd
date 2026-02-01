@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var enemy_HP : float = 100.0
+@export var enemy_HP_max : float = 100.0
 @export var speed : float = 80.0
 @export var gravity : float = 1200.0
 @export var detect_range := 800.0

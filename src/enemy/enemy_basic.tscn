@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ckfyqe8sdq3ot"]
+[gd_scene load_steps=17 format=3 uid="uid://ckfyqe8sdq3ot"]
 
 [ext_resource type="Script" uid="uid://da55at8pbknvg" path="res://src/enemy/enemy_basic.gd" id="1_d3put"]
 [ext_resource type="Texture2D" uid="uid://ox21r0cew4oi" path="res://assets/enemy/SHAMBLER_ATTACK_1.png" id="2_yjc8o"]
@@ -90,6 +90,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d3put"]
 size = Vector2(46, 58)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yjc8o"]
+size = Vector2(43, 54)
+
 [node name="EnemyBasic" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_d3put")
@@ -103,3 +106,11 @@ animation = &"enemy_attack"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 1)
 shape = SubResource("RectangleShape2D_d3put")
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+position = Vector2(21.5, 1)
+shape = SubResource("RectangleShape2D_yjc8o")

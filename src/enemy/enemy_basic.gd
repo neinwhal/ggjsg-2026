@@ -1,11 +1,13 @@
 extends CharacterBody2D
 
 # enemy stats
-@export var enemy_HP: float = 100.0
+@export var enemy_HP: float = 150.0
+@export var enemy_HP_max: float = 150.0
 @export var speed : float = 80.0
 @export var gravity : float = 1200.0
 @export var detect_range : float = 500.0
 @export var attack_cooldown : float = 0.8 # time between attacks
+@export var do_splash_dmg : bool = false
 @export var attack_damage_min : int = 8 # damage dealt
 @export var attack_damage_max : int = 12
 @export var wander_time_min : float = 0.5 # wandering time
@@ -13,6 +15,8 @@ extends CharacterBody2D
 @export var stop_distance_min : float = 20.0 # distance before stopping near target
 @export var stop_distance_max : float = 55.0
 @export var attack_range_max : float = 60.0 # distance to stop attacking
+# hitbox
+@onready var hitbox: Area2D = $AttackHitbox
 # death timers
 @export var dead_timer := 5.0 # time before getting deleted AFTER death
 @export var dead_fall_velocity : float = 5.0 # death falling speed
@@ -34,6 +38,8 @@ func _ready() -> void:
 	randomize()
 	$AnimatedSprite2D.play("enemy_move")
 	add_to_group("enemy") # add to unit group
+	hitbox.monitoring = true
+	hitbox.monitorable = false
 
 func state_wander(delta: float) -> void:
 	enemy_change_time -= delta
@@ -74,6 +80,16 @@ func state_chase(delta: float) -> void:
 	velocity.x = dir * speed
 		
 		
+func do_splash_attack() -> void:
+	await get_tree().physics_frame
+	var dmg := randi_range(attack_damage_min, attack_damage_max)
+	# splash damage
+	for body in hitbox.get_overlapping_bodies():
+		if body != null \
+		and (body.is_in_group("unit") or body.is_in_group("player")) \
+		and body.has_method("take_damage"):
+			body.take_damage(dmg)
+		
 func state_attack(delta: float) -> void:
 	if target == null:
 		state = EnemyHelper.State.WANDER
@@ -96,9 +112,11 @@ func state_attack(delta: float) -> void:
 	attack_timer -= delta
 	if attack_timer <= 0.0:
 		attack_timer = attack_cooldown
-		# apply damage ONCE per cooldown
-		if target.has_method("take_damage"):
-			target.take_damage(randi_range(attack_damage_min, attack_damage_max))
+		if do_splash_dmg:
+			do_splash_attack()
+		else:
+			if target.has_method("take_damage"):
+				target.take_damage(randi_range(attack_damage_min, attack_damage_max))
 
 func state_dead(delta: float) -> void:
 	if is_on_floor():
@@ -146,6 +164,7 @@ func _process(delta: float) -> void:
 	elif state == EnemyHelper.State.ATTACK:
 		state_attack(delta)
 	
+	
 	# gravity
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -155,6 +174,13 @@ func _process(delta: float) -> void:
 	if state == EnemyHelper.State.WANDER:
 		if enemy_direction != 0:
 			$AnimatedSprite2D.flip_h = enemy_direction < 0
+	elif (state == EnemyHelper.State.ATTACK):
+		# attack state, just turn towards enemy
+		# sprite.flip_h = target_enemy.global_position.x < global_position.x
+		# determine facing from enemy position
+		var facing_dir = -1 if target.global_position.x < global_position.x else 1
+		$AnimatedSprite2D.flip_h = facing_dir < 0 # visual flip
+		hitbox.scale.x = facing_dir # hitbox flip
 	else:
 		if target != null:
 			$AnimatedSprite2D.flip_h = target.global_position.x < global_position.x

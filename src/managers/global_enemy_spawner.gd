@@ -20,7 +20,7 @@ func spawn_enemy() -> void:
 	if roll == 1:
 		enemy_scene = EnemyScene
 	else:
-		enemy_scene = EnemyRangedScene
+		enemy_scene = EnemyScene #EnemyRangedScene
 	# actually psawn
 	var e := enemy_scene.instantiate()
 	add_child(e)
