@@ -140,10 +140,10 @@ func state_attack(delta: float) -> void:
 		$AnimatedSprite2D.play("enemy_move")
 		return
 		
-#	if dist < attack_range_min:
-#		state = EnemyHelper.State.REPOSITION
-#		$AnimatedSprite2D.play("enemy_move")
-#		return
+	if dist < attack_range_min:
+		state = EnemyHelper.State.REPOSITION
+		$AnimatedSprite2D.play("enemy_move")
+		return
 		
 	# target in attack range
 	velocity.x = 0.0
@@ -167,6 +167,37 @@ func state_dead(delta: float) -> void:
 	if dead_timer <= 0.0:
 		queue_free()
 		
+func state_reposition(delta: float) -> void:
+	if target == null:
+		target = null
+		state = EnemyHelper.State.WANDER
+		$AnimatedSprite2D.play("enemy_move")
+		return
+	
+	var to_target: Vector2 = target.global_position - global_position
+	var dist: float = to_target.length()
+	# if we are not too close anymore, we can attack
+	if dist >= attack_range_min:
+		velocity.x = 0.0
+		state = EnemyHelper.State.ATTACK
+		$AnimatedSprite2D.play("enemy_attack")
+		return
+	# too close -> reposition to a random distance in [attack_range_min, attack_range_max]
+	var desired_dist: float = randf_range(attack_range_min, attack_range_max)
+	# direction away from target (fallback if overlapping)
+	var away_dir: Vector2
+	if dist > 0.001:
+		away_dir = (-to_target / dist)
+	else:
+		away_dir = Vector2([-1.0, 1.0].pick_random(), 0.0)
+
+	var desired_pos: Vector2 = target.global_position + away_dir * desired_dist
+	# move horizontally toward desired position
+	var dir_x: float = sign(desired_pos.x - global_position.x)
+	velocity.x = dir_x * speed
+	
+	
+
 func take_damage(amount: int) -> void:
 	if state == EnemyHelper.State.DEAD:
 		return
@@ -200,6 +231,9 @@ func _process(delta: float) -> void:
 		
 	elif state == EnemyHelper.State.ATTACK:
 		state_attack(delta)
+		
+	elif state == EnemyHelper.State.REPOSITION:
+		state_reposition(delta)
 	
 	# gravity
 	if not is_on_floor():
