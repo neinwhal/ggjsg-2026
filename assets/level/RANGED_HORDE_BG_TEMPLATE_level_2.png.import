@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf3qty74igehu"
-path="res://.godot/imported/BG_TEMPLATE_level_3.png-6d666438e2b2a3822447859c932b0c5e.ctex"
+uid="uid://e2v2j46pysav"
+path="res://.godot/imported/RANGED_HORDE_BG_TEMPLATE_level_2.png-97419bbc1817102b7bb8f5bf29d76d2e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/level/BG_TEMPLATE_level_3.png"
-dest_files=["res://.godot/imported/BG_TEMPLATE_level_3.png-6d666438e2b2a3822447859c932b0c5e.ctex"]
+source_file="res://assets/level/RANGED_HORDE_BG_TEMPLATE_level_2.png"
+dest_files=["res://.godot/imported/RANGED_HORDE_BG_TEMPLATE_level_2.png-97419bbc1817102b7bb8f5bf29d76d2e.ctex"]
 
 [params]
 

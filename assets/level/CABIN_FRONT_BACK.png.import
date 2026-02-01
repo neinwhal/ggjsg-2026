@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf3qty74igehu"
-path="res://.godot/imported/BG_TEMPLATE_level_3.png-6d666438e2b2a3822447859c932b0c5e.ctex"
+uid="uid://b1nboppa1sgny"
+path="res://.godot/imported/CABIN_FRONT_BACK.png-5a4e8ca10b0410e7341d64a300e0fead.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/level/BG_TEMPLATE_level_3.png"
-dest_files=["res://.godot/imported/BG_TEMPLATE_level_3.png-6d666438e2b2a3822447859c932b0c5e.ctex"]
+source_file="res://assets/level/CABIN_FRONT_BACK.png"
+dest_files=["res://.godot/imported/CABIN_FRONT_BACK.png-5a4e8ca10b0410e7341d64a300e0fead.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bf3qty74igehu"
-path="res://.godot/imported/BG_TEMPLATE_level_3.png-6d666438e2b2a3822447859c932b0c5e.ctex"
+uid="uid://r5ty04w3nwcr"
+path="res://.godot/imported/MEGA_HORDE_BG_TEMPLATE_level_3.png-437eee6a38b44b667bfebdae2067947e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/level/BG_TEMPLATE_level_3.png"
-dest_files=["res://.godot/imported/BG_TEMPLATE_level_3.png-6d666438e2b2a3822447859c932b0c5e.ctex"]
+source_file="res://assets/level/MEGA_HORDE_BG_TEMPLATE_level_3.png"
+dest_files=["res://.godot/imported/MEGA_HORDE_BG_TEMPLATE_level_3.png-437eee6a38b44b667bfebdae2067947e.ctex"]
 
 [params]
 
