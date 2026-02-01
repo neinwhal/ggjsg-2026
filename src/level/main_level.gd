@@ -8,12 +8,13 @@ const SECTION_WIDTH: int = 2016
 const START_SCENE : String = "res://src/level/start_section.tscn"
 const END_SCENE : String = "res://src/level/end_section.tscn"
 
-@export var GREEN_DIFFICULTY_COUNT: int = 2
+@export var GREEN_DIFFICULTY_COUNT: int = 1
 @export var YELLOW_DIFFICULTY_COUNT: int = 3
 @export var RED_DIFFICULTY_COUNT: int = 4
 
 var current_max_x: int = SECTION_WIDTH
 var mid_section_count: int = 1
+var mid_section_max: int
 var is_end_generated: bool = false
 ### Tracks map progresion
 #var current_level: int
@@ -30,26 +31,39 @@ func _ready() -> void:
 	
 	match Progression.zone:
 		"A":
-			pass
+			## Normal Normal
 			scene_selection.append(preload("res://src/level/normal_section.tscn"))
-			#scene_selection.append(preload("res://src/level/section_a.tscn"))
-			#scene_selection.append(preload("res://src/level/section_b.tscn"))
-			#scene_selection.append(preload("res://src/level/section_c.tscn"))
+			## Normal
+			## Normal
+			## Big
+			## Ranged
+			## Ranged
+			
 		"B":
 			pass
+			## Normal Normal
+			## Normal Healing
+			## Big
+			## Big
+			## Mega
+			## Ranged
 		"C":
 			pass
+			## Big
+			## Mega
+			## Mega
+			## Mega
 		"D":
 			pass
 		_:
 			print_debug("Invalid progression zone: ", Progression.zone, "!!!")
 	match Progression.color_difficulty:
 		"GREEN":
-			mid_section_count = GREEN_DIFFICULTY_COUNT
+			mid_section_max = GREEN_DIFFICULTY_COUNT
 		"YELLOW":
-			mid_section_count = YELLOW_DIFFICULTY_COUNT
+			mid_section_max = YELLOW_DIFFICULTY_COUNT
 		"RED":
-			mid_section_count = RED_DIFFICULTY_COUNT
+			mid_section_max = RED_DIFFICULTY_COUNT
 		_:
 			print_debug("Invalid progression color difficulty: ", Progression.color_difficulty, "!!!")
 	
@@ -63,8 +77,8 @@ func _ready() -> void:
 	
 	
 	generate_start_section()
-	generate_random_section(SECTION_WIDTH)
-	$RightExtent.position.x = SECTION_WIDTH
+	generate_random_section(SECTION_WIDTH / 3.0)
+	$RightExtent.position.x = SECTION_WIDTH / 3.0
 	print_debug("Current node is: ", Progression.node)
 	
 	$CanvasLayer/BranchingMrtMap.on_mrt_node_pressed.connect(go_next_level)
@@ -139,10 +153,12 @@ func pause() -> void:
 func _on_right_extent_body_entered(body: Node2D) -> void:
 	#print_debug("Hit right extent!!!")
 	## Spawn section to right
-	if mid_section_count == scene_selection.size():
-		current_max_x += SECTION_WIDTH
+	if mid_section_count >= mid_section_max:
+		print("spawn end")
+		current_max_x #+= SECTION_WIDTH / 3.0
 		generate_end_section(current_max_x)
 	else:
+		print("spawn mid")
 		current_max_x += SECTION_WIDTH
 		$RightExtent.position.x += SECTION_WIDTH
 		generate_random_section(current_max_x)
