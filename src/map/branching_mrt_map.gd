@@ -30,38 +30,44 @@ func open_branching_mrt() -> void:
 		#node.set_unlighted()
 	match Progression.node:
 		0:
-			print_debug("setting nfiefbe")
 			$"Nodes/Node(1,1)".set_blinking()
 		11:
-			pass
+			$"Nodes/Node(2,1)".set_blinking()
+			$"Nodes/Node(2,2)".set_blinking()
 		21:
-			pass
+			$"Nodes/Node(3,1)".set_blinking()
+			$"Nodes/Node(3,2)".set_blinking()
 		22:
-			pass
+			$"Nodes/Node(3,2)".set_blinking()
+			$"Nodes/Node(3,3)".set_blinking()
 		31:
-			pass
+			$"Nodes/Node(4,1)".set_blinking()
 		32:
-			pass
+			$"Nodes/Node(4,1)".set_blinking()
+			$"Nodes/Node(4,2)".set_blinking()
 		33:
-			pass
+			$"Nodes/Node(4,2)".set_blinking()
 		41:
-			pass
+			$"Nodes/Node(5,1)".set_blinking()
+			$"Nodes/Node(5,2)".set_blinking()
 		42:
-			pass
+			$"Nodes/Node(5,2)".set_blinking()
+			$"Nodes/Node(5,3)".set_blinking()
 		51:
-			pass
+			$"Nodes/Node(6,1)".set_blinking()
 		52:
-			pass
+			$"Nodes/Node(6,1)".set_blinking()
+			$"Nodes/Node(6,2)".set_blinking()
 		53:
-			pass
+			$"Nodes/Node(6,2)".set_blinking()
 		61:
-			pass
+			$"Nodes/Node(7,1)".set_blinking()
 		62:
-			pass
+			$"Nodes/Node(7,1)".set_blinking()
 		71:
-			pass
+			print_debug("Shouldn't be accessing map at the end of 71(final node)!!!")
 		_:
-			pass
+			print_debug("Invalid progression node: ", Progression.node, "!!!")
 	show()
 
 func _on_node_11_pressed() -> void:
