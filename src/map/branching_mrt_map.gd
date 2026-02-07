@@ -13,6 +13,7 @@ signal on_mrt_node_pressed(next_node: int, zone: String, colour_difficulty: Stri
 func _ready() -> void:
 	if Progression.enter_from_main_menu:
 		Progression.enter_from_main_menu = false
+		open_branching_mrt()
 	else:
 		hide()
 
@@ -24,9 +25,12 @@ func open_branching_mrt() -> void:
 	## Logic to determine what node to allow selection
 	for n in $Nodes.get_children():
 		var node: TextureButton = n as TextureButton
+		node.set_unlighted()
+		#print_debug("sfeneffef")
 		#node.set_unlighted()
 	match Progression.node:
 		0:
+			print_debug("setting nfiefbe")
 			$"Nodes/Node(1,1)".set_blinking()
 		11:
 			pass
@@ -63,7 +67,7 @@ func open_branching_mrt() -> void:
 func _on_node_11_pressed() -> void:
 	## Zone A, green
 	hide()
-	Progression.reset_progression()
+	Progression.set_level_one("A", "GREEN")
 	get_tree().change_scene_to_file("res://src/level/main_level.tscn")
 
 

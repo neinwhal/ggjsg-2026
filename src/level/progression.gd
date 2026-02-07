@@ -14,10 +14,12 @@ func _ready() -> void:
 	reset_progression()
 
 func reset_progression() -> void:
-	## Initial lvl
+	node = 0
+
+func set_level_one(_zone: String = "A", _color: String = "GREEN") -> void:
 	node = 11
-	zone = "A"
-	color_difficulty = "GREEN"
+	zone = _zone
+	color_difficulty = _color
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
