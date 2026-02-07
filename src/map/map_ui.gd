@@ -15,7 +15,7 @@ func _ready() -> void:
 	map_spritesheet_width = 896#texture.get_size().x
 	map_frame_width = 128#map_spritesheet_width / MAP_FRAMES
 	atlas.region.size.x = 128#map_frame_width
-	atlas.region.size.y = 112#texture.get_size().y
+	atlas.region.size.y = 115#texture.get_size().y
 	atlas.region.position.x = 0 # will change per frame
 	atlas.region.position.y = 0
 

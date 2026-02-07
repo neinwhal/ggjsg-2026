@@ -1,14 +1,14 @@
 [gd_scene load_steps=22 format=3 uid="uid://b57787sd0uw3v"]
 
 [ext_resource type="Script" uid="uid://be1jo7qkdrnv" path="res://src/map/branching_mrt_map.gd" id="1_0m4hf"]
-[ext_resource type="Texture2D" uid="uid://c7buqhpvx6qug" path="res://assets/map/NEW_MAP.png" id="2_74pbq"]
+[ext_resource type="Texture2D" uid="uid://b86rupjqyeeup" path="res://assets/map/MAP.png" id="2_61dor"]
 [ext_resource type="Script" uid="uid://lboq80aklq2m" path="res://src/map/map_ui.gd" id="3_6pw1s"]
 [ext_resource type="Texture2D" uid="uid://bkfu3rwnh3mra" path="res://assets/map/SINGLE_MAP_FRAME.png" id="4_6pw1s"]
 [ext_resource type="Texture2D" uid="uid://m1j8joewaqw" path="res://assets/map/GREEN_NODE_FLASHING.png" id="5_61dor"]
 [ext_resource type="Script" uid="uid://ctpbdaxr28mno" path="res://src/map/node_logic.gd" id="6_61dor"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6pw1s"]
-atlas = ExtResource("2_74pbq")
+atlas = ExtResource("2_61dor")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_61dor"]
 atlas = ExtResource("5_61dor")
@@ -63,7 +63,7 @@ grow_vertical = 2
 script = ExtResource("1_0m4hf")
 
 [node name="MapUI" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(740.57, 648)
+custom_minimum_size = Vector2(723, 648)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -84,8 +84,7 @@ stretch_mode = 5
 script = ExtResource("3_6pw1s")
 
 [node name="MapFrame(debug)" type="TextureRect" parent="."]
-visible = false
-custom_minimum_size = Vector2(740.57, 648)
+custom_minimum_size = Vector2(723, 648)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -103,7 +102,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Nodes" type="Control" parent="."]
-custom_minimum_size = Vector2(740.57, 648)
+custom_minimum_size = Vector2(723, 648)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -119,10 +118,10 @@ grow_vertical = 2
 
 [node name="Node(1,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 70.285
-offset_top = 347.0
-offset_right = 150.285
-offset_bottom = 427.0
+offset_left = 77.285
+offset_top = 338.0
+offset_right = 157.285
+offset_bottom = 418.0
 scale = Vector2(0.58, 0.58)
 texture_normal = SubResource("AtlasTexture_61dor")
 stretch_mode = 5
@@ -130,10 +129,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(2,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 170.285
-offset_top = 262.0
-offset_right = 250.285
-offset_bottom = 342.0
+offset_left = 173.285
+offset_top = 252.0
+offset_right = 253.285
+offset_bottom = 332.0
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_5or0s")
 stretch_mode = 4
@@ -141,10 +140,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(2,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 170.28499
-offset_top = 447.99997
-offset_right = 250.28499
-offset_bottom = 528.0
+offset_left = 173.28499
+offset_top = 434.00003
+offset_right = 253.28499
+offset_bottom = 514.00006
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_y8l36")
 stretch_mode = 4
@@ -152,10 +151,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(3,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 263.285
-offset_top = 168.0
-offset_right = 343.285
-offset_bottom = 248.0
+offset_left = 264.28503
+offset_top = 163.0
+offset_right = 344.28503
+offset_bottom = 243.0
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_ldpqy")
 stretch_mode = 4
@@ -163,10 +162,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(3,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 263.285
-offset_top = 356.0
-offset_right = 343.285
-offset_bottom = 436.0
+offset_left = 264.28503
+offset_top = 346.0
+offset_right = 344.28503
+offset_bottom = 426.0
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_6eris")
 stretch_mode = 4
@@ -174,10 +173,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(3,3)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 261.28497
-offset_top = 538.99994
-offset_right = 341.28497
-offset_bottom = 618.99994
+offset_left = 266.285
+offset_top = 525.00006
+offset_right = 346.285
+offset_bottom = 605.00006
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_vejkc")
 stretch_mode = 4
@@ -185,10 +184,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(4,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 355.28497
-offset_top = 261.99997
-offset_right = 435.28497
-offset_bottom = 341.99997
+offset_left = 354.28497
+offset_top = 254.00003
+offset_right = 434.28497
+offset_bottom = 334.00003
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_ehfkc")
 stretch_mode = 4
@@ -196,10 +195,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(4,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 355.28497
-offset_top = 447.0
-offset_right = 435.28497
-offset_bottom = 527.0
+offset_left = 354.28497
+offset_top = 433.0
+offset_right = 434.28497
+offset_bottom = 513.0
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_oiw72")
 stretch_mode = 4
@@ -207,10 +206,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(5,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 447.28497
-offset_top = 169.99998
-offset_right = 527.285
-offset_bottom = 249.99998
+offset_left = 446.28497
+offset_top = 162.0
+offset_right = 526.285
+offset_bottom = 242.0
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_wo0un")
 stretch_mode = 4
@@ -218,10 +217,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(5,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 447.28503
-offset_top = 355.0
-offset_right = 527.28503
-offset_bottom = 435.0
+offset_left = 445.28503
+offset_top = 343.0
+offset_right = 525.28503
+offset_bottom = 423.0
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_muv01")
 stretch_mode = 4
@@ -230,9 +229,9 @@ script = ExtResource("6_61dor")
 [node name="Node(5,3)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
 offset_left = 445.28497
-offset_top = 540.99994
+offset_top = 525.00006
 offset_right = 525.285
-offset_bottom = 620.99994
+offset_bottom = 605.00006
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_4lqr8")
 stretch_mode = 4
@@ -240,10 +239,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(6,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 542.285
-offset_top = 261.99997
-offset_right = 622.285
-offset_bottom = 341.99997
+offset_left = 534.285
+offset_top = 256.00003
+offset_right = 614.285
+offset_bottom = 336.00003
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_53tpu")
 stretch_mode = 4
@@ -251,10 +250,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(6,2)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 541.285
-offset_top = 447.99997
-offset_right = 621.285
-offset_bottom = 528.0
+offset_left = 535.285
+offset_top = 436.00003
+offset_right = 615.285
+offset_bottom = 516.00006
 scale = Vector2(0.4, 0.4)
 texture_normal = SubResource("AtlasTexture_x2scm")
 stretch_mode = 4
@@ -262,10 +261,10 @@ script = ExtResource("6_61dor")
 
 [node name="Node(7,1)" type="TextureButton" parent="Nodes"]
 layout_mode = 0
-offset_left = 624.28503
-offset_top = 347.0
-offset_right = 704.28503
-offset_bottom = 427.0
+offset_left = 618.28503
+offset_top = 337.0
+offset_right = 698.28503
+offset_bottom = 417.0
 scale = Vector2(0.58, 0.58)
 texture_normal = SubResource("AtlasTexture_74whj")
 stretch_mode = 4
