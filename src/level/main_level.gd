@@ -12,8 +12,8 @@ const END_SCENE : String = "res://src/level/end_section.tscn"
 @export var YELLOW_DIFFICULTY_COUNT: int = 3
 @export var RED_DIFFICULTY_COUNT: int = 4
 
-var current_max_x: int = SECTION_WIDTH
-var mid_section_count: int = 1
+var current_max_x: int = SECTION_WIDTH * 2.0 / 3.0
+var mid_section_count: int = 0
 var mid_section_max: int
 var is_end_generated: bool = false
 ### Tracks map progresion
@@ -87,13 +87,16 @@ func _ready() -> void:
 	#$Floor.position.x = ($Floor/CollisionShape2D.shape.size.x / 2.0) - (SECTION_WIDTH / 2.0)
 	
 	## Use this if floor is to extend by 1 SECTION_WIDTH past the wall sprite of both ends
-	$Floor/CollisionShape2D.shape.size.x = SECTION_WIDTH * (mid_section_count + 2 + 2) # +2 for begin/end, +2 for extra width for enemy spawn
+	$Floor/CollisionShape2D.shape.size.x = SECTION_WIDTH * (mid_section_max + 2 + 2) # +2 for begin/end, +2 for extra width for enemy spawn
 	$Floor.position.x = ($Floor/CollisionShape2D.shape.size.x / 2.0) - (SECTION_WIDTH * 1.5)
 	
 	
 	generate_start_section()
-	generate_random_section(SECTION_WIDTH / 3.0)
-	$RightExtent.position.x = SECTION_WIDTH / 3.0
+	#generate_random_section(SECTION_WIDTH * 2.0 / 3.0)
+	generate_random_section(current_max_x)
+	#current_max_x += SECTION_WIDTH
+	$RightExtent.position.x = SECTION_WIDTH * 2.0 / 3.0
+	print_debug("mid cnt: ", mid_section_count, "mid max", mid_section_max)
 	print_debug("Current node is: ", Progression.node)
 	
 	$CanvasLayer/BranchingMrtMap.on_mrt_node_pressed.connect(go_next_level)
@@ -172,7 +175,7 @@ func _on_right_extent_body_entered(body: Node2D) -> void:
 	## Spawn section to right
 	if mid_section_count >= mid_section_max:
 		print("spawn end")
-		current_max_x #+= SECTION_WIDTH / 3.0
+		current_max_x += SECTION_WIDTH * 2.0 / 3.0
 		generate_end_section(current_max_x)
 	else:
 		print("spawn mid")
