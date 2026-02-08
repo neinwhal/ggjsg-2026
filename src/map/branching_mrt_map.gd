@@ -70,6 +70,9 @@ func open_branching_mrt() -> void:
 			print_debug("Invalid progression node: ", Progression.node, "!!!")
 	show()
 
+func close_branching_mrt() -> void:
+	hide()
+
 func _on_node_11_pressed() -> void:
 	## Zone A, green
 	hide()
