@@ -4,11 +4,24 @@ var body_in_range: bool = false
 var trigger_action: String = ""
 signal on_time_timeout()
 
+## Custom logic to hide timer ui for x amt of time
+var hide_timer: Timer
+var to_hide: bool = false
+
 func _ready() -> void:
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	
+	## Custom logic to hide timer ui for x amt of time
+	hide_timer = Timer.new()
+	hide_timer.timeout.connect(timeout_unhide)
+	add_child(hide_timer)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	if to_hide:
+		hide()
+		return
+	
 	if not InputMap.has_action(trigger_action):
 		print_debug("Invalid action state in InteractionTimer!!!")
 		return
@@ -51,3 +64,12 @@ func body_exited() -> void:
 
 func _on_timer_timeout() -> void:
 	on_time_timeout.emit()
+
+## Custom logic to hide timer ui for x amt of time
+func hide_x_duration(duration: float) -> void:
+	to_hide = true
+	hide_timer.wait_time = duration
+	hide_timer.start()
+
+func timeout_unhide() -> void:
+	to_hide = false

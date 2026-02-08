@@ -22,3 +22,6 @@ func _on_exit_mrt_map_body_exited(body: Node2D) -> void:
 
 func _on_interaction_timer_on_time_timeout() -> void:
 	on_open_mrt_map_interacted.emit()
+	
+	## Custom logic to hide timer after opening map
+	$ExitMrtMap/InteractionTimer.hide_x_duration(0.6)
