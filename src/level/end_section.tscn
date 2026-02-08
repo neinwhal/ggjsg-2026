@@ -21,10 +21,10 @@ scale = Vector2(2, 2)
 texture = ExtResource("2_iyfca")
 script = ExtResource("2_a1rqp")
 
-[node name="OutOfBounds" type="StaticBody2D" parent="."]
+[node name="OutOfBounds(Right)" type="StaticBody2D" parent="." groups=["WorldExtent"]]
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds(Right)"]
 position = Vector2(342, -38)
 shape = SubResource("RectangleShape2D_iyfca")
 

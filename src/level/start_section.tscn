@@ -16,10 +16,10 @@ texture = ExtResource("1_nx66v")
 flip_h = true
 script = ExtResource("1_v6w26")
 
-[node name="OutOfBounds" type="StaticBody2D" parent="."]
+[node name="OutOfBounds(Left)" type="StaticBody2D" parent="." groups=["WorldExtent"]]
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds(Left)"]
 position = Vector2(-342, -47)
 shape = SubResource("RectangleShape2D_melth")
 

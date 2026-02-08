@@ -26,6 +26,11 @@ Progression="*res://src/level/progression.gd"
 window/size/viewport_width=1200
 window/size/viewport_height=650
 
+[global_group]
+
+WorldExtent=""
+NextSpawnTrigger=""
+
 [input]
 
 MoveLeft={
