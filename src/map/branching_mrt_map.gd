@@ -22,6 +22,11 @@ func _ready() -> void:
 	#pass
 
 func open_branching_mrt() -> void:
+	## Popup animation (start from 1 window size above)
+	var tween = get_tree().create_tween()
+	position = Vector2(0, -get_window().size.y)
+	tween.tween_property(self, "position", Vector2(0, 0), 0.5).set_trans(Tween.TRANS_SINE)
+	
 	## Logic to determine what node to allow selection
 	for n in $Nodes.get_children():
 		var node: TextureButton = n as TextureButton
