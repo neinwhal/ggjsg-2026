@@ -17,6 +17,7 @@ var duration_counter: float
 
 ## Rescue mechanics
 @export var rescue_duration: float = 3.0
+@export var duration_step: float = 0.5
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -38,7 +39,7 @@ func _ready() -> void:
 	$Sprite2D.hframes = 4
 	$Sprite2D.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	
-	$RescueArea/InteractionTimer.set_timer(rescue_duration, 0.5)
+	$RescueArea/InteractionTimer.set_timer(rescue_duration, duration_step)
 	$RescueArea/InteractionTimer.set_action_trigger("Rescue")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
