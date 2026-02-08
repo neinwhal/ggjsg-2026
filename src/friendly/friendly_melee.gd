@@ -71,7 +71,7 @@ func _find_nearest_in_group(group_name: String, max_dist: float) -> Node2D:
 	return nearest
 
 func state_idle(delta: float) -> void:
-	print("STATE IDLE")
+	#print("STATE IDLE")
 	# if too far from player, change to follow state
 	var dist_to_player := global_position.distance_to(target_player.global_position)
 	if dist_to_player > (follow_distance + follow_trigger_deviation):
@@ -98,7 +98,7 @@ func state_idle(delta: float) -> void:
 		velocity.x = friendly_direction * (speed * idle_speed_multiplier)
 	
 func state_follow(delta: float) -> void:
-	print("STATE FOLLOW")
+	#print("STATE FOLLOW")
 	# horizontal follow logic
 	var dx = target_player.global_position.x - global_position.x
 	var abs_dx = abs(dx)
@@ -119,7 +119,7 @@ func deselect_unit() -> void:
 	$Indicator.visible = false
 
 func state_order_move(delta: float) -> void:
-	print("STATE ORDER MOVE")
+	#print("STATE ORDER MOVE")
 	velocity.x = 0
 	# clear all targets!
 	target_enemy = null
@@ -127,8 +127,8 @@ func state_order_move(delta: float) -> void:
 	# todo maybe move here so its easier to configure for each unit type? idkkk
 	
 func state_order_attack(delta: float) -> void:
-	print("STATE ORDER ATTACK")
-	if target_enemy == null:
+	#print("STATE ORDER ATTACK")
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		state = FriendlyHelper.State.IDLE
 		return
 		
@@ -145,9 +145,9 @@ func state_order_attack(delta: float) -> void:
 	velocity.x = dir * speed
 	
 func state_chase(delta: float) -> void:
-	print("STATE CHASE")
+	#print("STATE CHASE")
 	# no target, go back to idle
-	if target_enemy == null:
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		state = FriendlyHelper.State.IDLE
 		return
 	
@@ -179,9 +179,9 @@ func do_splash_attack() -> void:
 			body.take_damage(dmg)
 	
 func state_attack(delta: float) -> void:
-	print("STATE ATTACK")
+	#print("STATE ATTACK")
 	# # # # # # # # # # #
-	if target_enemy == null:
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		state = FriendlyHelper.State.IDLE
 		return
 		
@@ -207,7 +207,7 @@ func state_attack(delta: float) -> void:
 				target_enemy.take_damage(randi_range(attack_damage_min, attack_damage_max))
 
 func state_dead(delta: float) -> void:
-	print("STATE DEAD")
+	#print("STATE DEAD")
 	# # # # # # # # # # #
 	if is_on_floor():
 		velocity.y = dead_fall_velocity

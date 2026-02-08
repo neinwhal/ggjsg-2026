@@ -136,7 +136,7 @@ func state_order_move(delta: float) -> void:
 	
 func state_order_attack(delta: float) -> void:
 	#print("attack order!")
-	if target_enemy == null:
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		state = FriendlyHelper.State.IDLE
 		return
 		
@@ -156,7 +156,7 @@ func state_order_attack(delta: float) -> void:
 func state_chase(delta: float) -> void:
 	#print("CHASEMAN")
 	# no target, go back to idle
-	if target_enemy == null:
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		state = FriendlyHelper.State.IDLE
 		return
 	
@@ -189,7 +189,7 @@ func do_splash_attack() -> void:
 			body.take_damage(dmg)
 	
 func fire_bullet() -> void:
-	if target_enemy == null:
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		return
 
 	var b := BulletScene.instantiate() as CharacterBody2D
@@ -213,7 +213,7 @@ func fire_bullet() -> void:
 	
 func state_attack(delta: float) -> void:
 	#print("ATTACKMAN")
-	if target_enemy == null:
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		state = FriendlyHelper.State.IDLE
 		return
 		
@@ -253,7 +253,7 @@ func state_dead(delta: float) -> void:
 		queue_free()
 
 func state_reposition(delta: float) -> void:
-	if target_enemy == null:
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		target_enemy = null
 		state = FriendlyHelper.State.IDLE
 		$AnimatedSprite2D.play("move")

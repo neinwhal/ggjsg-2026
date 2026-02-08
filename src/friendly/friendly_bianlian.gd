@@ -172,7 +172,7 @@ func state_order_move(delta: float) -> void:
 	
 func state_order_attack(delta: float) -> void:
 	#print("attack order!")
-	if target_enemy == null:
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		state = FriendlyHelper.State.IDLE
 		return
 		
@@ -192,7 +192,7 @@ func state_order_attack(delta: float) -> void:
 func state_chase(delta: float) -> void:
 	#print("CHASEMAN")
 	# no target, go back to idle
-	if target_enemy == null:
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		state = FriendlyHelper.State.IDLE
 		return
 	
@@ -230,7 +230,7 @@ func do_splash_attack() -> void:
 	
 func state_attack(delta: float) -> void:
 	#print("ATTACKMAN")
-	if target_enemy == null:
+	if !FriendlyHelper.is_enemy_valid(target_enemy):
 		state = FriendlyHelper.State.IDLE
 		return
 		
