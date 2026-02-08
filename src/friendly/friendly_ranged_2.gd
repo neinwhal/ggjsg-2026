@@ -129,8 +129,7 @@ func state_order_move(delta: float) -> void:
 	#print("ORDERMAN")
 	velocity.x = 0
 	# clear all targets!
-	if target_enemy != null:
-		target_enemy = null
+	target_enemy = null
 	# logic for orders are in selection manager!
 	# todo maybe move here so its easier to configure for each unit type? idkkk
 	
