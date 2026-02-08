@@ -27,8 +27,10 @@ func _process(_delta: float) -> void:
 		## Need to account for this special case
 		## To avoid value being set to max
 		value = 0.0
+		hide()
 	else:
 		value = $Timer.wait_time - $Timer.time_left
+		show()
 
 func set_timer(max_duration: float, _step: float = 1.0) -> void:
 	max_value = max_duration
