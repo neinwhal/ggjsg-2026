@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b1nboppa1sgny" path="res://assets/level/CABIN_FRONT_BACK.png" id="1_nx66v"]
 [ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/level/mrt_background.gd" id="1_v6w26"]
-[ext_resource type="PackedScene" uid="uid://dh8ijwlsvhect" path="res://src/level/rescue_event.tscn" id="3_melth"]
+[ext_resource type="PackedScene" uid="uid://dueeti0s0uve7" path="res://src/level/rescue_event.tscn" id="3_melth"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_melth"]
 size = Vector2(32, 260)
@@ -25,3 +25,4 @@ shape = SubResource("RectangleShape2D_melth")
 
 [node name="RescueEvent" parent="." instance=ExtResource("3_melth")]
 position = Vector2(226, -36)
+duration_step = 0.1
