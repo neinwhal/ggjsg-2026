@@ -4,6 +4,9 @@ var body_in_range: bool = false
 var trigger_action: String = ""
 signal on_time_timeout()
 
+func _ready() -> void:
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if not InputMap.has_action(trigger_action):
