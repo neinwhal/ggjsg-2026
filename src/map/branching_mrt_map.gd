@@ -1,6 +1,8 @@
 extends Control
 
-#signal _on_lvl_2_button_pressed()
+var green_texture:= preload("res://assets/map/GREEN_NODE_FLASHING.png")
+var yellow_texture:= preload("res://assets/map/YELLOW_NODE_FLASHING.png")
+var red_texture:= preload("res://assets/map/RED_NODE_FLASHING.png")
 
 ## Map logic
 ## Zone A - col 1-2
@@ -28,9 +30,23 @@ func open_branching_mrt() -> void:
 	tween.tween_property(self, "position", Vector2(0, 0), 0.5).set_trans(Tween.TRANS_SINE)
 	
 	## Logic to determine what node to allow selection
+	var idx: int = 0
 	for n in $Nodes.get_children():
 		var node: TextureButton = n as TextureButton
 		node.set_unlighted()
+		
+		var atlas_normal: AtlasTexture = node.texture_normal
+		match Progression.color_diff_saved[idx]:
+			"GREEN":
+				node.color_diff = "GREEN"
+				atlas_normal.atlas = green_texture
+			"YELLOW":
+				node.color_diff = "YELLOW"
+				atlas_normal.atlas = yellow_texture
+			"RED":
+				node.color_diff = "RED"
+				atlas_normal.atlas = red_texture
+		idx += 1
 		#print_debug("sfeneffef")
 		#node.set_unlighted()
 	match Progression.node:

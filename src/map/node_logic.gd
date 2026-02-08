@@ -2,10 +2,12 @@ extends TextureButton
 
 ## Animation State
 enum NodeAnimation {
-	UNLIGHTED,		# For current node and non neighbouring nodes
+	UNLIGHTED,		# For non neighbouring nodes
 	BLINKING,		# For neighbouring nodes
-	CLICKED			# For neighbouring nodes upon click
+	GRAYED			# For nodes not possible to enter anymore
 }
+
+var color_diff: String
 
 const NODE_FRAMES: int = 5
 const NODE_FRAME_WIDTH: int = 16
@@ -18,6 +20,8 @@ var animation_state: NodeAnimation
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#texture_normal = red_texture
+	
 	animation_state = NodeAnimation.UNLIGHTED
 	animation_state = NodeAnimation.BLINKING
 	var atlas_normal: AtlasTexture = texture_normal
@@ -48,7 +52,7 @@ func _process(delta: float) -> void:
 					#print_debug("+ width")
 				else:
 					atlas_normal.region.position.x = 0
-		NodeAnimation.CLICKED:
+		NodeAnimation.GRAYED:
 			node_duration_count = 0.0
 		_:
 			pass
@@ -63,6 +67,6 @@ func set_blinking() -> void:
 	disabled = false
 	animation_state = NodeAnimation.BLINKING
 
-func set_clicked() -> void:
-	disabled = false
-	animation_state = NodeAnimation.CLICKED
+func set_grayed() -> void:
+	disabled = true
+	animation_state = NodeAnimation.GRAYED
