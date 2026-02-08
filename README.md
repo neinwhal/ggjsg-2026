@@ -1,4 +1,5 @@
-### Train To Yishun
+
+![train-to-yishun](https://github.com/user-attachments/assets/2efe0e96-c8f6-47a6-8be3-1b5a6c90a7a9)
 
 Made for [Global Game Jam Singapore 2026](https://globalgamejam.org/jam-sites/2026/ggj-singapore-2026) in *mostly* 48 hours
 
