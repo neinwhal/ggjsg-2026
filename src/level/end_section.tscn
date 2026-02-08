@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b77tgxo88nrfq"]
+[gd_scene load_steps=7 format=3 uid="uid://b77tgxo88nrfq"]
 
 [ext_resource type="Script" uid="uid://6wpsctahhvdf" path="res://src/level/end_section.gd" id="1_a1rqp"]
 [ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/level/mrt_background.gd" id="2_a1rqp"]
 [ext_resource type="Texture2D" uid="uid://b1nboppa1sgny" path="res://assets/level/CABIN_FRONT_BACK.png" id="2_iyfca"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iyfca"]
+size = Vector2(32, 260)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q70ny"]
 size = Vector2(20, 200)
@@ -14,8 +17,16 @@ radius = 127.03
 script = ExtResource("1_a1rqp")
 
 [node name="MRTBackground" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
 texture = ExtResource("2_iyfca")
 script = ExtResource("2_a1rqp")
+
+[node name="OutOfBounds" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds"]
+position = Vector2(342, -38)
+shape = SubResource("RectangleShape2D_iyfca")
 
 [node name="FinalExtent" type="Area2D" parent="."]
 position = Vector2(150, -20)
