@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bybk3cr710qup"]
+[gd_scene load_steps=4 format=3 uid="uid://bybk3cr710qup"]
 
 [ext_resource type="Texture2D" uid="uid://b1nboppa1sgny" path="res://assets/level/CABIN_FRONT_BACK.png" id="1_nx66v"]
 [ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/level/mrt_background.gd" id="1_v6w26"]
+[ext_resource type="PackedScene" uid="uid://dh8ijwlsvhect" path="res://src/level/rescue_event.tscn" id="3_melth"]
 
 [node name="StartSection" type="Node2D"]
 texture_filter = 1
@@ -10,3 +11,6 @@ texture_filter = 1
 texture = ExtResource("1_nx66v")
 flip_h = true
 script = ExtResource("1_v6w26")
+
+[node name="RescueEvent" parent="." instance=ExtResource("3_melth")]
+position = Vector2(56, -31)
