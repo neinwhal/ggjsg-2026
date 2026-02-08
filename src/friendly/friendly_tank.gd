@@ -44,16 +44,11 @@ var attack_timer := 0.0
 var friendly_direction : float = 0.0
 var friendly_change_time : float = 0.0
 
-func find_player() -> void:
-	var players = get_tree().get_nodes_in_group("player")
-	if players.size() > 0:
-		target_player = players[0] as Node2D
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_to_group("unit") # add to unit group
 	randomize()
-	find_player()
+	target_player = FriendlyHelper.get_player(self)
 	# each friendly gets a slightly different stop distance
 	desired_distance = follow_distance + randf_range(-distance_variation, distance_variation)
 	# play default anim
@@ -237,7 +232,7 @@ func take_damage(amount: int) -> void:
 func _process(delta: float) -> void:
 	# wait until player exists
 	if target_player == null:
-		find_player()
+		target_player = FriendlyHelper.get_player(self)
 		return
 		
 	if (friendly_HP <= 0.0):

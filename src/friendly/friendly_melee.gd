@@ -10,7 +10,6 @@ extends CharacterBody2D
 @export var do_splash_dmg : bool = false
 @export var attack_damage_min : int = 10 # damage dealt
 @export var attack_damage_max : int = 15
-@export var chase_max_distance : float = 550.0 # stop chasing after exceeding this distance
 @export var wander_time_min : float = 0.0 # wandering time
 @export var wander_time_max : float = 1.0
 @export var idle_time_min : float = 2.0 # idle time
@@ -19,6 +18,7 @@ extends CharacterBody2D
 @export var stop_distance_min : float = 15.0 # distance before stopping near target
 @export var stop_distance_max : float = 50.0
 @export var attack_range_max : float = 60.0 # distance to stop attacking
+@export var chase_max_distance : float = 200.0 # stop chasing after exceeding this distance
 # follow variables
 var desired_distance := 0.0
 @export var follow_distance : float = 350.0
@@ -44,16 +44,11 @@ var attack_timer := 0.0
 var friendly_direction : float = 0.0
 var friendly_change_time : float = 0.0
 
-func find_player() -> void:
-	var players = get_tree().get_nodes_in_group("player")
-	if players.size() > 0:
-		target_player = players[0] as Node2D
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	add_to_group("unit") # add to unit group
 	randomize()
-	find_player()
+	target_player = FriendlyHelper.get_player(self)
 	# each friendly gets a slightly different stop distance
 	desired_distance = follow_distance + randf_range(-distance_variation, distance_variation)
 	# play default anim
@@ -76,7 +71,7 @@ func _find_nearest_in_group(group_name: String, max_dist: float) -> Node2D:
 	return nearest
 
 func state_idle(delta: float) -> void:
-	#print("IDLEMAN")
+	print("STATE IDLE")
 	# if too far from player, change to follow state
 	var dist_to_player := global_position.distance_to(target_player.global_position)
 	if dist_to_player > (follow_distance + follow_trigger_deviation):
@@ -103,7 +98,7 @@ func state_idle(delta: float) -> void:
 		velocity.x = friendly_direction * (speed * idle_speed_multiplier)
 	
 func state_follow(delta: float) -> void:
-	#print("FOLLOWMAN")
+	print("STATE FOLLOW")
 	# horizontal follow logic
 	var dx = target_player.global_position.x - global_position.x
 	var abs_dx = abs(dx)
@@ -124,7 +119,7 @@ func deselect_unit() -> void:
 	$Indicator.visible = false
 
 func state_order_move(delta: float) -> void:
-	#print("ORDERMAN")
+	print("STATE ORDER MOVE")
 	velocity.x = 0
 	# clear all targets!
 	if target_enemy != null:
@@ -133,7 +128,7 @@ func state_order_move(delta: float) -> void:
 	# todo maybe move here so its easier to configure for each unit type? idkkk
 	
 func state_order_attack(delta: float) -> void:
-	#print("attack order!")
+	print("STATE ORDER ATTACK")
 	if target_enemy == null:
 		state = FriendlyHelper.State.IDLE
 		return
@@ -150,9 +145,8 @@ func state_order_attack(delta: float) -> void:
 	var dir : float = sign(to_target.x)
 	velocity.x = dir * speed
 	
-	
 func state_chase(delta: float) -> void:
-	#print("CHASEMAN")
+	print("STATE CHASE")
 	# no target, go back to idle
 	if target_enemy == null:
 		state = FriendlyHelper.State.IDLE
@@ -175,7 +169,6 @@ func state_chase(delta: float) -> void:
 	var dir : float = sign(to_target.x)
 	velocity.x = dir * speed
 	
-	
 func do_splash_attack() -> void:
 	await get_tree().physics_frame
 	var dmg := randi_range(attack_damage_min, attack_damage_max)
@@ -187,7 +180,8 @@ func do_splash_attack() -> void:
 			body.take_damage(dmg)
 	
 func state_attack(delta: float) -> void:
-	#print("ATTACKMAN")
+	print("STATE ATTACK")
+	# # # # # # # # # # #
 	if target_enemy == null:
 		state = FriendlyHelper.State.IDLE
 		return
@@ -214,6 +208,8 @@ func state_attack(delta: float) -> void:
 				target_enemy.take_damage(randi_range(attack_damage_min, attack_damage_max))
 
 func state_dead(delta: float) -> void:
+	print("STATE DEAD")
+	# # # # # # # # # # #
 	if is_on_floor():
 		velocity.y = dead_fall_velocity
 	else:
@@ -237,7 +233,7 @@ func take_damage(amount: int) -> void:
 func _process(delta: float) -> void:
 	# wait until player exists
 	if target_player == null:
-		find_player()
+		target_player = FriendlyHelper.get_player(self)
 		return
 		
 	if (friendly_HP <= 0.0):

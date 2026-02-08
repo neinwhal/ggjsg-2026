@@ -1,7 +1,5 @@
 extends Node2D
 
-@onready var FriendlyScene: PackedScene = preload("res://src/friendly/friendly_basic.tscn")
-
 @onready var FriendlyTank: PackedScene = preload("res://src/friendly/friendly_tank.tscn")
 @onready var FriendlyMelee: PackedScene = preload("res://src/friendly/friendly_melee.tscn")
 @onready var FriendlyMelee2: PackedScene = preload("res://src/friendly/friendly_melee_2.tscn")
@@ -42,7 +40,6 @@ func spawn_friendly(friendly_scene: PackedScene) -> void:
 		player.global_position.x + randf_range(-250.0, 250.0),
 		-500.0
 	)
-
 
 var temp_spawning_stop : bool = false;
 # Called every frame. 'delta' is the elapsed time since the previous frame.
