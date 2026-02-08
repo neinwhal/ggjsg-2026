@@ -71,6 +71,7 @@ func open_branching_mrt() -> void:
 			$"Nodes/Node(7,1)".set_blinking()
 		71:
 			print_debug("Shouldn't be accessing map at the end of 71(final node)!!!")
+			get_tree().change_scene_to_file("res://src/ui/win_screen.tscn")
 		_:
 			print_debug("Invalid progression node: ", Progression.node, "!!!")
 	show()

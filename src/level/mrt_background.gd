@@ -5,3 +5,4 @@ func _ready() -> void:
 	pass
 	position.y = -40
 	scale = Vector2(2,2)
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST

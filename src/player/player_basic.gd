@@ -30,6 +30,7 @@ func _process(delta: float) -> void:
 	if player_HP <= 0:
 		### TODO: GAME OVER AND QUIT TO MAIN MENU	
 		print("GAMEOVER!")
+		get_tree().change_scene_to_file("res://src/ui/game_over.tscn")
 	
 	# horizontal movement
 	var dir := 0
