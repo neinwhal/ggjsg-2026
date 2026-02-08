@@ -20,7 +20,3 @@ func set_level_one(_zone: String = "A", _color: String = "GREEN") -> void:
 	node = 11
 	zone = _zone
 	color_difficulty = _color
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
