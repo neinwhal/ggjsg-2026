@@ -25,7 +25,7 @@ extends CharacterBody2D
 @export var attack_range_max : float = 60.0 # distance to stop attacking
 # follow variables
 var desired_distance := 0.0
-@export var follow_distance : float = 350.0
+@export var follow_distance : float = 200.0
 @export var follow_trigger_deviation : float = 5.0 # how far away from follow distance to trigger follow
 @export var follow_speed_multiplier : float = 4.0 # multiplier when following
 @export var distance_variation := 128.0
