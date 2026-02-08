@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://ye2jqq3kvv7d"]
+[gd_scene load_steps=2 format=3 uid="uid://ye2jqq3kvv7d"]
+
+[ext_resource type="Script" uid="uid://ba0u2axd3up77" path="res://src/ui/win_screen.gd" id="1_abv0v"]
 
 [node name="WinScreen" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_abv0v")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -30,3 +33,5 @@ text = "U WIN"
 [node name="MainMenu" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Back to Main Menu"
+
+[connection signal="pressed" from="VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
