@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b77tgxo88nrfq"]
+[gd_scene load_steps=8 format=3 uid="uid://b77tgxo88nrfq"]
 
 [ext_resource type="Script" uid="uid://6wpsctahhvdf" path="res://src/level/end_section.gd" id="1_a1rqp"]
 [ext_resource type="Script" uid="uid://bths8wmrf1pjh" path="res://src/level/mrt_background.gd" id="2_a1rqp"]
 [ext_resource type="Texture2D" uid="uid://b1nboppa1sgny" path="res://assets/level/CABIN_FRONT_BACK.png" id="2_iyfca"]
 [ext_resource type="PackedScene" uid="uid://hw6s2crnu56b" path="res://src/ui/interaction_timer.tscn" id="4_2unck"]
+[ext_resource type="Theme" uid="uid://nh5ucp828hcw" path="res://assets/ui/dialogue_box.tres" id="5_apege"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iyfca"]
 size = Vector2(32, 260)
@@ -36,6 +37,14 @@ shape = SubResource("CircleShape2D_a1rqp")
 
 [node name="InteractionTimer" parent="ExitMrtMap" instance=ExtResource("4_2unck")]
 anchors_preset = 8
+
+[node name="Dialogue" type="Label" parent="."]
+offset_left = 71.0
+offset_top = -69.0
+offset_right = 236.0
+offset_bottom = -46.0
+theme = ExtResource("5_apege")
+text = "Press 'E' to open map"
 
 [connection signal="body_entered" from="ExitMrtMap" to="." method="_on_exit_mrt_map_body_entered"]
 [connection signal="body_exited" from="ExitMrtMap" to="." method="_on_exit_mrt_map_body_exited"]
