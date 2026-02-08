@@ -56,13 +56,13 @@ func state_wander(delta: float) -> void:
 	velocity.x = enemy_direction * speed
 	#try to find target
 	target = EnemyHelper.find_nearest_player_unit(get_tree(), global_position, detect_range)
-	if (target != null):
+	if EnemyHelper.is_friendly_valid(target):
 		state = EnemyHelper.State.CHASE
 		velocity.x = 0;
 		
 func state_chase(delta: float) -> void:
 	# if no target, go back to wander state
-	if target == null:
+	if !EnemyHelper.is_friendly_valid(target):
 		state = EnemyHelper.State.WANDER
 		return
 		
@@ -97,7 +97,7 @@ func do_splash_attack() -> void:
 			body.take_damage(dmg)
 		
 func state_attack(delta: float) -> void:
-	if target == null:
+	if !EnemyHelper.is_friendly_valid(target):
 		state = EnemyHelper.State.WANDER
 		return
 	
@@ -154,7 +154,7 @@ func state_dodge(delta: float) -> void:
 	if $AnimatedSprite2D.animation != "enemy_dodge":
 		$AnimatedSprite2D.play("enemy_dodge")
 	# no target -> no dodge movement
-	if target == null or not is_instance_valid(target):
+	if !EnemyHelper.is_friendly_valid(target):
 		velocity.x = 0.0
 		return
 	# direction away from target
@@ -209,7 +209,7 @@ func _process(delta: float) -> void:
 		$AnimatedSprite2D.flip_h = facing_dir < 0 # visual flip
 		hitbox.scale.x = facing_dir # hitbox flip
 	else:
-		if target != null:
+		if EnemyHelper.is_friendly_valid(target):
 			$AnimatedSprite2D.flip_h = target.global_position.x < global_position.x
 	
 	move_and_slide()

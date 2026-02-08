@@ -36,3 +36,14 @@ static func find_nearest_player_ranged(tree: SceneTree, from_pos: Vector2, max_d
 			nearest_dist_sq = dist_sq
 			nearest = node
 	return nearest
+
+static func is_friendly_valid(target: Node2D) -> bool:
+	# check for instance validity
+	if target == null: return false
+	if not is_instance_valid(target): return false
+	# check for hp
+	if "friendly_HP" in target:
+		if target.friendly_HP <= 0:
+			return false
+	# otherwise is valid
+	return true

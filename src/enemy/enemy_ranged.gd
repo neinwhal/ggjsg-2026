@@ -67,13 +67,13 @@ func state_wander(delta: float) -> void:
 	velocity.x = enemy_direction * speed
 	#try to find target
 	target = find_nearest_player_unit(detect_range)
-	if (target != null):
+	if EnemyHelper.is_friendly_valid(target):
 		state = EnemyHelper.State.CHASE
 		velocity.x = 0;
 		
 func state_chase(delta: float) -> void:
 	# if no target, go back to wander state
-	if target == null:
+	if !EnemyHelper.is_friendly_valid(target):
 		state = EnemyHelper.State.WANDER
 		return
 		
@@ -98,7 +98,7 @@ func state_chase(delta: float) -> void:
 		
 
 func fire_bullet() -> void:
-	if target == null:
+	if !EnemyHelper.is_friendly_valid(target):
 		return
 
 	var b := BulletScene.instantiate() as CharacterBody2D
@@ -121,7 +121,7 @@ func fire_bullet() -> void:
 		b.damage = randi_range(attack_damage_min, attack_damage_max)
 
 func state_attack(delta: float) -> void:
-	if target == null:
+	if !EnemyHelper.is_friendly_valid(target):
 		state = EnemyHelper.State.WANDER
 		return
 	
@@ -211,7 +211,7 @@ func _process(delta: float) -> void:
 		if enemy_direction != 0:
 			$AnimatedSprite2D.flip_h = enemy_direction < 0
 	else:
-		if target != null:
+		if EnemyHelper.is_friendly_valid(target):
 			$AnimatedSprite2D.flip_h = target.global_position.x < global_position.x
 	
 	move_and_slide()
