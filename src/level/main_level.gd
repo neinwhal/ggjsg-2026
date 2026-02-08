@@ -125,9 +125,8 @@ func generate_end_section(xpos: int) -> void:
 	end_scene = preload(END_SCENE).instantiate()
 	
 	end_scene.position.x = xpos
-	#end_scene._on_final_extent_entered.connect(open_branching_mrt)
-	#end_scene._on_mrt_map_exited.connect(close_branching_mrt)
 	end_scene.on_open_mrt_map_interacted.connect(open_branching_mrt)
+	end_scene.on_mrt_map_exited.connect(close_branching_mrt)
 	$SpawnedSections.call_deferred("add_child", end_scene)
 
 ## Obtain random scene from container
@@ -144,9 +143,9 @@ func open_branching_mrt() -> void:
 	#print_debug("Open branching mrt")
 	$CanvasLayer/BranchingMrtMap.open_branching_mrt()
 
-#func close_branching_mrt() -> void:
-	##print_debug("Close branching mrt")
-	#$CanvasLayer/BranchingMrtMap.close_branching_mrt()
+func close_branching_mrt() -> void:
+	#print_debug("Close branching mrt")
+	$CanvasLayer/BranchingMrtMap.close_branching_mrt()
 
 func go_next_level(next_lvl: int, zone: String, colour_difficulty: String) -> void:
 	#current_level += 1
