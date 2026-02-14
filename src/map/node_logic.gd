@@ -36,10 +36,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	match animation_state:
 		NodeAnimation.UNLIGHTED:
+			## Retain same colour
+			self_modulate = Color(1,1,1,1)
 			node_duration_count = 0.0
 			var atlas_normal: AtlasTexture = texture_normal as AtlasTexture
 			atlas_normal.region.position.x = 0
 		NodeAnimation.BLINKING:
+			## Retain same colour
+			self_modulate = Color(1,1,1,1)
 			node_duration_count += delta
 			if node_duration_count >= duration_per_frame:
 				node_duration_count -= duration_per_frame
@@ -53,7 +57,11 @@ func _process(delta: float) -> void:
 				else:
 					atlas_normal.region.position.x = 0
 		NodeAnimation.GRAYED:
+			## Mix with gray
+			self_modulate = Color(0.5,0.5,0.5,1.0)
 			node_duration_count = 0.0
+			var atlas_normal: AtlasTexture = texture_normal as AtlasTexture
+			atlas_normal.region.position.x = 0
 		_:
 			pass
 			print_debug("Node in invalid state!!!")
